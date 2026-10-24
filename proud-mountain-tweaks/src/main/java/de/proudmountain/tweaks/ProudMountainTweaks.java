@@ -12,6 +12,7 @@ import net.neoforged.fml.config.ModConfig;
  * Anpassungen für das Modpack:
  * Serene Seasons folgt dem echten Kalender, siehe SeasonCalendar (Server).
  * Mitgelieferte Resource Packs werden einmal eingeschaltet, siehe DefaultResourcePacks (nur Client).
+ * Eisenfarmen laufen trotz Better-Days-Tageslänge den ganzen Tag, siehe VillagerMixin.
  * Außerdem legt neoforge.mods.toml die Ladereihenfolge Farmer's Delight -> Proud Mountain Tweaks -> Coffee Delight fest:
  * Coffee Delight greift beim Registrieren auf Farmer's-Delight-Blöcke zu, gibt die Reihenfolge aber selbst nicht an.
  */

@@ -4,7 +4,7 @@ license = "MIT"
 
 [[mods]]
 modId = "proudmountain_tweaks"
-version = "2.1.0"
+version = "2.2.0"
 displayName = "Proud Mountain Tweaks"
 authors = "Tim"
 description = '''

@@ -1,8 +1,8 @@
 name = "Proud Mountain Tweaks"
-filename = "proud-mountain-tweaks-2.1.0.jar"
+filename = "proud-mountain-tweaks-2.2.0.jar"
 side = "both"
 
 [download]
-url = "https://raw.githubusercontent.com/Stolzenberg/minecraft-modpack-proud-mountain-smp/main/extra-mods/proud-mountain-tweaks-2.1.0.jar"
+url = "https://raw.githubusercontent.com/Stolzenberg/minecraft-modpack-proud-mountain-smp/main/extra-mods/proud-mountain-tweaks-2.2.0.jar"
 hash-format = "sha1"
-hash = "d065a81895cf31b204603c3ff561eb9a675a815f"
+hash = "7b4ad0d556444e1c86bac20dd6ea664d600bbd88"

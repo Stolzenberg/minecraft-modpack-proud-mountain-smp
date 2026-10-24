@@ -3,6 +3,9 @@
   "minVersion": "0.8",
   "package": "de.proudmountain.tweaks.mixin",
   "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "VillagerMixin"
+  ],
   "client": [
     "OptionsMixin"
   ],
