@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "farm_and_charm:minced_beef"
+    }
+  ],
+  "result": {
+    "id": "farmersdelight:minced_beef",
+    "count": 1
+  }
+}

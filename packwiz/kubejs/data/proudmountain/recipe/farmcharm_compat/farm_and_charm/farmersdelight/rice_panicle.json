@@ -1,0 +1,17 @@
+{
+  "type": "farm_and_charm:cutting_board",
+  "ingredient": {
+    "item": "farmersdelight:rice_panicle"
+  },
+  "result": {
+    "count": 1,
+    "id": "farmersdelight:rice"
+  },
+  "experience": 0.1,
+  "byproducts": [
+    {
+      "count": 1,
+      "id": "farmersdelight:straw"
+    }
+  ]
+}

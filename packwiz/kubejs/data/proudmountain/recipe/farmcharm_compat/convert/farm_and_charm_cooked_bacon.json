@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "farm_and_charm:cooked_bacon"
+    }
+  ],
+  "result": {
+    "id": "farmersdelight:cooked_bacon",
+    "count": 1
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "farm_and_charm:cutting_board",
+  "ingredient": {
+    "item": "farmersdelight:sweet_berry_cheesecake"
+  },
+  "result": {
+    "count": 4,
+    "id": "farmersdelight:sweet_berry_cheesecake_slice"
+  },
+  "experience": 0.1
+}

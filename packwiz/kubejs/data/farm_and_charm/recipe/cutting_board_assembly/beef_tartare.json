@@ -1,0 +1,18 @@
+{
+  "type": "farm_and_charm:cutting_board_assembly",
+  "ingredients": [
+    {
+      "tag": "proudmountain:compat/minced_beef"
+    },
+    {
+      "tag": "farm_and_charm:onion"
+    }
+  ],
+  "finisher": {
+    "tag": "candlelight:bowls"
+  },
+  "result": {
+    "id": "candlelight:beef_tartare",
+    "count": 2
+  }
+}

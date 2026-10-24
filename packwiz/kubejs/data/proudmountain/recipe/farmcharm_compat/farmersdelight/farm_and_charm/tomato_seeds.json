@@ -1,0 +1,19 @@
+{
+  "type": "farmersdelight:cutting",
+  "ingredients": [
+    {
+      "tag": "proudmountain:compat/tomato"
+    }
+  ],
+  "tool": {
+    "tag": "c:tools/knife"
+  },
+  "result": [
+    {
+      "item": {
+        "id": "farm_and_charm:tomato_seeds",
+        "count": 4
+      }
+    }
+  ]
+}

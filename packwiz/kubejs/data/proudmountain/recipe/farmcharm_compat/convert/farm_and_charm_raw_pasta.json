@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "farm_and_charm:raw_pasta"
+    }
+  ],
+  "result": {
+    "id": "farmersdelight:raw_pasta",
+    "count": 1
+  }
+}

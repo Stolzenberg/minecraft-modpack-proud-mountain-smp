@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "farm_and_charm:cooked_chicken_parts"
+    }
+  ],
+  "result": {
+    "id": "farmersdelight:cooked_chicken_cuts",
+    "count": 1
+  }
+}

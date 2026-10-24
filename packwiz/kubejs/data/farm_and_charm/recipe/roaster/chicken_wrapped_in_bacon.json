@@ -1,0 +1,27 @@
+{
+  "type": "farm_and_charm:roaster",
+  "ingredients": [
+    {
+      "tag": "proudmountain:compat/bacon"
+    },
+    {
+      "tag": "proudmountain:compat/chicken_cuts"
+    },
+    {
+      "tag": "farm_and_charm:pasta"
+    },
+    {
+      "tag": "farm_and_charm:butter"
+    }
+  ],
+  "container": {
+    "id": "minecraft:bowl",
+    "count": 1
+  },
+  "result": {
+    "id": "farm_and_charm:chicken_wrapped_in_bacon",
+    "count": 1
+  },
+  "requiresLearning": false,
+  "experience": 0.35
+}

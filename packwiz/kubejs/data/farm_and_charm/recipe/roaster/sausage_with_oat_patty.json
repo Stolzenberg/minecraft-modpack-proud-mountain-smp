@@ -1,0 +1,33 @@
+{
+  "type": "farm_and_charm:roaster",
+  "ingredients": [
+    {
+      "tag": "farm_and_charm:oat"
+    },
+    {
+      "tag": "farm_and_charm:butter"
+    },
+    {
+      "item": "minecraft:potato"
+    },
+    {
+      "item": "minecraft:carrot"
+    },
+    {
+      "tag": "proudmountain:compat/minced_beef"
+    },
+    {
+      "tag": "proudmountain:compat/minced_beef"
+    }
+  ],
+  "container": {
+    "id": "minecraft:bowl",
+    "count": 1
+  },
+  "result": {
+    "id": "farm_and_charm:sausage_with_oat_patty",
+    "count": 2
+  },
+  "requiresLearning": false,
+  "experience": 0.35
+}

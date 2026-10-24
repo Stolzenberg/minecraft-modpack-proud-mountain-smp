@@ -1,0 +1,11 @@
+{
+  "type": "farm_and_charm:cutting_board",
+  "ingredient": {
+    "item": "farmersdelight:apple_pie"
+  },
+  "result": {
+    "count": 4,
+    "id": "farmersdelight:apple_pie_slice"
+  },
+  "experience": 0.1
+}

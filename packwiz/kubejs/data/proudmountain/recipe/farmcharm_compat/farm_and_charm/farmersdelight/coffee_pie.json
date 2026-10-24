@@ -1,0 +1,11 @@
+{
+  "type": "farm_and_charm:cutting_board",
+  "ingredient": {
+    "item": "coffee_delight:coffee_pie"
+  },
+  "result": {
+    "count": 4,
+    "id": "coffee_delight:coffee_pie_side"
+  },
+  "experience": 0.1
+}

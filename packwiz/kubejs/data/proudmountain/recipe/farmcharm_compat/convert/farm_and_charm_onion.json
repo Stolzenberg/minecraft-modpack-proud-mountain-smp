@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "farm_and_charm:onion"
+    }
+  ],
+  "result": {
+    "id": "farmersdelight:onion",
+    "count": 1
+  }
+}

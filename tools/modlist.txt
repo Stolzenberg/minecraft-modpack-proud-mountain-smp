@@ -20,7 +20,9 @@ recipe-modification                      pin=7214826 id=1345325 # von Vegan Deli
 lets-do-farm-charm                       pin=9203717 # Felder, Vorratsblöcke, Herd und Kochtopf; Basis für Bakery und Candlelight
 lets-do-bakery-farm-charm-compat         pin=9234083 # Bakery (1.21.1 nur als Farm-&-Charm-Fassung)
 lets-do-candlelight-farm-charm-compat    pin=9150310 # Candlelight: Gerichte, Geschirr, Tischdeko (1.21.1 nur als Farm-&-Charm-Fassung)
-rightclickharvest                        pin=7508749 # Rechtsklick auf reife Feldfrüchte erntet sie und pflanzt sie sofort neu (auch Farmer's Delight, Let's Do), braucht JamLib
+# Farmer's Delight <-> Farm & Charm: Schneidebretter, doppelte Zutaten, Brotmesser per Datapack (tools/farmcharm_compat.py
+# -> packwiz/kubejs/data); eine Compat-Mod dafür gibt es für NeoForge 1.21.1 nicht
+rightclickharvest                       pin=7508749 # Rechtsklick auf reife Feldfrüchte erntet sie und pflanzt sie sofort neu (auch Farmer's Delight, Let's Do), braucht JamLib
 rightclickharvest-supplementaries-compat pin=6137052 # RightClickHarvest für Supplementaries-Flachs (zwei Blöcke hoch)
 # --- Einrichtung & Technik ---
 handcrafted                              pin=6330030 # Möbel (Stühle, Tische, Regale, Betten), braucht Resourceful Lib

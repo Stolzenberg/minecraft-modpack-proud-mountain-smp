@@ -1,0 +1,11 @@
+{
+  "type": "farm_and_charm:cutting_board",
+  "ingredient": {
+    "item": "minecraft:pumpkin_pie"
+  },
+  "result": {
+    "count": 4,
+    "id": "farmersdelight:pumpkin_pie_slice"
+  },
+  "experience": 0.1
+}

@@ -1,0 +1,11 @@
+{
+  "type": "farm_and_charm:cutting_board",
+  "ingredient": {
+    "item": "farmersdelight:wild_cabbages"
+  },
+  "result": {
+    "count": 1,
+    "id": "farmersdelight:cabbage_seeds"
+  },
+  "experience": 0.1
+}

@@ -1,0 +1,17 @@
+{
+  "type": "farm_and_charm:cutting_board",
+  "ingredient": {
+    "item": "farmersdelight:wild_onions"
+  },
+  "result": {
+    "count": 1,
+    "id": "farmersdelight:onion"
+  },
+  "experience": 0.1,
+  "byproducts": [
+    {
+      "count": 2,
+      "id": "minecraft:magenta_dye"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "type": "farm_and_charm:cutting_board",
+  "ingredient": {
+    "item": "farmersdelight:red_mushroom_colony"
+  },
+  "result": {
+    "count": 5,
+    "id": "minecraft:red_mushroom"
+  },
+  "experience": 0.1
+}

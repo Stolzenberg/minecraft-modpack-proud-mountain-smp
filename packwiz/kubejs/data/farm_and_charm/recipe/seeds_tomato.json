@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "proudmountain:compat/tomato"
+    }
+  ],
+  "result": {
+    "id": "farm_and_charm:tomato_seeds",
+    "count": 3
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "farm_and_charm:cutting_board",
+  "ingredient": {
+    "item": "farmersdelight:wild_beetroots"
+  },
+  "result": {
+    "count": 1,
+    "id": "minecraft:beetroot_seeds"
+  },
+  "experience": 0.1,
+  "byproducts": [
+    {
+      "count": 1,
+      "id": "minecraft:red_dye"
+    }
+  ]
+}

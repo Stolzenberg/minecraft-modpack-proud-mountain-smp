@@ -70,6 +70,10 @@ file = "kubejs/assets/proudmountain/lang/de_de.json"
 hash = "aa5f20dd8187a5d7c4ad80bcc3bc7897e7f900de4b5a5dfe05d807e7054aa0de"
 
 [[files]]
+file = "kubejs/data/bakery/tags/item/dough.json"
+hash = "ba9866ac666ad8748aaf605316d6a0111378fb5adfb136dbbce2ffbf34889202"
+
+[[files]]
 file = "kubejs/data/betterdungeons/worldgen/structure_set/skeleton_dungeons.json"
 hash = "2598b2b278b72d40288a2e6a66be791a6659d6ffaf26ec56532bf5237a5ee0c1"
 
@@ -230,8 +234,48 @@ file = "kubejs/data/bosses_of_mass_destruction/worldgen/structure_set/void_bloss
 hash = "5b60b055dea23ad604892cd4a4fba971ef191124daddb581888fc58d7fa73983"
 
 [[files]]
+file = "kubejs/data/c/tags/item/foods/cooked_bacon.json"
+hash = "23c7fbe2435004123c822aa1163b4b3e6a1e55a668aecd732538d02ebfda3b0d"
+
+[[files]]
+file = "kubejs/data/c/tags/item/foods/cooked_chicken.json"
+hash = "4f1aceed4e8c6c7dc93ac664932234981e2f5d33a67b0eea13627009f8c83d91"
+
+[[files]]
+file = "kubejs/data/c/tags/item/foods/cooked_meat.json"
+hash = "aaddcaa1ad4522e2e54751c8d69ba63c0df9e18c9cbdb1f2c397cc9b85fbc0e9"
+
+[[files]]
+file = "kubejs/data/c/tags/item/foods/dough.json"
+hash = "0ad437742431f6735724c3aeb868ca73e8053101e1e1eca37ed1afc976c51bbd"
+
+[[files]]
+file = "kubejs/data/c/tags/item/foods/leafy_green.json"
+hash = "6e8009434ea9310f580a21440b22bba7b3a0ef727febaf843b6db023ba10449e"
+
+[[files]]
+file = "kubejs/data/c/tags/item/foods/pasta.json"
+hash = "41d375a2af7af1fbe30574f5ebd0715b406a2755dbe955468b618b23b81a3316"
+
+[[files]]
+file = "kubejs/data/c/tags/item/foods/raw_beef.json"
+hash = "c78e6520f455dc24dfe15e879ea8a1141b3e9650c41bbffa072c07b657c8d0ac"
+
+[[files]]
+file = "kubejs/data/c/tags/item/foods/raw_chicken.json"
+hash = "0dbb6724d7f1491b3e507c08ee8a21a8650ef8ddaf1412780bd61ab404fe794c"
+
+[[files]]
+file = "kubejs/data/c/tags/item/foods/raw_pork.json"
+hash = "25869e9b03286a2df4536c19fd21c6947b38a58da2b42320d7772cea7536f536"
+
+[[files]]
 file = "kubejs/data/c/tags/item/hidden_from_recipe_viewers.json"
 hash = "c7be0cbab564da060f7d7dd512992b7a72b3f7bc440660c198e87adaaa97d993"
+
+[[files]]
+file = "kubejs/data/c/tags/item/tools/knife.json"
+hash = "0ff08a2c4e507c71095c55b7740267ae3c3909b15028c6c38425520b24ff04e2"
 
 [[files]]
 file = "kubejs/data/cataclysm/worldgen/structure_set/abandoned_structures.json"
@@ -276,6 +320,10 @@ hash = "a5bf264eb3cf9ffc203ca495bba16968fb26ae7139e834d6fd085903c1f8ee4b"
 [[files]]
 file = "kubejs/data/cataclysm/worldgen/structure_set/sunken_city.json"
 hash = "964a4490c49ca4224ca3a5db0eb4f8dd2ebc8a6f8f3a879d6044a9757290d637"
+
+[[files]]
+file = "kubejs/data/coffee_delight/recipe/wafer.json"
+hash = "cc184ab423d6810faddb3cde2d1a15d99eb60763e43cc9fa6969ef4a6dabfd7f"
 
 [[files]]
 file = "kubejs/data/dungeons_arise/worldgen/structure/heavenly_challenger.json"
@@ -368,6 +416,122 @@ hash = "65a861d851d7772b8ce22f523e406b8636b5473ea694d53119ccf8aa2012cca9"
 [[files]]
 file = "kubejs/data/explorify/worldgen/structure_set/watchtowers.json"
 hash = "9b918424ade1239c76eff29b19270a98601a7bd637e6a6317cc04eae2126493a"
+
+[[files]]
+file = "kubejs/data/farm_and_charm/recipe/cutting_board/tomato_seeds.json"
+hash = "0ead818ed0cc6baefa9fed125443041f24a3b6d04db1c17ec77cc17b52424910"
+
+[[files]]
+file = "kubejs/data/farm_and_charm/recipe/cutting_board_assembly/beef_tartare.json"
+hash = "869ab0d5884c38ec99cdc4a29f98c8a462f64d0819dda18d5bb546cc674bedc2"
+
+[[files]]
+file = "kubejs/data/farm_and_charm/recipe/drying/bone_meal_from_onion.json"
+hash = "a9f042da271fd377545556e9d8695c6943f55f30f0c88d4d3b28c06a32102c64"
+
+[[files]]
+file = "kubejs/data/farm_and_charm/recipe/drying/bone_meal_from_tomato.json"
+hash = "7797709c514840f91d4d2d80011572f3094c3f1ec96089aac429313626457310"
+
+[[files]]
+file = "kubejs/data/farm_and_charm/recipe/mincer/tomato_seeds.json"
+hash = "8edc4fe0191cfa49a2198948a9d48dca12d7862a32f766518eab7d767c1c20d9"
+
+[[files]]
+file = "kubejs/data/farm_and_charm/recipe/pot_cooking/chicken_teriyaki.json"
+hash = "6bc010bab7a855b12b04b216fd2a8b28508085d6f84e38af4c2fda82154c06db"
+
+[[files]]
+file = "kubejs/data/farm_and_charm/recipe/pot_cooking/potroast.json"
+hash = "f7801e36b3c3937c9107aa781d11e2e074eda372c507bca1d1bf87f78fa27f9b"
+
+[[files]]
+file = "kubejs/data/farm_and_charm/recipe/roaster/bacon_with_eggs.json"
+hash = "24eb24d63bcc07212c777c9fca1a2fefc2a0a2eca4ae815a0af529e978fe7c30"
+
+[[files]]
+file = "kubejs/data/farm_and_charm/recipe/roaster/bolognese.json"
+hash = "2445cfeb2a041c178d3a987388dbffa3e6827db572a4c74a3431c25b9b113dcd"
+
+[[files]]
+file = "kubejs/data/farm_and_charm/recipe/roaster/chicken_wrapped_in_bacon.json"
+hash = "1bcc5a03e9f5ca887f3b2bdfa95026b26c0b27d4c8f32b41bdd9b2f32fc2e232"
+
+[[files]]
+file = "kubejs/data/farm_and_charm/recipe/roaster/sausage_with_oat_patty.json"
+hash = "b65457c7ef1e1a60d4358ca654f96234a0d71c97413a7e5dc3250407f9d9ce2e"
+
+[[files]]
+file = "kubejs/data/farm_and_charm/recipe/seeds_tomato.json"
+hash = "efd1ae4265f4c14541f6cafe156cedf2d2f7d85087b52f12752498f0ac0bb8b9"
+
+[[files]]
+file = "kubejs/data/farm_and_charm/recipe/stove/chicken_alfredo.json"
+hash = "16c3580b011214ee2dea19fec822444a76febccb64feb145c8b5bf6053a07c23"
+
+[[files]]
+file = "kubejs/data/farm_and_charm/recipe/stove/chicken_with_vegetables.json"
+hash = "0f35fa4ae865b92a0c48497d5607cd1f7e4cfbe0a9c65c79bf950e4eb82c792f"
+
+[[files]]
+file = "kubejs/data/farm_and_charm/recipe/stove/roasted_chicken.json"
+hash = "705f8f7bb40385b2cbe169de4dfb1937ddc5fcda34becad504213fc9a9bc349a"
+
+[[files]]
+file = "kubejs/data/farm_and_charm/tags/item/dough.json"
+hash = "ba9866ac666ad8748aaf605316d6a0111378fb5adfb136dbbce2ffbf34889202"
+
+[[files]]
+file = "kubejs/data/farm_and_charm/tags/item/pasta.json"
+hash = "bd2737f8c416ecea3b6a93b37b82d08af6d67cf9c7f73cccb1a298e841cee14e"
+
+[[files]]
+file = "kubejs/data/farm_and_charm/tags/item/raw_bacon.json"
+hash = "c70a05fe74f19bd67b2b907f8156e076079919f8a40cd7099d4ca319b18a555d"
+
+[[files]]
+file = "kubejs/data/farm_and_charm/tags/item/raw_beef.json"
+hash = "c94d3fedd43737090ed0829571e91972565d4e67aaed9cc9599e16e8e1a3ba35"
+
+[[files]]
+file = "kubejs/data/farm_and_charm/tags/item/raw_chicken.json"
+hash = "20ff692f53ad120e7d7df270f49af481ffa01e781275d6a76f2f31da0d3531d6"
+
+[[files]]
+file = "kubejs/data/farmersdelight/recipe/bread_from_smelting.json"
+hash = "71df5a40699bdfc4ed80e158a164499946b4e01c58a55894eec00f0f20099737"
+
+[[files]]
+file = "kubejs/data/farmersdelight/recipe/bread_from_smoking.json"
+hash = "712b237798c073d0f181ac510b6e650523635cac5724dfe1989825aeb0d5bd49"
+
+[[files]]
+file = "kubejs/data/farmersdelight/recipe/cooked_bacon.json"
+hash = "33c43812a23120513f796526b4d1229071ba07fa5753278c2e746bd9a1348a8f"
+
+[[files]]
+file = "kubejs/data/farmersdelight/recipe/cooked_bacon_from_smoking.json"
+hash = "492dfe3bd9851e3a1c532fdb81467cdb272e4adde9f937aa8db9800bc9ccf0a8"
+
+[[files]]
+file = "kubejs/data/farmersdelight/recipe/cooked_chicken_cuts.json"
+hash = "acca365f0c8fdd93e1ddf24fb2cc4511c9d6f512066f0866f1a2892ed6c1c05b"
+
+[[files]]
+file = "kubejs/data/farmersdelight/recipe/cooked_chicken_cuts_from_smoking.json"
+hash = "41ab858f291abc7828996703bd5395f42a024076981afc07f7054fd9ef60b616"
+
+[[files]]
+file = "kubejs/data/farmersdelight/recipe/cooking/pasta_with_meatballs.json"
+hash = "55e9f9abf005f9aca60f6d7380e70d0fcb461e7d76c13c1efdba54fb6641a737"
+
+[[files]]
+file = "kubejs/data/farmersdelight/recipe/cooking/quiche_side.json"
+hash = "09c8849d46bf5cbaafd3a68403de07e0b27ac43696148d9f98c6f7e91d1c1468"
+
+[[files]]
+file = "kubejs/data/farmersdelight/recipe/tomato_seeds.json"
+hash = "b6d0998ae0775ae12d90c3abc8d3238847dcfda45e760c5fe7688036e57b125a"
 
 [[files]]
 file = "kubejs/data/friendsandfoes/worldgen/structure_set/citadel.json"
@@ -1440,6 +1604,318 @@ hash = "adc4b3e26e5c42a0e723f89e6f3f6c5cf74ab07a3699717707292362d19e4053"
 [[files]]
 file = "kubejs/data/proudmountain/dimension_type/testwelt.json"
 hash = "6d868d02da4835e1461e8945e9827fd861529f12dc704fd982cef7131021a166"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/convert/farm_and_charm_bacon.json"
+hash = "c55498831f3d426f9ba9e042cfeeff2412dc51f968cf0be22cbe3a4a0b4424d6"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/convert/farm_and_charm_chicken_parts.json"
+hash = "dd00a056264c10d9e57e2bb767360e3103b628a9a784617811d95274da1a477e"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/convert/farm_and_charm_cooked_bacon.json"
+hash = "a9c2b1df0c71b6d3e61108496fa3c4461e4c6d9404dfbd54a207e3a411678296"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/convert/farm_and_charm_cooked_chicken_parts.json"
+hash = "5c8e0f5a33b2c887ee41c05cd9bd199ba89250198fd973a34b38ff70159d7f96"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/convert/farm_and_charm_dough.json"
+hash = "a4bb8cab5b5839c2d80e6066e1b07c3b53c0e9ecca7adaf7a19a60e831ba53d9"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/convert/farm_and_charm_minced_beef.json"
+hash = "220a2a01778b2612c8d6412703dade6739bde5c8d029d92b2839b1a8795e8310"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/convert/farm_and_charm_onion.json"
+hash = "e14cd332b91e54a2c82aef101c5ae01d40c3757542c9224ed636d64cd283b9c1"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/convert/farm_and_charm_raw_pasta.json"
+hash = "13108bc904d0a41a3765c6d64c05b53a7eb71852b3366c93ca2a2d4954e32686"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/convert/farm_and_charm_tomato_seeds.json"
+hash = "ccbb3d0b947a9d1436bafe1410684559c6552d24805e803d8246204130fc4d55"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/convert/farmersdelight_bacon.json"
+hash = "9ac78cd55c5fa7e729eb23568f9a70288acde6dbee1a70ace5f7969b73d7f7a2"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/convert/farmersdelight_chicken_cuts.json"
+hash = "4a56d83b643f2de2c2f4dd1f6d112f6f94108c61085221a9024e3a1cd4a3b57b"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/convert/farmersdelight_cooked_bacon.json"
+hash = "e67ff9e81783f4030ebf49822a334b727db094be5ddcd2097f9fbd9c25ddaeeb"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/convert/farmersdelight_cooked_chicken_cuts.json"
+hash = "449a66e7339f1f014eb1c4e83a6f4bd9fccd1b94fbe622a852ba5202087633f8"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/convert/farmersdelight_minced_beef.json"
+hash = "5393ddcf909a0a2c2866bcfac9e6e9d5da6a0810f2efbc84624456f2a5946889"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/convert/farmersdelight_onion.json"
+hash = "d741e15d391e249e7b194397180e7411cc73b9101d2e231c019c71955eabebd7"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/convert/farmersdelight_raw_pasta.json"
+hash = "ee01655c09aba41f99ef8de07a6f40240cc12880449ee9beaf8f9948b90141a0"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/convert/farmersdelight_tomato_seeds.json"
+hash = "68745928bdb0f2cd98a931fb49a575ecc199bf25c7ee42c1ee2e624448aa91ee"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/convert/farmersdelight_wheat_dough.json"
+hash = "78bf82bda4031cd74b5ce5ee322908694d0c576ee254232247fb4eb1515c314a"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farm_and_charm/farmersdelight/apple_pie.json"
+hash = "2fca09383aa2cfae686613c5936a87a93154c6fea896b3c2ff9e580eb5b6e22b"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farm_and_charm/farmersdelight/brown_mushroom_colony.json"
+hash = "d2a1cdbaf4022aaacb8ed9c48def2139abf9720e0c61f2b753b771b1496604ae"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farm_and_charm/farmersdelight/cabbage.json"
+hash = "3fa318c0221b9eec8eeab0860c27f9728e814aaf47d161c2ae284c682768f9b8"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farm_and_charm/farmersdelight/cake.json"
+hash = "8ad0879ab57097be5d5016c74f9a522dde45134aa07e01f12cf65e36c634efcb"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farm_and_charm/farmersdelight/chocolate_pie.json"
+hash = "4ad63ddd0916a580a3481f7f9dcae67cabb67baf8ed21840df10b2782cecf202"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farm_and_charm/farmersdelight/cod.json"
+hash = "b7e363e769a529de4f63487f8a7c17a8c361be6ee8f8cfba16c2e599894376c3"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farm_and_charm/farmersdelight/coffee_beans_cooked.json"
+hash = "ff2009e99309723ed9359b5c6576d8f0de7b3f652c441f4b9872b01def127dab"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farm_and_charm/farmersdelight/coffee_berries.json"
+hash = "6072a7bc7042e7dfc7f6b5a99919ca7d17fd8a0f8e20a6f306d263a8769a8d11"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farm_and_charm/farmersdelight/coffee_pie.json"
+hash = "7ea030969ccedf4d0cb640f0f75406613787cf34dc99be843c27a2da59f9efb6"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farm_and_charm/farmersdelight/cooked_chicken.json"
+hash = "70569c37421a20718bd433f56c248e92e343dc5dc4f3f7bb450c6ce454bd8d63"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farm_and_charm/farmersdelight/cooked_cod.json"
+hash = "c701ef74475d5df84e8baa0d965de6a4fb20131d66bb7b8a4194ba81f14bd9da"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farm_and_charm/farmersdelight/cooked_mutton.json"
+hash = "dba7cf6ca1fde9bc011ee215d7457cb7662fd98ba5957e18e7b9d2be50bfcb2d"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farm_and_charm/farmersdelight/cooked_salmon.json"
+hash = "91b87833a8df047f2168ca78ef23a9758676172fade24ee35ef787ab86defcc3"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farm_and_charm/farmersdelight/ham.json"
+hash = "41a70003b087687f9a0931addcf7d435477f717ec7275f37833b5c229c59ad8c"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farm_and_charm/farmersdelight/ink_sac.json"
+hash = "4f55988b9d59d6f06a291c0c3c1e8efcf36ae39ea22573f884eaee25ce76b0b8"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farm_and_charm/farmersdelight/kelp_roll.json"
+hash = "dd4c840f7910a09b4acb2e968af6e38cf18213e40b5375e80836060d5c14523b"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farm_and_charm/farmersdelight/pumpkin_pie.json"
+hash = "696051366c0ad090d46cbc756aed0eba41dad722b0f52d8c34dcb661644ee262"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farm_and_charm/farmersdelight/red_mushroom_colony.json"
+hash = "cf13ced2a79069c0a06371a0b6024291806489b5f066f420cc1d82d6be63bb6e"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farm_and_charm/farmersdelight/rice_panicle.json"
+hash = "8a110a3245ca11a87e8031171e1cd9fc63fbed4e2b1567ceda49d25b5320d92f"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farm_and_charm/farmersdelight/salmon.json"
+hash = "7645238b59b48c018671601dc25f0055b39200e818e0d04cfaaad6961fe9b472"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farm_and_charm/farmersdelight/smoked_ham.json"
+hash = "d8d1d156372a61fe53b80b4927fa97cd155c727f0317173f85edafb338c43b95"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farm_and_charm/farmersdelight/sweet_berry_cheesecake.json"
+hash = "1935ed51dbe3838d18254bb8a041a87675fb1a0182f79af603227f51038c8e49"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farm_and_charm/farmersdelight/wild_beetroots.json"
+hash = "46a8f8fb8841fbf5f5733f1c71cd3be2005db5fe316f5c7c3cae9274435993c2"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farm_and_charm/farmersdelight/wild_cabbages.json"
+hash = "052bf938b818b124541bffcaf5bf42a14fd56c017bbbc311b398000e580bae79"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farm_and_charm/farmersdelight/wild_carrots.json"
+hash = "4a6101107564ca5294d6b117047435bfecc60374c83b0db5be0ebc723ae7d345"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farm_and_charm/farmersdelight/wild_onions.json"
+hash = "1796b3bb8ada6612192f246f7e8923ac419bc9eb3cf356a22e96aa1143d2dd5e"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farm_and_charm/farmersdelight/wild_potatoes.json"
+hash = "120d8754239afaa93d7a36d4323442cefa5ee757f5364d92203da64e3e107b0b"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farm_and_charm/farmersdelight/wild_rice.json"
+hash = "deee0031157690bf821cb0be3de5765fa8d2c985987c1816ddd445054d2fc942"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farm_and_charm/farmersdelight/wild_tomatoes.json"
+hash = "cfb5ebd5cb937b2d6ef31649c3e9c8c63c84664106e6e814e18339e678169dfa"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farm_and_charm/vegandelight/cooked_smoked_tofu_slices_from_cutting.json"
+hash = "a6cc938dcf1ad67d593dee7752d51283dc487115c552a97eed73332f4917489d"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farm_and_charm/vegandelight/cooked_tofu_slices_from_cutting.json"
+hash = "a6b81e7f68382cbfa365aeb8340ec302c0655eac926ed58d6f7b504f35c6119e"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farm_and_charm/vegandelight/feather.json"
+hash = "af1719eaee574eb5dd20a6901a3c1faed17b7c6f35f50dd318594edfd3aada20"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farm_and_charm/vegandelight/minced_tofu.json"
+hash = "36516aa75152b8a5d60829dabe0e9cb5305414366a0fdcf106d51895aae5e609"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farm_and_charm/vegandelight/smoked_tofu_slices.json"
+hash = "12a64f3ad6d52d393a6e1fed092ef7c085f90a1596a95dce10e541a443f9bb9c"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farm_and_charm/vegandelight/tofu_slices.json"
+hash = "3e2073e347b19714ef59fb48af548e55757dbbb4eef8668fa826ab8e4d76d1d9"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farmersdelight/farm_and_charm/bone_meal.json"
+hash = "c9abe9a7e9ae9ae09c7553514e771b7175a577b3f18fb965a919f8f7f898e5ba"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farmersdelight/farm_and_charm/brown_mushroom.json"
+hash = "56078a183c01b6df8130734d6f45cd8217f727ebee4dee3a97f17850a9f3b002"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farmersdelight/farm_and_charm/cyan_dye_from_pitcher_plant.json"
+hash = "f6668280e81f0e4439d2b1ba7bbcec6d8aaf239ad3b0522790bba56b77b14fce"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farmersdelight/farm_and_charm/magenta_dye_from_lilac.json"
+hash = "44f96a9863e38405a0a5fb155bc5643fee2b4eaa5c2347b8e5b596cae038658e"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farmersdelight/farm_and_charm/melon_seeds.json"
+hash = "7a2626c0ec587ca3c496d3a1899494099591f6dc0d040b982ca2c9e4afb96262"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farmersdelight/farm_and_charm/pink_dye_from_peony.json"
+hash = "f82c0078deabbc63c8fb862008fab3ec81c06d7c343fbedb1dc0e9905595abd4"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farmersdelight/farm_and_charm/pink_dye_from_pink_petals.json"
+hash = "aad4fbf17af945d41cc7a3ed13a65be25702366e514b1f5b54b6e0a8d3041c38"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farmersdelight/farm_and_charm/red_dye_from_rose_bush.json"
+hash = "6a4109d87b5caa4b05cdfda0a1ab318578096f424b2d197742308fc509fe2020"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farmersdelight/farm_and_charm/red_mushroom.json"
+hash = "f95e8562135f05f8852bc86540ede916aa98e889a05401e43ddbdae39b448cfe"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farmersdelight/farm_and_charm/strawberry_seeds.json"
+hash = "749c503021cde7ab9890af84d51896f9d706bb7d912a38e86679c9fb21a88602"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farmersdelight/farm_and_charm/sugar.json"
+hash = "e1b5a4f40719967ee59f083189b6fa4bad87a719adbc94f0945f60569ddbe08e"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farmersdelight/farm_and_charm/tomato_seeds.json"
+hash = "ad2c8ade440d45423015a0df036623850d9347f31a403729ccbce557eefba915"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farmersdelight/farm_and_charm/wheat_from_hay_block.json"
+hash = "75f51722a87de5de0a31392e2c0957c1444e32b4f5b31c861ac3e83bf332766d"
+
+[[files]]
+file = "kubejs/data/proudmountain/recipe/farmcharm_compat/farmersdelight/farm_and_charm/yellow_dye_from_sunflower.json"
+hash = "a5462c4dee8812664dd23e4d6bc52984422aa30eac554069d4c88f60e2f937fb"
+
+[[files]]
+file = "kubejs/data/proudmountain/tags/item/compat/bacon.json"
+hash = "c2cbb706e5d132c2fd2961ef2d426d063853ec9bd8aa452cfefb1937bb06ab95"
+
+[[files]]
+file = "kubejs/data/proudmountain/tags/item/compat/chicken_cuts.json"
+hash = "361817082909c51ccdc6258a3c4f4ccaae640580227227f19b0bb22a651d7dfd"
+
+[[files]]
+file = "kubejs/data/proudmountain/tags/item/compat/cooked_bacon.json"
+hash = "c5b1d80cbf358a55a63a54aea2976a501d38948293d49432b79f57f8dcdf5fc9"
+
+[[files]]
+file = "kubejs/data/proudmountain/tags/item/compat/cooked_chicken_cuts.json"
+hash = "f4aab464c89f16eb9bd5c4b37a4f508a2b18879b48caf100e86fa32512efac7b"
+
+[[files]]
+file = "kubejs/data/proudmountain/tags/item/compat/dough.json"
+hash = "cd2d419a67204c27c878ac7d81e3d32174a70dc49a1bd733976b5ef2808946b4"
+
+[[files]]
+file = "kubejs/data/proudmountain/tags/item/compat/minced_beef.json"
+hash = "b99f37bbec52bdbf92592adeb210f40e25146181ee61c7e02c4b3a7e914b5b66"
+
+[[files]]
+file = "kubejs/data/proudmountain/tags/item/compat/onion.json"
+hash = "9a1a29a9e485125e3250b09f4f6bf4c1ad581c7b11ff5a0ba7413fa0b310623a"
+
+[[files]]
+file = "kubejs/data/proudmountain/tags/item/compat/raw_pasta.json"
+hash = "29acca2d71fbc9f20024008c9a20d0d5429d36c85662357d102d8b47db3ff129"
+
+[[files]]
+file = "kubejs/data/proudmountain/tags/item/compat/rotten_tomato.json"
+hash = "d8d25d0628a9df608b8da9f1fa9b402279b6910e44a6e18d50ec2c5ccc72d3f6"
+
+[[files]]
+file = "kubejs/data/proudmountain/tags/item/compat/tomato.json"
+hash = "7cf7f6b61c302ad17eb3664428ada04809ed6a0c12485081d921d504b2f10aba"
+
+[[files]]
+file = "kubejs/data/proudmountain/tags/item/compat/tomato_seeds.json"
+hash = "b30bc32dbda221f0f61b6d2d8224dd862facf4e193920881e944a655d07bca46"
 
 [[files]]
 file = "kubejs/data/proudmountain/tags/worldgen/biome/none.json"
