@@ -1889,6 +1889,11 @@ hash = "b41e7109af31de676177eba9b868d1773f4dc7e1af03fd250c85e798286fce59"
 metafile = true
 
 [[files]]
+file = "mods/jamlib.pw.toml"
+hash = "ce065fcc35323407c2292190ba7fc23da2fa60dcb35084b8fcdf56f5e4a39ffa"
+metafile = true
+
+[[files]]
 file = "mods/jei.pw.toml"
 hash = "a0173d81cb7230abe164228c0c43558284a3790925dbb8bd9c2324361744a067"
 metafile = true
@@ -2081,6 +2086,16 @@ metafile = true
 [[files]]
 file = "mods/ribbits.pw.toml"
 hash = "536234f1bfeb8b8d0edca8c227250e9d94721b0e4ba81d332a99f4c025ed83c9"
+metafile = true
+
+[[files]]
+file = "mods/rightclickharvest-supplementaries-compat.pw.toml"
+hash = "2db0541b1079fd48f067ac3034da403d27321e250d7fa7d1f840b93e4452facc"
+metafile = true
+
+[[files]]
+file = "mods/rightclickharvest.pw.toml"
+hash = "4541932689a812b97729c40d64321eb820c83fd585a2ac6302c366fc94719658"
 metafile = true
 
 [[files]]

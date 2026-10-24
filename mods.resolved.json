@@ -143,6 +143,50 @@
   "serverPackOnly": false
  },
  {
+  "slug": "rightclickharvest",
+  "name": "RightClickHarvest",
+  "projectID": 452834,
+  "fileID": 7508749,
+  "fileName": "rightclickharvest-neoforge-4.6.1+1.21.1.jar",
+  "date": "2026-01-22",
+  "releaseType": 1,
+  "downloadUrl": "https://edge.forgecdn.net/files/7508/749/rightclickharvest-neoforge-4.6.1%2b1.21.1.jar",
+  "side": "both",
+  "why": "listed",
+  "requires": [
+   419699,
+   623764
+  ],
+  "url": "https://www.curseforge.com/minecraft/mc-mods/rightclickharvest",
+  "authors": [
+   "jamalam360"
+  ],
+  "classId": 6,
+  "serverPackOnly": false
+ },
+ {
+  "slug": "rightclickharvest-supplementaries-compat",
+  "name": "RightClickHarvest Supplementaries Compat",
+  "projectID": 1038427,
+  "fileID": 6137052,
+  "fileName": "rch-supplementaries-compat-neoforge-2.0.0+1.21.jar",
+  "date": "2025-01-29",
+  "releaseType": 1,
+  "downloadUrl": "https://edge.forgecdn.net/files/6137/52/rch-supplementaries-compat-neoforge-2.0.0%2b1.21.jar",
+  "side": "both",
+  "why": "listed",
+  "requires": [
+   452834,
+   412082
+  ],
+  "url": "https://www.curseforge.com/minecraft/mc-mods/rightclickharvest-supplementaries-compat",
+  "authors": [
+   "jamalam360"
+  ],
+  "classId": 6,
+  "serverPackOnly": false
+ },
+ {
   "slug": "handcrafted",
   "name": "Handcrafted",
   "projectID": 538214,
@@ -1780,6 +1824,27 @@
    "Juicebus",
    "MaxNeedsSnacks",
    "st0x0ef"
+  ],
+  "classId": 6,
+  "serverPackOnly": false
+ },
+ {
+  "slug": "jamlib",
+  "name": "JamLib",
+  "projectID": 623764,
+  "fileID": 7766752,
+  "fileName": "jamlib-neoforge-1.3.6+1.21.1.jar",
+  "date": "2026-03-16",
+  "releaseType": 1,
+  "downloadUrl": "https://edge.forgecdn.net/files/7766/752/jamlib-neoforge-1.3.6%2b1.21.1.jar",
+  "side": "both",
+  "why": "dep of rightclickharvest",
+  "requires": [
+   419699
+  ],
+  "url": "https://www.curseforge.com/minecraft/mc-mods/jamlib",
+  "authors": [
+   "jamalam360"
   ],
   "classId": 6,
   "serverPackOnly": false
