@@ -11,7 +11,6 @@
 # create-cold-sweat; Create samt create-wrapped und create-structures-arise; Weihnachten bis auf macaws-holidays
 # (snowy-spirit, manyideas-christmas, christmas-delight, festive-delight, christmas-culinary, christmas-music-discs);
 # Kleidung (weavers-paradise mit patchouli, leather-working-pelts-hides, armor-series-norsemen).
-# Ersetzt (2026-10-24): pandas-falling-trees durch treechop (verbundene Stämme fällten ganze Wälder auf einmal).
 # --- Kern: Farmer's Delight ---
 farmers-delight                          pin=8765184
 coffee-delight                           pin=7027805 # Kaffee-Addon für Farmer's Delight
@@ -25,7 +24,7 @@ lets-do-candlelight-farm-charm-compat    pin=9150310 # Candlelight: Gerichte, Ge
 handcrafted                              pin=6330030 # Möbel (Stühle, Tische, Regale, Betten), braucht Resourceful Lib
 supplementaries                          pin=9211734 # Vanilla+-Blöcke und -Mechanik (Krüge, Wegweiser, Wasserhähne, Federschleudern …), braucht Moonlight Lib
 copper-age-backport                      pin=8988105 # Copper Golem aus 1.21.9: sortiert Items aus Kupfertruhen in Truhen; F&F-Golem ist per Config aus
-treechop                                 pin=6254465 # Bäume Schlag für Schlag fällen, Schläge wachsen linear mit der Baumgröße (Config: packwiz/config/treechop-common.toml)
+pandas-falling-trees                     pin=7858908 # mit der Axt gefällte Bäume kippen um und zerfallen in Drops; max. 24 zusammenhängende Stämme, größere (Riesenfichten, Riesentropenbäume, über Stämme verbundene Bäume) werden normal abgebaut (Config: packwiz/config/fallingtrees/common.json)
 # --- Jahreszeiten (Saison folgt dem Kalender, siehe Proud Mountain Tweaks; Config: config/sereneseasons/) ---
 serene-seasons                           pin=6182596 # Biom-Tags: packwiz/kubejs/data/sereneseasons/
 seasonal-lets-do                         pin=7886750 # Let's-Do-Feldfrüchte respektieren die Jahreszeiten

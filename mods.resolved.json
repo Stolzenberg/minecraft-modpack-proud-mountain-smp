@@ -206,20 +206,22 @@
   "serverPackOnly": false
  },
  {
-  "slug": "treechop",
-  "name": "HT's TreeChop",
-  "projectID": 421377,
-  "fileID": 6254465,
-  "fileName": "TreeChop-1.21.1-neoforge-0.19.3.jar",
-  "date": "2025-03-02",
-  "releaseType": 1,
-  "downloadUrl": "https://edge.forgecdn.net/files/6254/465/TreeChop-1.21.1-neoforge-0.19.3.jar",
+  "slug": "pandas-falling-trees",
+  "name": "Panda's Falling Trees",
+  "projectID": 880630,
+  "fileID": 7858908,
+  "fileName": "fallingtrees-neoforge-1.21.1-0.14.0.jar",
+  "date": "2026-04-01",
+  "releaseType": 2,
+  "downloadUrl": "https://edge.forgecdn.net/files/7858/908/fallingtrees-neoforge-1.21.1-0.14.0.jar",
   "side": "both",
   "why": "listed",
-  "requires": [],
-  "url": "https://www.curseforge.com/minecraft/mc-mods/treechop",
+  "requires": [
+   975460
+  ],
+  "url": "https://www.curseforge.com/minecraft/mc-mods/pandas-falling-trees",
   "authors": [
-   "hammertater"
+   "ThePandaOliver"
   ],
   "classId": 6,
   "serverPackOnly": false
@@ -1818,6 +1820,25 @@
   "authors": [
    "MehVahdJukaar",
    "plantspookable"
+  ],
+  "classId": 6,
+  "serverPackOnly": false
+ },
+ {
+  "slug": "pandalib",
+  "name": "PandaLib",
+  "projectID": 975460,
+  "fileID": 8787579,
+  "fileName": "pandalib-neoforge-1.21.1-0.6.2.jar",
+  "date": "2026-09-01",
+  "releaseType": 2,
+  "downloadUrl": "https://edge.forgecdn.net/files/8787/579/pandalib-neoforge-1.21.1-0.6.2.jar",
+  "side": "both",
+  "why": "dep of pandas-falling-trees",
+  "requires": [],
+  "url": "https://www.curseforge.com/minecraft/mc-mods/pandalib",
+  "authors": [
+   "ThePandaOliver"
   ],
   "classId": 6,
   "serverPackOnly": false

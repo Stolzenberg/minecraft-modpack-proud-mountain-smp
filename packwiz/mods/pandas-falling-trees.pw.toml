@@ -1,0 +1,13 @@
+name = "Panda's Falling Trees"
+filename = "fallingtrees-neoforge-1.21.1-0.14.0.jar"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/i2kUe4lq/versions/26ZXBAbi/fallingtrees-neoforge-1.21.1-0.14.0.jar"
+hash-format = "sha1"
+hash = "070260f182d10bdc23de5e8e9297bec0231e2bec"
+
+[update]
+[update.modrinth]
+mod-id = "i2kUe4lq"
+version = "26ZXBAbi"

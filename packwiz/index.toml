@@ -9,6 +9,10 @@ file = "config/betterdays-common.toml"
 hash = "2db73d5071bd28cb2f65c1e934f32a1cb3fba10c17f591e32fcd36471ecbb221"
 
 [[files]]
+file = "config/fallingtrees/common.json"
+hash = "38087e213fc6665caee804836df125675b46248019f369ae188bb7de97758ed8"
+
+[[files]]
 file = "config/friendsandfoes.json"
 hash = "c224d3d5efae206d363e801babb1a65903cc83f80ac45ec440108ed12f8ec5d2"
 
@@ -44,10 +48,6 @@ hash = "2e49cfa87ea3b7fc8d8142bfc6fd7e3863db5e9adfc120701d36a0b0a4271d11"
 [[files]]
 file = "config/tectonic.json"
 hash = "c44645599a7c0c0315131e7e0c4189b7957b6b1eae534e443c795bbafc20dd2a"
-
-[[files]]
-file = "config/treechop-common.toml"
-hash = "cd3e5d8931f34811e08c1ab7961682ed2b228c5c18e39c2b13ede422d8097065"
 
 [[files]]
 file = "config/waystones-common.toml"
@@ -2029,6 +2029,16 @@ hash = "1a2f1a876b1a88f97e066672282dd947d7a4b9c22e026bf7602aadf8cfebf926"
 metafile = true
 
 [[files]]
+file = "mods/pandalib.pw.toml"
+hash = "f99e607a49856a5e8e51394a370daf82c20b899ea32a1c7863946b042a390ed0"
+metafile = true
+
+[[files]]
+file = "mods/pandas-falling-trees.pw.toml"
+hash = "7eca6ea3f2860bb538c883a150357f81cb977ebd5d6ad86a957b1c98f6ba656b"
+metafile = true
+
+[[files]]
 file = "mods/paragliders.pw.toml"
 hash = "bc415f1176e3429b5a0b5b0525769ce7e640c78730265a24dc8937937f5dc6f3"
 metafile = true
@@ -2141,11 +2151,6 @@ metafile = true
 [[files]]
 file = "mods/terrablender-neoforge.pw.toml"
 hash = "d77e4dc337b6090358c1ef01b0f99a8357e5279443e0e23e511de1be865c01c9"
-metafile = true
-
-[[files]]
-file = "mods/treechop.pw.toml"
-hash = "c949f8317564cb699436ff531246cedbb4440700a2960ef7261a19046d2ef31c"
 metafile = true
 
 [[files]]
