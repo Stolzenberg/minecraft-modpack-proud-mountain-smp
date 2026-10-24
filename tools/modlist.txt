@@ -89,6 +89,10 @@ xaeros-world-map                         pin=9067277 side=both
 mouse-tweaks                             pin=5637846 side=client
 controlling                              pin=6368976 side=client
 inventory-profiles-next                  pin=7810574   # Sortieren (Knöpfe/Tasten), Auffüllen gebrochener Werkzeuge, Profile; ersetzt Inventory Sorter (2026-10-23)
+effect-insights                          pin=6077939 side=client # Effekt-Beschreibungen in Tooltips von Tränken, Pfeilen, Essen und beim Hovern über aktive Effekte im Inventar; deutsche Texte: packwiz/kubejs/assets/proudmountain/lang/de_de.json
+enchantment-insights                     pin=8780466 # Verzauberungs-Beschreibungen in Item-Tooltips (Client); deutsche Texte wie bei Effect Insights
+just-enough-effect-descriptions-jeed     pin=9079612 side=both # Effekte in JEI (Beschreibung, woher der Effekt kommt); Texte nutzt auch Effect Insights
+moderately-enough-effect-descriptions-meed pin=9301219 side=both # JEED-Texte für 600 Mod-Effekte (Born in Chaos, Cataclysm, Mowzie's …); auch auf dem Server, sonst fehlen die JEI-Quellen im Multiplayer
 # --- Grafik: Resource Packs (Proud Mountain Tweaks schaltet sie einmal ein, config/proudmountain_tweaks/default_resourcepacks.txt) ---
 entity-model-features                    pin=9188526 side=client   # EMF (+ ETF als Abhängigkeit), für Fresh Animations/Moves
 continuity-neoforged                     pin=9273913 side=client id=1679396   # Connected Textures für Block Overlays (Modrinth-Pack, MODRINTH_FILES in packwiz.py); nativer NeoForge-Port, die offizielle NeoForge-Fassung braucht Sinytra Connector

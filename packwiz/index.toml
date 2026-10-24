@@ -66,6 +66,10 @@ file = "config/xaero/world-map/server_profiles/default.cfg"
 hash = "2485a4a91399363128a1f6921d2c1db891e2440ef0c6239014b80125d06c2983"
 
 [[files]]
+file = "kubejs/assets/proudmountain/lang/de_de.json"
+hash = "aa5f20dd8187a5d7c4ad80bcc3bc7897e7f900de4b5a5dfe05d807e7054aa0de"
+
+[[files]]
 file = "kubejs/data/betterdungeons/worldgen/structure_set/skeleton_dungeons.json"
 hash = "2598b2b278b72d40288a2e6a66be791a6659d6ffaf26ec56532bf5237a5ee0c1"
 
@@ -380,6 +384,10 @@ hash = "63baabe4f3553eb1fb16bf3c8e8af77cf0aef70a9da2576136dd299e92c7bfed"
 [[files]]
 file = "kubejs/data/friendsandfoes/worldgen/structure_set/illusioner_training_grounds.json"
 hash = "9c94991c91ef3d4033b6fbf8f977ed60737941363f04191e4a56ec4fb64b3d95"
+
+[[files]]
+file = "kubejs/data/meed/recipe/born_in_chaos_v1/infernal_flame.json"
+hash = "f5104b0ae84f6ca03d0f4680d2ef0ca89a53542931b41cc3d1c0806f0e14fa9b"
 
 [[files]]
 file = "kubejs/data/mes/worldgen/structure_set/astral_hideaway.json"
@@ -1794,6 +1802,16 @@ hash = "be34c53a0fc5e3ede6b6cb941aff74918f15f784d9018e577de4271ede014aef"
 metafile = true
 
 [[files]]
+file = "mods/effect-insights.pw.toml"
+hash = "49c2d3c964f02fad95d1323c1286f144be834ef1154670eb5681db7045800334"
+metafile = true
+
+[[files]]
+file = "mods/enchantment-insights.pw.toml"
+hash = "14538b1e15fab5f5e6c9d50e2b8c1cbd0916ef6aba8db4c248350f52a550416f"
+metafile = true
+
+[[files]]
 file = "mods/enderman-overhaul.pw.toml"
 hash = "4f691d906039608bd379742b2aaec4bb292409189c6010a781c49dd9ca126bfd"
 metafile = true
@@ -1899,6 +1917,11 @@ hash = "a0173d81cb7230abe164228c0c43558284a3790925dbb8bd9c2324361744a067"
 metafile = true
 
 [[files]]
+file = "mods/just-enough-effect-descriptions-jeed.pw.toml"
+hash = "14fc3de5bb7eea017a80120477c456f443a9d9fbbfa3c229c1ec8bcb09c4c020"
+metafile = true
+
+[[files]]
 file = "mods/kotlin-for-forge.pw.toml"
 hash = "1506a3d749a45bc760b3ad57ef1fbb959f0c166b6d1d4955114fd66db7a4855d"
 metafile = true
@@ -1971,6 +1994,11 @@ metafile = true
 [[files]]
 file = "mods/mns-moogs-nether-structures.pw.toml"
 hash = "ea3432507125b8a4b2d86728a3ee6439106972d7b97d83f48eefe8bab188dc6d"
+metafile = true
+
+[[files]]
+file = "mods/moderately-enough-effect-descriptions-meed.pw.toml"
+hash = "81703048ddb04504b42833eb51f77fc49d7b48237b22d08fa5d2cf2e7394556a"
 metafile = true
 
 [[files]]

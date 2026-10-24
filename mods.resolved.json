@@ -1384,6 +1384,86 @@
   "serverPackOnly": false
  },
  {
+  "slug": "effect-insights",
+  "name": "Effect Insights",
+  "projectID": 891326,
+  "fileID": 6077939,
+  "fileName": "EffectDescriptions-v21.1.1-1.21.1-NeoForge.jar",
+  "date": "2025-01-11",
+  "releaseType": 1,
+  "downloadUrl": "https://edge.forgecdn.net/files/6077/939/EffectDescriptions-v21.1.1-1.21.1-NeoForge.jar",
+  "side": "client",
+  "why": "listed",
+  "requires": [
+   495476
+  ],
+  "url": "https://www.curseforge.com/minecraft/mc-mods/effect-insights",
+  "authors": [
+   "Fuzs"
+  ],
+  "classId": 6,
+  "serverPackOnly": false
+ },
+ {
+  "slug": "enchantment-insights",
+  "name": "Enchantment Insights",
+  "projectID": 1366848,
+  "fileID": 8780466,
+  "fileName": "EnchantmentInsights-v21.1.5-mc1.21.1-NeoForge.jar",
+  "date": "2026-08-31",
+  "releaseType": 1,
+  "downloadUrl": "https://edge.forgecdn.net/files/8780/466/EnchantmentInsights-v21.1.5-mc1.21.1-NeoForge.jar",
+  "side": "client",
+  "why": "listed",
+  "requires": [
+   495476
+  ],
+  "url": "https://www.curseforge.com/minecraft/mc-mods/enchantment-insights",
+  "authors": [
+   "Fuzs"
+  ],
+  "classId": 6,
+  "serverPackOnly": false
+ },
+ {
+  "slug": "just-enough-effect-descriptions-jeed",
+  "name": "Just Enough Effect Descriptions (JEED)",
+  "projectID": 532286,
+  "fileID": 9079612,
+  "fileName": "jeed-1.21-2.3.5-neoforge.jar",
+  "date": "2026-10-06",
+  "releaseType": 1,
+  "downloadUrl": "https://edge.forgecdn.net/files/9079/612/jeed-1.21-2.3.5-neoforge.jar",
+  "side": "both",
+  "why": "listed",
+  "requires": [],
+  "url": "https://www.curseforge.com/minecraft/mc-mods/just-enough-effect-descriptions-jeed",
+  "authors": [
+   "MehVahdJukaar"
+  ],
+  "classId": 6,
+  "serverPackOnly": false
+ },
+ {
+  "slug": "moderately-enough-effect-descriptions-meed",
+  "name": "Moderately Enough Effect Descriptions (MEED)",
+  "projectID": 918638,
+  "fileID": 9301219,
+  "fileName": "meed-1.21.1-8.5.0.jar",
+  "date": "2026-10-23",
+  "releaseType": 1,
+  "downloadUrl": "https://edge.forgecdn.net/files/9301/219/meed-1.21.1-8.5.0.jar",
+  "side": "both",
+  "why": "listed",
+  "requires": [],
+  "url": "https://www.curseforge.com/minecraft/mc-mods/moderately-enough-effect-descriptions-meed",
+  "authors": [
+   "NeonCranberries"
+  ],
+  "classId": 6,
+  "serverPackOnly": false
+ },
+ {
   "slug": "entity-model-features",
   "name": "[EMF] Entity Model Features [Fabric & Forge]",
   "projectID": 844662,
