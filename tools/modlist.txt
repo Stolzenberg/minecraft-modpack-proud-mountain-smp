@@ -22,7 +22,7 @@ lets-do-bakery-farm-charm-compat         pin=9234083 # Bakery (1.21.1 nur als Fa
 lets-do-candlelight-farm-charm-compat    pin=9150310 # Candlelight: Gerichte, Geschirr, Tischdeko (1.21.1 nur als Farm-&-Charm-Fassung)
 # Farmer's Delight <-> Farm & Charm: Schneidebretter, doppelte Zutaten, Brotmesser per Datapack (tools/farmcharm_compat.py
 # -> packwiz/kubejs/data); eine Compat-Mod dafür gibt es für NeoForge 1.21.1 nicht
-rightclickharvest                       pin=7508749 # Rechtsklick auf reife Feldfrüchte erntet sie und pflanzt sie sofort neu (auch Farmer's Delight, Let's Do), braucht JamLib
+rightclickharvest                        pin=7508749 # Rechtsklick auf reife Feldfrüchte erntet sie und pflanzt sie sofort neu (auch Farmer's Delight, Let's Do), braucht JamLib
 rightclickharvest-supplementaries-compat pin=6137052 # RightClickHarvest für Supplementaries-Flachs (zwei Blöcke hoch)
 # --- Einrichtung & Technik ---
 handcrafted                              pin=6330030 # Möbel (Stühle, Tische, Regale, Betten), braucht Resourceful Lib
