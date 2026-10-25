@@ -29,11 +29,24 @@ handcrafted                              pin=6330030 # Möbel (Stühle, Tische, 
 supplementaries                          pin=9211734 # Vanilla+-Blöcke und -Mechanik (Krüge, Wegweiser, Wasserhähne, Federschleudern …), braucht Moonlight Lib
 copper-age-backport                      pin=8988105 # Copper Golem aus 1.21.9: sortiert Items aus Kupfertruhen in Truhen; F&F-Golem ist per Config aus
 pandas-falling-trees                     pin=7858908 # mit der Axt gefällte Bäume kippen um und zerfallen in Drops; max. 24 zusammenhängende Stämme, größere (Riesenfichten, Riesentropenbäume, über Stämme verbundene Bäume) werden normal abgebaut (Config: packwiz/config/fallingtrees/common.json)
+# --- Bauen: Macaw's (komplette Reihe, keine Weltgenerierung) ---
+macaws-bridges                           pin=7627896
+macaws-doors                             pin=7618651
+macaws-windows                           pin=7317672
+macaws-fences-and-walls                  pin=7308338
+macaws-furniture                         pin=7255584
+macaws-trapdoors                         pin=7256148
+macaws-lights-and-lamps                  pin=7304075
+macaws-roofs                             pin=6494399
+macaws-paths-and-pavings                 pin=7029451
+macaws-stairs                            pin=7317479
+macaws-roads-and-streets                 pin=8961975
+macaws-paintings                         pin=7845033
+macaws-holidays                          pin=7304374 # Weihnachts- und Halloween-Deko
+macaws-biomes-o-plenty                   pin=8296109 # BoP-Holzarten für Brücken, Dächer, Türen, Zäune, Möbel usw., braucht AddonsLib
 # --- Jahreszeiten (Saison folgt dem Kalender, siehe Proud Mountain Tweaks; Config: config/sereneseasons/) ---
 serene-seasons                           pin=6182596 # Biom-Tags: packwiz/kubejs/data/sereneseasons/
 seasonal-lets-do                         pin=7886750 # Let's-Do-Feldfrüchte respektieren die Jahreszeiten
-# --- Weihnachten ---
-macaws-holidays                          pin=7304374
 # --- Welt / Biome ---
 tectonic                                 pin=8855043 # Gelände: große Kontinente mit Inseln, Gebirge, große Biome (Config: packwiz/config/tectonic.json)
 natural-temperature                      pin=8713498 # Biome nach Klimazonen (Nord kalt, Süd heiß), keine Wüste neben Schnee (Config: packwiz/config/naturaltemperature-common.toml)
@@ -82,6 +95,8 @@ betterdays                               pin=7978626 # 4x längere Tage (Config:
 # --- Multiplayer ---
 simple-voice-chat                        pin=8601207 # Proximity-Voice-Chat, Server braucht UDP-Port 24454
 coreprotectneo                           pin=8917394 side=server pack=server # Block-Logging und Rollbacks, MariaDB auf dem Server (Config nur dort, enthält Passwort)
+chunky-pregenerator-forge                pin=6383261 side=server pack=server # Welt vorgenerieren (/chunky), erst wenn die Weltgenerierung feststeht
+bluemap                                  pin=6239407 side=server pack=server # 3D-Webkarte auf https://map.proud-mountain.com (Port 8100, Cloudflare Tunnel im Docker-Setup); Config: server-overrides/config/bluemap/
 # --- QoL ---
 jei                                      pin=8792638
 jade                                     pin=8591319

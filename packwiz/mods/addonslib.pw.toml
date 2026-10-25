@@ -1,0 +1,13 @@
+name = "AddonsLib"
+filename = "addonslib-neoforge-1.21.1-1.14.jar"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/cl5ec0Qm/versions/7SEGJEQj/addonslib-neoforge-1.21.1-1.14.jar"
+hash-format = "sha1"
+hash = "9f4eae06f0b713ed73cfcae03c668fb5b289e020"
+
+[update]
+[update.modrinth]
+mod-id = "cl5ec0Qm"
+version = "7SEGJEQj"

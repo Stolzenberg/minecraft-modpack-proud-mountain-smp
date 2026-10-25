@@ -9,6 +9,26 @@ file = "config/betterdays-common.toml"
 hash = "2db73d5071bd28cb2f65c1e934f32a1cb3fba10c17f591e32fcd36471ecbb221"
 
 [[files]]
+file = "config/bluemap/core.conf"
+hash = "eb391feadc2ce686e0ec5f37f01229b6be2e759349819453f08ab4eee7b975c4"
+
+[[files]]
+file = "config/bluemap/maps/world.conf"
+hash = "901cdd2c09af17d0203bec946fe9625766d758165f49f190b01c8e6c5434bdb3"
+
+[[files]]
+file = "config/bluemap/maps/world_the_end.conf"
+hash = "3f1ff5cd0f3fe5cadc3c69df00c76764a9e293eb43987318993cf532f0a65f20"
+
+[[files]]
+file = "config/bluemap/maps/world_the_nether.conf"
+hash = "7d3a49747f1ed238bcd0f3b2d99a089df19773cdb2bca62c13c2705262c3c906"
+
+[[files]]
+file = "config/bluemap/plugin.conf"
+hash = "93c9b2090eac3283d6af7436c2a72ef1ddb4bdcb3cea26644f22464019427468"
+
+[[files]]
 file = "config/fallingtrees/common.json"
 hash = "38087e213fc6665caee804836df125675b46248019f369ae188bb7de97758ed8"
 
@@ -2166,6 +2186,11 @@ file = "kubejs/server_scripts/testwelt.js"
 hash = "3a1e5d8f013f3568fbc1610cf58338b69501f9c2542331f2190bc1f1436b644f"
 
 [[files]]
+file = "mods/addonslib.pw.toml"
+hash = "b35dbe5f65e47b2d8b5d2517def613d0212f0e845dfe35c277627f8e7ddf4d4f"
+metafile = true
+
+[[files]]
 file = "mods/alltheleaks.pw.toml"
 hash = "c71a37f05849d41b3b2a883c55afc4d32de7e05beff02b6f94a833be0c59635c"
 metafile = true
@@ -2206,6 +2231,11 @@ hash = "f6f723c2d15da3b36a2c29408deb914f6c4bdbe4a20aa652f3f07642011fce8e"
 metafile = true
 
 [[files]]
+file = "mods/bluemap.pw.toml"
+hash = "5edfbc3144fd12924e2f581eb238be03cdd7db42e9a95b3761a9240b773dfec9"
+metafile = true
+
+[[files]]
 file = "mods/born-in-chaos.pw.toml"
 hash = "2c43a8411efa4d7dc088890ee6519abac3589040bd8867dc75d1595d7134cfaa"
 metafile = true
@@ -2218,6 +2248,11 @@ metafile = true
 [[files]]
 file = "mods/cerbons-api.pw.toml"
 hash = "5652a3f7f07083e93a4b3704731bf51f18b1786160870ab21ba72c0b074ffdbb"
+metafile = true
+
+[[files]]
+file = "mods/chunky-pregenerator-forge.pw.toml"
+hash = "3423d975355da0e06645821c12941158ff37ad2a9f443b71e9cff41e45e335fe"
 metafile = true
 
 [[files]]
@@ -2466,8 +2501,73 @@ hash = "f5fca9bf0c7df946181a078ff8946dfc4d747f2be063fcdc45025eb14698956d"
 metafile = true
 
 [[files]]
+file = "mods/macaws-biomes-o-plenty.pw.toml"
+hash = "7fab61e51894b28bd09499858e61a174e3f021e1b37ca3294982ca36aae9d076"
+metafile = true
+
+[[files]]
+file = "mods/macaws-bridges.pw.toml"
+hash = "e6e2d478dc4c08283f8064a4496e5279ceb4f6705e32c07ce582262718170441"
+metafile = true
+
+[[files]]
+file = "mods/macaws-doors.pw.toml"
+hash = "ac74d1c0dfb2ed0735c30c0a86df9c6508b549b27292b7bf7176498495c30cf6"
+metafile = true
+
+[[files]]
+file = "mods/macaws-fences-and-walls.pw.toml"
+hash = "1553c29a2eb63e9632bbd377db1b5942b044959c59b0d2c4b16bb5076b080239"
+metafile = true
+
+[[files]]
+file = "mods/macaws-furniture.pw.toml"
+hash = "769dbe006a137ee369bcb3ead098f7c8a4d5d33ae44a3012abb430fcc4f6b578"
+metafile = true
+
+[[files]]
 file = "mods/macaws-holidays.pw.toml"
 hash = "5bd631a7457d94ead183ee854740278ff1a236177a34c00176e1bf94aac55fa1"
+metafile = true
+
+[[files]]
+file = "mods/macaws-lights-and-lamps.pw.toml"
+hash = "3e563cf73b3d0ad951fde291dd2d9f97158f3aaeae9549af9a207f45eb577192"
+metafile = true
+
+[[files]]
+file = "mods/macaws-paintings.pw.toml"
+hash = "5387fedcaade190298a38f999530a1d252b9051c2c8b8c6686a55b9b27bd1c45"
+metafile = true
+
+[[files]]
+file = "mods/macaws-paths-and-pavings.pw.toml"
+hash = "a764d0c72417a199ee421094dd368a44e46dbc2d1ec40de9e59d7870184574ec"
+metafile = true
+
+[[files]]
+file = "mods/macaws-roads-and-streets.pw.toml"
+hash = "e7116632a84df14e7f8e52c8cca912f4c35ab891a4d799cd38fe18b77ab58d9f"
+metafile = true
+
+[[files]]
+file = "mods/macaws-roofs.pw.toml"
+hash = "f1a2777856b95bc2f38e958b3021912c2c634a97c3e1b8bd12587aa20ede65cb"
+metafile = true
+
+[[files]]
+file = "mods/macaws-stairs.pw.toml"
+hash = "ed3a18bcc401943b485451d2f9149d2993d2eebe63a2222b5e6313bebdb9bac6"
+metafile = true
+
+[[files]]
+file = "mods/macaws-trapdoors.pw.toml"
+hash = "4f41411ab30edfcf6a1a64c0641d9faae88ccb8eaa92aded05cf3f597aadc05b"
+metafile = true
+
+[[files]]
+file = "mods/macaws-windows.pw.toml"
+hash = "f7e9feba77d8c887beecff47010599a71c9548f610577bb79bd8974424f38191"
 metafile = true
 
 [[files]]
@@ -2562,7 +2662,7 @@ metafile = true
 
 [[files]]
 file = "mods/proud-mountain-tweaks.pw.toml"
-hash = "c10403c8de31e3015bdbfd9431b10be325f999d68e133ad8eb833a6089629ebb"
+hash = "967dd6f204207015f844941e6d632b304cb126d0cce5de3e8deda360812da063"
 metafile = true
 
 [[files]]

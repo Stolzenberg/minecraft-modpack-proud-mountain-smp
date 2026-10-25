@@ -271,6 +271,277 @@
   "serverPackOnly": false
  },
  {
+  "slug": "macaws-bridges",
+  "name": "Macaw's Bridges",
+  "projectID": 351725,
+  "fileID": 7627896,
+  "fileName": "mcw-bridges-3.1.2-mc1.21.1neoforge.jar",
+  "date": "2026-02-15",
+  "releaseType": 1,
+  "downloadUrl": "https://edge.forgecdn.net/files/7627/896/mcw-bridges-3.1.2-mc1.21.1neoforge.jar",
+  "side": "both",
+  "why": "listed",
+  "requires": [],
+  "url": "https://www.curseforge.com/minecraft/mc-mods/macaws-bridges",
+  "authors": [
+   "sketch_macaw"
+  ],
+  "classId": 6,
+  "serverPackOnly": false
+ },
+ {
+  "slug": "macaws-doors",
+  "name": "Macaw's Doors",
+  "projectID": 378646,
+  "fileID": 7618651,
+  "fileName": "mcw-doors-1.1.5-mc1.21.1neoforge.jar",
+  "date": "2026-02-13",
+  "releaseType": 1,
+  "downloadUrl": "https://edge.forgecdn.net/files/7618/651/mcw-doors-1.1.5-mc1.21.1neoforge.jar",
+  "side": "both",
+  "why": "listed",
+  "requires": [],
+  "url": "https://www.curseforge.com/minecraft/mc-mods/macaws-doors",
+  "authors": [
+   "sketch_macaw"
+  ],
+  "classId": 6,
+  "serverPackOnly": false
+ },
+ {
+  "slug": "macaws-windows",
+  "name": "Macaw's Windows",
+  "projectID": 363569,
+  "fileID": 7317672,
+  "fileName": "mcw-mcwwindows-2.4.2-mc1.21.1neoforge.jar",
+  "date": "2025-12-10",
+  "releaseType": 1,
+  "downloadUrl": "https://edge.forgecdn.net/files/7317/672/mcw-mcwwindows-2.4.2-mc1.21.1neoforge.jar",
+  "side": "both",
+  "why": "listed",
+  "requires": [],
+  "url": "https://www.curseforge.com/minecraft/mc-mods/macaws-windows",
+  "authors": [
+   "sketch_macaw"
+  ],
+  "classId": 6,
+  "serverPackOnly": false
+ },
+ {
+  "slug": "macaws-fences-and-walls",
+  "name": "Macaw's Fences and Walls",
+  "projectID": 453925,
+  "fileID": 7308338,
+  "fileName": "mcw-mcwfences-1.2.1-mc1.21.1neoforge.jar",
+  "date": "2025-12-08",
+  "releaseType": 1,
+  "downloadUrl": "https://edge.forgecdn.net/files/7308/338/mcw-mcwfences-1.2.1-mc1.21.1neoforge.jar",
+  "side": "both",
+  "why": "listed",
+  "requires": [],
+  "url": "https://www.curseforge.com/minecraft/mc-mods/macaws-fences-and-walls",
+  "authors": [
+   "sketch_macaw"
+  ],
+  "classId": 6,
+  "serverPackOnly": false
+ },
+ {
+  "slug": "macaws-furniture",
+  "name": "Macaw's Furniture",
+  "projectID": 359540,
+  "fileID": 7255584,
+  "fileName": "mcw-furniture-3.4.1-mc1.21.1neoforge.jar",
+  "date": "2025-11-23",
+  "releaseType": 1,
+  "downloadUrl": "https://edge.forgecdn.net/files/7255/584/mcw-furniture-3.4.1-mc1.21.1neoforge.jar",
+  "side": "both",
+  "why": "listed",
+  "requires": [],
+  "url": "https://www.curseforge.com/minecraft/mc-mods/macaws-furniture",
+  "authors": [
+   "sketch_macaw"
+  ],
+  "classId": 6,
+  "serverPackOnly": false
+ },
+ {
+  "slug": "macaws-trapdoors",
+  "name": "Macaw's Trapdoors",
+  "projectID": 400933,
+  "fileID": 7256148,
+  "fileName": "mcw-trapdoors-1.1.5-mc1.21.1neoforge.jar",
+  "date": "2025-11-24",
+  "releaseType": 1,
+  "downloadUrl": "https://edge.forgecdn.net/files/7256/148/mcw-trapdoors-1.1.5-mc1.21.1neoforge.jar",
+  "side": "both",
+  "why": "listed",
+  "requires": [],
+  "url": "https://www.curseforge.com/minecraft/mc-mods/macaws-trapdoors",
+  "authors": [
+   "sketch_macaw"
+  ],
+  "classId": 6,
+  "serverPackOnly": false
+ },
+ {
+  "slug": "macaws-lights-and-lamps",
+  "name": "Macaw's Lights and Lamps",
+  "projectID": 502372,
+  "fileID": 7304075,
+  "fileName": "mcw-lights-1.1.5-mc1.21.1neoforge.jar",
+  "date": "2025-12-07",
+  "releaseType": 1,
+  "downloadUrl": "https://edge.forgecdn.net/files/7304/75/mcw-lights-1.1.5-mc1.21.1neoforge.jar",
+  "side": "both",
+  "why": "listed",
+  "requires": [],
+  "url": "https://www.curseforge.com/minecraft/mc-mods/macaws-lights-and-lamps",
+  "authors": [
+   "sketch_macaw"
+  ],
+  "classId": 6,
+  "serverPackOnly": false
+ },
+ {
+  "slug": "macaws-roofs",
+  "name": "Macaw's Roofs",
+  "projectID": 352039,
+  "fileID": 6494399,
+  "fileName": "mcw-roofs-2.3.2-mc1.21.1neoforge.jar",
+  "date": "2025-05-04",
+  "releaseType": 1,
+  "downloadUrl": "https://edge.forgecdn.net/files/6494/399/mcw-roofs-2.3.2-mc1.21.1neoforge.jar",
+  "side": "both",
+  "why": "listed",
+  "requires": [],
+  "url": "https://www.curseforge.com/minecraft/mc-mods/macaws-roofs",
+  "authors": [
+   "sketch_macaw"
+  ],
+  "classId": 6,
+  "serverPackOnly": false
+ },
+ {
+  "slug": "macaws-paths-and-pavings",
+  "name": "Macaw's Paths and Pavings",
+  "projectID": 629153,
+  "fileID": 7029451,
+  "fileName": "mcw-mcwpaths-1.1.1-mc1.21.1neoforge.jar",
+  "date": "2025-09-24",
+  "releaseType": 1,
+  "downloadUrl": "https://edge.forgecdn.net/files/7029/451/mcw-mcwpaths-1.1.1-mc1.21.1neoforge.jar",
+  "side": "both",
+  "why": "listed",
+  "requires": [],
+  "url": "https://www.curseforge.com/minecraft/mc-mods/macaws-paths-and-pavings",
+  "authors": [
+   "sketch_macaw"
+  ],
+  "classId": 6,
+  "serverPackOnly": false
+ },
+ {
+  "slug": "macaws-stairs",
+  "name": "Macaw's Stairs",
+  "projectID": 1119394,
+  "fileID": 7317479,
+  "fileName": "mcw-mcwstairs-1.0.2-mc1.21.1neoforge.jar",
+  "date": "2025-12-10",
+  "releaseType": 1,
+  "downloadUrl": "https://edge.forgecdn.net/files/7317/479/mcw-mcwstairs-1.0.2-mc1.21.1neoforge.jar",
+  "side": "both",
+  "why": "listed",
+  "requires": [],
+  "url": "https://www.curseforge.com/minecraft/mc-mods/macaws-stairs",
+  "authors": [
+   "sketch_macaw"
+  ],
+  "classId": 6,
+  "serverPackOnly": false
+ },
+ {
+  "slug": "macaws-roads-and-streets",
+  "name": "Macaw's Roads and Streets",
+  "projectID": 1709382,
+  "fileID": 8961975,
+  "fileName": "mcw-roads-1.0.0-mc1.21.1neoforge.jar",
+  "date": "2026-09-24",
+  "releaseType": 1,
+  "downloadUrl": "https://edge.forgecdn.net/files/8961/975/mcw-roads-1.0.0-mc1.21.1neoforge.jar",
+  "side": "both",
+  "why": "listed",
+  "requires": [],
+  "url": "https://www.curseforge.com/minecraft/mc-mods/macaws-roads-and-streets",
+  "authors": [
+   "sketch_macaw"
+  ],
+  "classId": 6,
+  "serverPackOnly": false
+ },
+ {
+  "slug": "macaws-paintings",
+  "name": "Macaw's Paintings",
+  "projectID": 438116,
+  "fileID": 7845033,
+  "fileName": "mcw-paintings-1.1.0-mc1.21.1neoforge.jar",
+  "date": "2026-03-30",
+  "releaseType": 1,
+  "downloadUrl": "https://edge.forgecdn.net/files/7845/33/mcw-paintings-1.1.0-mc1.21.1neoforge.jar",
+  "side": "both",
+  "why": "listed",
+  "requires": [],
+  "url": "https://www.curseforge.com/minecraft/mc-mods/macaws-paintings",
+  "authors": [
+   "sketch_macaw"
+  ],
+  "classId": 6,
+  "serverPackOnly": false
+ },
+ {
+  "slug": "macaws-holidays",
+  "name": "Macaw's Holidays",
+  "projectID": 930232,
+  "fileID": 7304374,
+  "fileName": "mcw-holidays-1.1.2-mc1.21.1neoforge.jar",
+  "date": "2025-12-07",
+  "releaseType": 1,
+  "downloadUrl": "https://edge.forgecdn.net/files/7304/374/mcw-holidays-1.1.2-mc1.21.1neoforge.jar",
+  "side": "both",
+  "why": "listed",
+  "requires": [],
+  "url": "https://www.curseforge.com/minecraft/mc-mods/macaws-holidays",
+  "authors": [
+   "sketch_macaw"
+  ],
+  "classId": 6,
+  "serverPackOnly": false
+ },
+ {
+  "slug": "macaws-biomes-o-plenty",
+  "name": "Macaw's Biomes O' Plenty",
+  "projectID": 533382,
+  "fileID": 8296109,
+  "fileName": "mcwbiomesoplenty-neoforge-1.21.1-1.6.jar",
+  "date": "2026-06-21",
+  "releaseType": 1,
+  "downloadUrl": "https://edge.forgecdn.net/files/8296/109/mcwbiomesoplenty-neoforge-1.21.1-1.6.jar",
+  "side": "both",
+  "why": "listed",
+  "requires": [
+   940057,
+   1090999,
+   955399,
+   220318
+  ],
+  "url": "https://www.curseforge.com/minecraft/mc-mods/macaws-biomes-o-plenty",
+  "authors": [
+   "Samlegamer_"
+  ],
+  "classId": 6,
+  "serverPackOnly": false
+ },
+ {
   "slug": "serene-seasons",
   "name": "Serene Seasons",
   "projectID": 291874,
@@ -307,25 +578,6 @@
   "url": "https://www.curseforge.com/minecraft/mc-mods/seasonal-lets-do",
   "authors": [
    "xhyrom"
-  ],
-  "classId": 6,
-  "serverPackOnly": false
- },
- {
-  "slug": "macaws-holidays",
-  "name": "Macaw's Holidays",
-  "projectID": 930232,
-  "fileID": 7304374,
-  "fileName": "mcw-holidays-1.1.2-mc1.21.1neoforge.jar",
-  "date": "2025-12-07",
-  "releaseType": 1,
-  "downloadUrl": "https://edge.forgecdn.net/files/7304/374/mcw-holidays-1.1.2-mc1.21.1neoforge.jar",
-  "side": "both",
-  "why": "listed",
-  "requires": [],
-  "url": "https://www.curseforge.com/minecraft/mc-mods/macaws-holidays",
-  "authors": [
-   "sketch_macaw"
   ],
   "classId": 6,
   "serverPackOnly": false
@@ -1227,6 +1479,44 @@
   "serverPackOnly": true
  },
  {
+  "slug": "chunky-pregenerator-forge",
+  "name": "Chunky (Forge/NeoForge)",
+  "projectID": 485681,
+  "fileID": 6383261,
+  "fileName": "Chunky-NeoForge-1.4.23.jar",
+  "date": "2025-04-04",
+  "releaseType": 1,
+  "downloadUrl": "https://edge.forgecdn.net/files/6383/261/Chunky-NeoForge-1.4.23.jar",
+  "side": "server",
+  "why": "listed",
+  "requires": [],
+  "url": "https://www.curseforge.com/minecraft/mc-mods/chunky-pregenerator-forge",
+  "authors": [
+   "pop4959"
+  ],
+  "classId": 6,
+  "serverPackOnly": true
+ },
+ {
+  "slug": "bluemap",
+  "name": "BlueMap",
+  "projectID": 406463,
+  "fileID": 6239407,
+  "fileName": "bluemap-5.7-neoforge.jar",
+  "date": "2025-02-26",
+  "releaseType": 1,
+  "downloadUrl": "https://edge.forgecdn.net/files/6239/407/bluemap-5.7-neoforge.jar",
+  "side": "server",
+  "why": "listed",
+  "requires": [],
+  "url": "https://www.curseforge.com/minecraft/mc-mods/bluemap",
+  "authors": [
+   "TBlueF"
+  ],
+  "classId": 6,
+  "serverPackOnly": true
+ },
+ {
   "slug": "jei",
   "name": "Just Enough Items (JEI)",
   "projectID": 238222,
@@ -1989,25 +2279,6 @@
   "serverPackOnly": false
  },
  {
-  "slug": "glitchcore",
-  "name": "GlitchCore",
-  "projectID": 955399,
-  "fileID": 8109792,
-  "fileName": "GlitchCore-neoforge-1.21.1-2.1.0.2.jar",
-  "date": "2026-05-18",
-  "releaseType": 2,
-  "downloadUrl": "https://edge.forgecdn.net/files/8109/792/GlitchCore-neoforge-1.21.1-2.1.0.2.jar",
-  "side": "both",
-  "why": "dep of serene-seasons",
-  "requires": [],
-  "url": "https://www.curseforge.com/minecraft/mc-mods/glitchcore",
-  "authors": [
-   "TheAdubbz"
-  ],
-  "classId": 6,
-  "serverPackOnly": false
- },
- {
   "slug": "terrablender-neoforge",
   "name": "TerraBlender (NeoForge)",
   "projectID": 940057,
@@ -2017,9 +2288,47 @@
   "releaseType": 2,
   "downloadUrl": "https://edge.forgecdn.net/files/6054/947/TerraBlender-neoforge-1.21.1-4.1.0.8.jar",
   "side": "both",
-  "why": "dep of biomes-o-plenty",
+  "why": "dep of macaws-biomes-o-plenty",
   "requires": [],
   "url": "https://www.curseforge.com/minecraft/mc-mods/terrablender-neoforge",
+  "authors": [
+   "TheAdubbz"
+  ],
+  "classId": 6,
+  "serverPackOnly": false
+ },
+ {
+  "slug": "addonslib",
+  "name": "AddonsLib",
+  "projectID": 1090999,
+  "fileID": 8359493,
+  "fileName": "addonslib-neoforge-1.21.1-1.14.jar",
+  "date": "2026-07-02",
+  "releaseType": 1,
+  "downloadUrl": "https://edge.forgecdn.net/files/8359/493/addonslib-neoforge-1.21.1-1.14.jar",
+  "side": "both",
+  "why": "dep of macaws-biomes-o-plenty",
+  "requires": [],
+  "url": "https://www.curseforge.com/minecraft/mc-mods/addonslib",
+  "authors": [
+   "Samlegamer_"
+  ],
+  "classId": 6,
+  "serverPackOnly": false
+ },
+ {
+  "slug": "glitchcore",
+  "name": "GlitchCore",
+  "projectID": 955399,
+  "fileID": 8109792,
+  "fileName": "GlitchCore-neoforge-1.21.1-2.1.0.2.jar",
+  "date": "2026-05-18",
+  "releaseType": 2,
+  "downloadUrl": "https://edge.forgecdn.net/files/8109/792/GlitchCore-neoforge-1.21.1-2.1.0.2.jar",
+  "side": "both",
+  "why": "dep of macaws-biomes-o-plenty",
+  "requires": [],
+  "url": "https://www.curseforge.com/minecraft/mc-mods/glitchcore",
   "authors": [
    "TheAdubbz"
   ],

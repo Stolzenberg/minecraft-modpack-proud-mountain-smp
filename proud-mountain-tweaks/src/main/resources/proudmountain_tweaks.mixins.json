@@ -4,6 +4,7 @@
   "package": "de.proudmountain.tweaks.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "DistantHorizonsChunkyMixin",
     "VillagerMixin"
   ],
   "client": [
