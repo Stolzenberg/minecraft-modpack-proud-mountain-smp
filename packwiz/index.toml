@@ -26,6 +26,10 @@ hash = "fd63c707c5e749fa250137ccb1b6955e0b29f1521c292bc2675f49f45d71fc28"
 preserve = true
 
 [[files]]
+file = "config/lootr-common.toml"
+hash = "3c61e2cc481218a7844dcdefa3fcb39fefb51de44179875712df501c0cba0c47"
+
+[[files]]
 file = "config/naturaltemperature-common.toml"
 hash = "fc1ec8d3e3c8afd9f2ee55927a03efeb691a8efcd68d93937daef476a8d5aeb3"
 
@@ -271,7 +275,7 @@ hash = "25869e9b03286a2df4536c19fd21c6947b38a58da2b42320d7772cea7536f536"
 
 [[files]]
 file = "kubejs/data/c/tags/item/hidden_from_recipe_viewers.json"
-hash = "c7be0cbab564da060f7d7dd512992b7a72b3f7bc440660c198e87adaaa97d993"
+hash = "b159ec6194e87631def5e3aacb565e346578ceda330d634586f6500d0060c327"
 
 [[files]]
 file = "kubejs/data/c/tags/item/tools/knife.json"
@@ -2150,6 +2154,10 @@ file = "kubejs/data/vegandelight/loot_modifiers/add_loot_village_taiga_house.jso
 hash = "76286c339280e176b04fd27dd88032312803af36178aaf174e5a3dda796dde4e"
 
 [[files]]
+file = "kubejs/server_scripts/elytra.js"
+hash = "f99cf362902ba9ef64d9085354a827116a315b8b785d66cbd582dc6ab8d66a5d"
+
+[[files]]
 file = "kubejs/server_scripts/smallships.js"
 hash = "de10973245c650c925376f297637b6a4c6586ca092a4c60bfc34a2bac34c5d62"
 
@@ -2554,7 +2562,7 @@ metafile = true
 
 [[files]]
 file = "mods/proud-mountain-tweaks.pw.toml"
-hash = "b8e4e3d2ef54378abedcb2ca2e81497480de1200d44b5172145af0dbb6529088"
+hash = "c10403c8de31e3015bdbfd9431b10be325f999d68e133ad8eb833a6089629ebb"
 metafile = true
 
 [[files]]

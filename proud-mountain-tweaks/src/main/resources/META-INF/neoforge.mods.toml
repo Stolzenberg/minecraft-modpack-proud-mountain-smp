@@ -4,12 +4,13 @@ license = "MIT"
 
 [[mods]]
 modId = "proudmountain_tweaks"
-version = "2.2.0"
+version = "2.3.0"
 displayName = "Proud Mountain Tweaks"
 authors = "Tim"
 description = '''
 Anpassungen für das Modpack: Die Jahreszeiten von Serene Seasons folgen dem echten Kalender (Server).
 Mitgelieferte Resource Packs werden einmal eingeschaltet und lassen sich danach abwählen (Client).
+Elytren sind verbannt (Server).
 Ladereihenfolge Farmer's Delight vor Coffee Delight.
 '''
 # Client und Server brauchen sie nicht gegenseitig

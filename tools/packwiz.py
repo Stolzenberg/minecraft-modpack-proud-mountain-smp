@@ -23,7 +23,7 @@ MC, NEOFORGE = "1.21.1", "21.1.256"
 PACK_URL = "https://raw.githubusercontent.com/Stolzenberg/minecraft-modpack-proud-mountain-smp/main/packwiz/pack.toml"
 SERVER = (NAME, "server.proud-mountain.com")  # Eintrag in der Serverliste (Name, Adresse)
 # Eigene Mods aus extra-mods/ (Quelle im gleichnamigen Unterordner): Datei -> (Name, Seite)
-EXTRA_MODS = {"proud-mountain-tweaks-2.2.0.jar": ("Proud Mountain Tweaks", "both")}
+EXTRA_MODS = {"proud-mountain-tweaks-2.3.0.jar": ("Proud Mountain Tweaks", "both")}
 EXTRA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "extra-mods")
 RAW_BASE = PACK_URL.rsplit("/packwiz/", 1)[0]
 # Nur auf Modrinth: Pfad im Pack -> (Name, Seite, Projekt-ID, Versions-ID, Dateiname, SHA1)

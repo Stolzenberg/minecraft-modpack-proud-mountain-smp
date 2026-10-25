@@ -3,7 +3,7 @@ plugins {
     id 'net.neoforged.moddev' version '2.0.148'
 }
 
-version = '2.2.0'
+version = '2.3.0'
 group = 'de.proudmountain'
 base { archivesName = 'proud-mountain-tweaks' }
 

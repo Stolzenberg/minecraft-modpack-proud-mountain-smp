@@ -1,5 +1,6 @@
 package de.proudmountain.tweaks;
 
+import de.proudmountain.tweaks.ban.BannedItems;
 import de.proudmountain.tweaks.seasons.SeasonCalendar;
 import de.proudmountain.tweaks.seasons.SeasonCalendarConfig;
 import net.neoforged.bus.api.IEventBus;
@@ -13,6 +14,7 @@ import net.neoforged.fml.config.ModConfig;
  * Serene Seasons folgt dem echten Kalender, siehe SeasonCalendar (Server).
  * Mitgelieferte Resource Packs werden einmal eingeschaltet, siehe DefaultResourcePacks (nur Client).
  * Eisenfarmen laufen trotz Better-Days-Tageslänge den ganzen Tag, siehe VillagerMixin.
+ * Elytren gibt es nicht (Loot, Item-Frames, Inventar), siehe BannedItems (Server).
  * Außerdem legt neoforge.mods.toml die Ladereihenfolge Farmer's Delight -> Proud Mountain Tweaks -> Coffee Delight fest:
  * Coffee Delight greift beim Registrieren auf Farmer's-Delight-Blöcke zu, gibt die Reihenfolge aber selbst nicht an.
  */
@@ -22,6 +24,7 @@ public final class ProudMountainTweaks {
 
     public ProudMountainTweaks(IEventBus modBus, ModContainer container) {
         container.registerConfig(ModConfig.Type.COMMON, SeasonCalendarConfig.SPEC);
+        BannedItems.init(modBus);
         // SeasonCalendar greift auf Serene-Seasons-Klassen zu und darf ohne Serene Seasons nicht geladen werden
         if (ModList.get().isLoaded("sereneseasons")) SeasonCalendar.init();
     }
