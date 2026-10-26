@@ -558,6 +558,10 @@ file = "kubejs/data/farmersdelight/recipe/tomato_seeds.json"
 hash = "b6d0998ae0775ae12d90c3abc8d3238847dcfda45e760c5fe7688036e57b125a"
 
 [[files]]
+file = "kubejs/data/farmersdelight/tags/block/heat_sources.json"
+hash = "dce439bde3c1186fdac8ec7ff3006b0ab38508251fec46d873001359c1da5ed9"
+
+[[files]]
 file = "kubejs/data/friendsandfoes/worldgen/structure_set/citadel.json"
 hash = "79fb9d30186151eb3f873a184fa183d6e32dcf7a83ead2e47cb3eb88ce751d78"
 
