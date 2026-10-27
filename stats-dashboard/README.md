@@ -1,15 +1,16 @@
 # Statistik-Dashboard
 
-Öffentliche Seite https://stats.proud-mountain.com: wer online ist und seit wann, wann jemand zuletzt da war, Spielzeit pro Tag, Server-Auslastung (TPS, RAM, CPU) und ein paar Werte aus den Weltstatistiken. Positionen werden bewusst nicht angezeigt.
+Öffentliche Seite https://stats.proud-mountain.com: wer online ist und seit wann, wann jemand zuletzt da war, Server-Auslastung (TPS, RAM, CPU), wann gespielt wird (Heatmap), Spielzeit und platzierte Blöcke pro Tag, Wettrennen der Gesamtspielzeit, Rangliste und Tabelle für Heute / 7 Tage / Gesamt (Spielzeit, platziert, abgebaut, Mobs, zu Fuß, Tode, Strecke, Hergestelltes) und Steckbriefe pro Spieler (Lieblingsblock, -mob, Todesursache …). Positionen werden bewusst nicht angezeigt.
 
-- `app.py` (nur Python-Standardbibliothek) sammelt jede Minute: `list` und `neoforge tps` per RCON, belegten Heap aus `logs/gc.log` (JVM-Option im Compose-Setup), RAM/CPU des Hosts aus `/proc`. Sessions kommen aus den Server-Logs (`joined/left the game`, auch rotierte `*.log.gz`), deshalb zählt auch die Zeit vor dem Dashboard. Alles landet in SQLite (`/stats/stats.db`), die Seite holt sich `/api/stats`.
+- `app.py` (nur Python-Standardbibliothek) sammelt jede Minute: `list` und `neoforge tps` per RCON, belegten Heap aus `logs/gc.log` (JVM-Option im Compose-Setup), RAM/CPU des Hosts aus `/proc`. Sessions kommen aus den Server-Logs (`joined/left the game`, auch rotierte `*.log.gz`), deshalb zählt auch die Zeit vor dem Dashboard. Platzierte/abgebaute Blöcke zählt es stündlich aus der CoreProtect-Datenbank (MariaDB-Benutzer `stats`, nur `SELECT`, liest nur neue Zeilen). Tode, Mobs, Strecke usw. kommen aus `world/stats/*.json`; davon wird stündlich ein Snapshot gespeichert, daraus werden die Werte für Heute und 7 Tage (erst ab dem ersten Snapshot, die Seite sagt ab wann). Alles landet in SQLite (`/stats/stats.db`), die Seite holt sich `/api/stats`.
+- Namen von Blöcken, Items und Mobs: Vanilla auf Deutsch lädt `fetch_lang.py` beim Docker-Build von Mojang (nicht im Repo), die der Mods liest `app.py` aus den Jars in `data/mods` (de_de, sonst en_us).
 - `index.html` ist die ganze Oberfläche (kein Build, keine externen Skripte).
 - Läuft auf dem Server als Service `stats` in `~/docker/minecraft/compose.yaml`, nach außen über den Service `tunnel` (Cloudflare Tunnel, Route `stats.proud-mountain.com -> http://stats:8080`).
 
 Update:
 
 ```sh
-rsync -a --delete --exclude __pycache__ stats-dashboard/ fedora-server:docker/minecraft/stats-dashboard/
+rsync -a --delete --exclude __pycache__ --exclude lang_de_vanilla.json stats-dashboard/ fedora-server:docker/minecraft/stats-dashboard/
 ssh fedora-server 'cd ~/docker/minecraft && docker compose up -d --build stats'
 ```
 

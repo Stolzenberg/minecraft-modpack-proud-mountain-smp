@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Proud Mountain Statistik</title>
-<meta name="description" content="Wer ist online, wie läuft der Server, wer hat wie viel gespielt.">
+<meta name="description" content="Wer ist online, wie läuft der Server, wer hat wie viel gespielt und gebaut.">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <style>
 :root {
@@ -23,6 +23,7 @@
   --good-text: #006300;
   --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100;
   --s5: #e87ba4; --s6: #008300; --s7: #6250d6; --s8: #e34948;
+  --h0: #f0efec; --h1: #cde2fb; --h2: #9ec5f4; --h3: #5598e7; --h4: #256abf; --h5: #104281;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
@@ -32,6 +33,7 @@
     --accent: #3987e5; --good-text: #0ca30c;
     --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500;
     --s5: #d55181; --s6: #008300; --s7: #9085e9; --s8: #e66767;
+    --h0: #262624; --h1: #184f95; --h2: #1c5cab; --h3: #2a78d6; --h4: #5598e7; --h5: #9ec5f4;
   }
 }
 :root[data-theme="dark"] {
@@ -41,6 +43,7 @@
   --accent: #3987e5; --good-text: #0ca30c;
   --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500;
   --s5: #d55181; --s6: #008300; --s7: #9085e9; --s8: #e66767;
+  --h0: #262624; --h1: #184f95; --h2: #1c5cab; --h3: #2a78d6; --h4: #5598e7; --h5: #9ec5f4;
 }
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
@@ -54,6 +57,7 @@ header .title { flex: 1 1 auto; min-width: 0; }
 h1 { font-size: 24px; line-height: 1.2; margin: 0; font-weight: 650; letter-spacing: -0.01em; }
 .subtitle { color: var(--text-2); margin-top: 2px; font-size: 14px; }
 .subtitle code { font: inherit; color: var(--text); }
+.section-title { font-size: 18px; font-weight: 650; margin: 28px 0 10px; }
 .pill {
   display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px;
   background: var(--surface); border: 1px solid var(--border); font-weight: 600; font-size: 14px; white-space: nowrap;
@@ -62,7 +66,9 @@ h1 { font-size: 24px; line-height: 1.2; margin: 0; font-weight: 650; letter-spac
 .pill.on .dot { background: var(--good); box-shadow: 0 0 0 3px color-mix(in srgb, var(--good) 22%, transparent); }
 .pill.off .dot { background: var(--critical); }
 .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; min-width: 0; }
+.stack > * + * { margin-top: 12px; }
 h2 { font-size: 15px; margin: 0 0 2px; font-weight: 620; }
+h3 { font-size: 14px; margin: 0 0 8px; font-weight: 620; }
 .card .note { color: var(--muted); font-size: 13px; margin: 0 0 12px; }
 .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 12px; margin-bottom: 12px; }
 .tile .label { color: var(--text-2); font-size: 13px; }
@@ -75,7 +81,8 @@ h2 { font-size: 15px; margin: 0 0 2px; font-weight: 620; }
 .meter i.warn { background: var(--warning); } .meter i.crit { background: var(--critical); }
 .status { display: inline-flex; align-items: center; gap: 4px; }
 .status svg { width: 14px; height: 14px; flex: none; }
-.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr)); gap: 12px; margin-bottom: 12px; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr)); gap: 12px; }
+.grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 12px; }
 .online-list { list-style: none; margin: 0; padding: 0; }
 .online-list li { display: flex; align-items: baseline; gap: 10px; padding: 8px 0; border-top: 1px solid var(--grid); flex-wrap: wrap; }
 .online-list li:first-child { border-top: 0; padding-top: 2px; }
@@ -86,10 +93,12 @@ h2 { font-size: 15px; margin: 0 0 2px; font-weight: 620; }
 .chart { position: relative; }
 .chart svg { display: block; width: 100%; overflow: visible; }
 .chart text { fill: var(--muted); font-size: 11px; font-variant-numeric: tabular-nums; }
+.chart text.label { fill: var(--text-2); font-size: 12px; }
 .chart .gridline { stroke: var(--grid); stroke-width: 1; }
 .chart .baseline { stroke: var(--axis); stroke-width: 1; }
 .chart .crosshair { stroke: var(--muted); stroke-width: 1; }
 .chart .total { fill: var(--text-2); font-size: 11px; }
+.chart rect.cell:hover, .chart rect.cell:focus { stroke: var(--text); stroke-width: 1.5; outline: none; }
 .tooltip {
   position: absolute; pointer-events: none; z-index: 5; min-width: 120px; padding: 8px 10px; border-radius: 8px;
   background: var(--surface); border: 1px solid var(--border); box-shadow: 0 4px 16px rgba(0,0,0,0.12);
@@ -102,6 +111,27 @@ h2 { font-size: 15px; margin: 0 0 2px; font-weight: 620; }
 .tooltip .key { width: 12px; height: 2px; border-radius: 1px; flex: none; }
 .legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 0 0 10px; padding: 0; list-style: none; font-size: 13px; color: var(--text-2); }
 .legend li { display: inline-flex; align-items: center; gap: 6px; }
+.legend .line-key { width: 14px; height: 2px; border-radius: 1px; }
+.ramp { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); margin-top: 10px; flex-wrap: wrap; }
+.ramp i { width: 22px; height: 10px; border-radius: 2px; display: inline-block; }
+.controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin: 28px 0 12px; }
+.controls .section-title { margin: 0; }
+.segmented { display: inline-flex; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 3px; gap: 2px; }
+.segmented button {
+  font: inherit; font-size: 14px; border: 0; background: transparent; color: var(--text-2); padding: 6px 14px;
+  border-radius: 7px; cursor: pointer;
+}
+.segmented button:hover { background: var(--wash); }
+.segmented button[aria-pressed="true"] { background: var(--accent); color: #fff; font-weight: 600; }
+.segmented button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.coverage { color: var(--muted); font-size: 13px; flex-basis: 100%; margin: 0; }
+.bars { list-style: none; margin: 0; padding: 0; }
+.bars li { display: grid; grid-template-columns: minmax(70px, 108px) 1fr; align-items: center; gap: 10px; padding: 3px 0; font-size: 13px; }
+.bars .who { color: var(--text-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bars .track { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.bars .bar { height: 14px; border-radius: 0 4px 4px 0; flex: none; min-width: 0; }
+.bars .val { font-variant-numeric: tabular-nums; color: var(--text); font-weight: 600; white-space: nowrap; }
+.bars .rank { color: var(--muted); font-variant-numeric: tabular-nums; margin-right: 4px; }
 .table-wrap { overflow-x: auto; margin: 0 -16px -16px; padding: 0 16px 8px; }
 table { border-collapse: collapse; width: 100%; font-size: 14px; }
 th, td { text-align: right; padding: 9px 10px; border-top: 1px solid var(--grid); white-space: nowrap; }
@@ -112,13 +142,20 @@ thead th button { all: unset; cursor: pointer; }
 thead th button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
 thead th[aria-sort] button::after { content: " ↓"; }
 thead th[aria-sort="ascending"] button::after { content: " ↑"; }
-thead th.group { text-align: center; color: var(--muted); font-size: 12px; padding-bottom: 0; }
 td { font-variant-numeric: tabular-nums; }
 td.player { font-weight: 600; }
 td.player .swatch { margin-right: 8px; vertical-align: -1px; }
 td .online { color: var(--good-text); font-weight: 600; }
-td.sep, th.sep { border-left: 1px solid var(--grid); }
-footer { color: var(--muted); font-size: 13px; margin-top: 20px; }
+.profile header { margin: 0 0 4px; gap: 8px; flex-wrap: nowrap; }
+.profile header .name { font-weight: 650; font-size: 16px; }
+.profile header .state { margin-left: auto; color: var(--text-2); font-size: 13px; white-space: nowrap; }
+.profile header .state.online { color: var(--good-text); font-weight: 600; }
+.profile .meta { color: var(--muted); font-size: 13px; margin: 0 0 10px; }
+.profile dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 6px 12px; font-size: 14px; }
+.profile dt { color: var(--text-2); }
+.profile dd { margin: 0; text-align: right; font-weight: 560; }
+.profile dd span { color: var(--muted); font-weight: 400; }
+footer { color: var(--muted); font-size: 13px; margin-top: 24px; }
 footer p { margin: 4px 0; }
 .stale main { opacity: 0.6; }
 #error { display: none; color: var(--critical); font-size: 14px; margin: -8px 0 16px; }
@@ -152,32 +189,65 @@ footer p { margin: 4px 0; }
     <div class="card tile"><div class="label">Nächster Neustart</div><div class="value" id="t-restart">–</div><div class="sub" id="t-restart-sub"></div></div>
   </section>
 
-  <section class="card" style="margin-bottom:12px">
+  <section class="card">
     <h2>Gerade online</h2>
     <ul class="online-list" id="online"></ul>
   </section>
 
-  <section class="grid2" aria-label="Verlauf">
-    <div class="card"><h2>Spieler online</h2><p class="note">letzte 24 Stunden</p><div class="chart" id="c-players"></div></div>
-    <div class="card"><h2>TPS</h2><p class="note">letzte 24 Stunden, 20 ist das Maximum, darunter ruckelt es</p><div class="chart" id="c-tps"></div></div>
-    <div class="card"><h2>Arbeitsspeicher</h2><p class="note" id="c-ram-note">letzte 24 Stunden</p><div class="chart" id="c-ram"></div></div>
-    <div class="card"><h2>CPU-Auslastung</h2><p class="note">letzte 24 Stunden, ganzer Server</p><div class="chart" id="c-cpu"></div></div>
+  <h2 class="section-title">Server, letzte 24 Stunden</h2>
+  <section class="grid2" aria-label="Server-Verlauf">
+    <div class="card"><h2>Spieler online</h2><p class="note">Anzahl gleichzeitig online</p><div class="chart" id="c-players"></div></div>
+    <div class="card"><h2>TPS</h2><p class="note">20 ist das Maximum, darunter ruckelt es</p><div class="chart" id="c-tps"></div></div>
+    <div class="card"><h2>Arbeitsspeicher</h2><p class="note" id="c-ram-note">in GB</p><div class="chart" id="c-ram"></div></div>
+    <div class="card"><h2>CPU-Auslastung</h2><p class="note">ganzer Server</p><div class="chart" id="c-cpu"></div></div>
   </section>
 
-  <section class="card" style="margin-bottom:12px">
-    <h2>Spielzeit pro Tag</h2><p class="note">letzte 14 Tage, Stunden je Spieler</p>
-    <ul class="legend" id="daily-legend"></ul>
-    <div class="chart" id="c-daily"></div>
-  </section>
+  <h2 class="section-title">Wer spielt wann und wie viel</h2>
+  <div class="stack">
+    <section class="card">
+      <h2>Wann wird gespielt?</h2><p class="note" id="heat-note">Durchschnittlich online, letzte 4 Wochen</p>
+      <div class="chart" id="c-heat"></div>
+      <div class="ramp" id="heat-ramp"></div>
+    </section>
+    <section class="grid2">
+      <div class="card">
+        <h2>Spielzeit pro Tag</h2><p class="note">letzte 14 Tage, Stunden je Spieler</p>
+        <ul class="legend" id="l-daily-play"></ul><div class="chart" id="c-daily-play"></div>
+      </div>
+      <div class="card">
+        <h2>Blöcke platziert pro Tag</h2><p class="note" id="n-daily-placed">letzte 14 Tage, aus dem Block-Protokoll (CoreProtect)</p>
+        <ul class="legend" id="l-daily-placed"></ul><div class="chart" id="c-daily-placed"></div>
+      </div>
+    </section>
+    <section class="card">
+      <h2>Wettrennen: Spielzeit insgesamt</h2><p class="note" id="n-race">Stunden seit Beginn der Aufzeichnung</p>
+      <ul class="legend" id="l-race"></ul><div class="chart" id="c-race"></div>
+    </section>
+  </div>
 
-  <section class="card">
-    <h2>Alle Spieler</h2><p class="note">Spalten zum Sortieren antippen</p>
-    <div class="table-wrap"><table id="players"></table></div>
-  </section>
+  <div class="controls">
+    <h2 class="section-title">Rangliste</h2>
+    <div class="segmented" role="group" aria-label="Zeitraum" id="period">
+      <button type="button" data-period="today">Heute</button>
+      <button type="button" data-period="week">7 Tage</button>
+      <button type="button" data-period="total">Gesamt</button>
+    </div>
+    <p class="coverage" id="coverage"></p>
+  </div>
+  <div class="stack">
+    <section class="grid3" id="ranking" aria-label="Rangliste"></section>
+    <section class="card">
+      <h2>Alle Spieler</h2><p class="note" id="table-note">Spalten zum Sortieren antippen</p>
+      <div class="table-wrap"><table id="players"></table></div>
+    </section>
+  </div>
+
+  <h2 class="section-title">Steckbriefe</h2>
+  <section class="grid3" id="profiles" aria-label="Steckbriefe"></section>
 
   <footer>
     <p id="foot-tracking">Spielzeiten aus den Server-Logs.</p>
-    <p>Tode, Mobs, Strecke, Blöcke und Hergestelltes zählen nur in der aktuellen Welt. Positionen werden bewusst nicht angezeigt.</p>
+    <p>Platzierte und abgebaute Blöcke aus dem Block-Protokoll (CoreProtect), Tode, Mobs, Strecke und Hergestelltes aus den Minecraft-Statistiken, beides für die aktuelle Welt. Positionen werden bewusst nicht angezeigt.</p>
     <p>Aktualisiert sich jede Minute von selbst.</p>
   </footer>
 </main>
@@ -186,8 +256,9 @@ footer p { margin: 4px 0; }
 "use strict";
 const $ = id => document.getElementById(id);
 const nf = (v, d = 0) => v.toLocaleString("de-DE", { minimumFractionDigits: d, maximumFractionDigits: d });
-const DAY = 86400, WD = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
-let data = null, sortKey = "status", sortDir = -1;
+const DAY = 86400, WD = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"], WD_MON = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
+let data = null, sortKey = "playtime", sortDir = -1, period = "week";
+try { period = localStorage.getItem("period") || period; } catch (e) {}
 
 function dur(sec) {
   sec = Math.max(0, Math.round(sec));
@@ -197,14 +268,16 @@ function dur(sec) {
   return `${m} min`;
 }
 function hours(sec) { return sec >= 36000 ? `${nf(sec / 3600)} h` : `${nf(sec / 3600, 1)} h`; }
+function km(v) { return `${nf(v, v < 10 ? 1 : 0)} km`; }
 function clock(ts) { return new Date(ts * 1000).toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" }); }
 function dayStart(ts) { const d = new Date(ts * 1000); d.setHours(0, 0, 0, 0); return d.getTime() / 1000; }
+function dateShort(ts) { const d = new Date(ts * 1000); return `${d.getDate()}.${d.getMonth() + 1}.`; }
 function when(ts, now) {
   const days = Math.round((dayStart(now) - dayStart(ts)) / DAY);
   if (days === 0) return `heute ${clock(ts)}`;
   if (days === 1) return `gestern ${clock(ts)}`;
   const d = new Date(ts * 1000);
-  return `${WD[d.getDay()]} ${d.getDate()}.${d.getMonth() + 1}. ${clock(ts)}`;
+  return `${WD[d.getDay()]} ${dateShort(ts)} ${clock(ts)}`;
 }
 function ago(ts, now) {
   const s = now - ts;
@@ -232,6 +305,18 @@ function colorOf(name) {
   const i = data.players.findIndex(p => p.name === name);
   return `var(--s${(i < 0 ? 0 : i) % 8 + 1})`;
 }
+function swatch(name, cls = "swatch") {
+  const s = el("span", { class: cls }); s.style.background = colorOf(name); return s;
+}
+function niceStep(max, target = 4) {
+  const raw = max / target, mag = 10 ** Math.floor(Math.log10(raw || 1));
+  return [1, 2, 2.5, 5, 10].map(f => f * mag).find(s => s >= raw) || mag * 10;
+}
+function compact(v) {
+  if (v >= 10000) return `${nf(v / 1000)}K`;
+  if (v >= 1000) return `${nf(v / 1000, 1)}K`;
+  return nf(v);
+}
 const ICON = {
   good: '<svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="var(--good)"/><path d="M4.5 8.2l2.3 2.3 4.7-4.8" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
   warning: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5l7 12.5H1z" fill="var(--warning)"/><path d="M8 6v3.5" stroke="#0b0b0b" stroke-width="1.8" stroke-linecap="round"/><circle cx="8" cy="11.7" r="1" fill="#0b0b0b"/></svg>',
@@ -244,6 +329,31 @@ function status(kind, label) {
   return s;
 }
 
+// ---------- Tooltip ----------
+function tooltipFor(box) {
+  let tip = box.querySelector(".tooltip");
+  if (!tip) tip = el("div", { class: "tooltip", role: "status" });
+  return tip;
+}
+function placeTip(box, tip, x, y) {
+  tip.style.display = "block";
+  const w = tip.offsetWidth, bw = box.clientWidth;
+  let left = x + 12;
+  if (left + w > bw) left = x - w - 12;
+  tip.style.left = `${Math.max(0, Math.min(left, bw - w))}px`;
+  tip.style.top = `${Math.max(0, y)}px`;
+}
+function tipRows(tip, head, rows, keyShape = "line") {
+  tip.replaceChildren(el("div", { class: "t-head" }, head));
+  for (const [color, value, label] of rows) {
+    const r = el("div", { class: "t-row" });
+    const k = el("span", { class: "key" }); k.style.background = color;
+    if (keyShape === "box") { k.style.height = "8px"; k.style.width = "8px"; k.style.borderRadius = "2px"; }
+    r.append(k, el("b", {}, value), el("span", {}, label));
+    tip.append(r);
+  }
+}
+
 // ---------- Kacheln ----------
 function renderTiles() {
   const s = data.server, now = data.generated;
@@ -254,7 +364,7 @@ function renderTiles() {
 
   const tp = $("t-players"); tp.textContent = s.online ? s.players : "–";
   if (s.online && s.max_players) tp.append(el("small", {}, ` / ${s.max_players}`));
-  const today = data.players.reduce((a, p) => a + (p.last_seen && dayStart(p.last_seen) === dayStart(now) ? 1 : 0), 0);
+  const today = data.players.filter(p => p.last_seen && dayStart(p.last_seen) === dayStart(now)).length;
   $("t-players-sub").textContent = `heute ${today} Spieler da gewesen`;
 
   $("t-uptime").textContent = s.ready_since ? dur(now - s.ready_since) : "–";
@@ -273,14 +383,15 @@ function renderTiles() {
     node.style.width = `${Math.min(100, Math.max(0, frac * 100))}%`;
     node.className = frac >= 0.9 ? "crit" : frac >= 0.75 ? "warn" : "";
   };
+  const r = $("t-ram");
   if (s.heap_used != null) {
     $("t-ram-label").textContent = "Arbeitsspeicher (Minecraft)";
-    const r = $("t-ram"); r.textContent = `${gb(s.heap_used)} GB`; r.append(el("small", {}, ` / ${nf(s.heap_max / 1024)} GB`));
+    r.textContent = `${gb(s.heap_used)} GB`; r.append(el("small", {}, ` / ${nf(s.heap_max / 1024)} GB`));
     bar($("t-ram-bar"), s.heap_used / s.heap_max);
     $("t-ram-sub").textContent = `belegt nach letzter Aufräumrunde · ganzer Server ${gb(s.mem_used)} / ${nf(s.mem_total / 1024)} GB`;
   } else {
     $("t-ram-label").textContent = "Arbeitsspeicher (ganzer Server)";
-    const r = $("t-ram"); r.textContent = `${gb(s.mem_used)} GB`; r.append(el("small", {}, ` / ${nf(s.mem_total / 1024)} GB`));
+    r.textContent = `${gb(s.mem_used)} GB`; r.append(el("small", {}, ` / ${nf(s.mem_total / 1024)} GB`));
     bar($("t-ram-bar"), s.mem_used / s.mem_total);
     $("t-ram-sub").textContent = `Minecraft darf bis ${nf(s.heap_max / 1024)} GB nutzen`;
   }
@@ -305,36 +416,15 @@ function renderOnline() {
   }
   for (const p of on) {
     const li = el("li");
-    const sw = el("span", { class: "swatch" }); sw.style.background = colorOf(p.name);
-    li.append(sw, el("span", { class: "name" }, p.name),
-      el("span", { class: "meta" }, p.since ? `seit ${when(p.since, now)} · ${dur(now - p.since)}` : "gerade gekommen"));
+    const today = p.periods.today;
+    const bits = [p.since ? `seit ${when(p.since, now)} · ${dur(now - p.since)}` : "gerade gekommen"];
+    if (today.placed) bits.push(`heute ${nf(today.placed)} Blöcke gesetzt`);
+    li.append(swatch(p.name), el("span", { class: "name" }, p.name), el("span", { class: "meta" }, bits.join(" · ")));
     ul.append(li);
   }
 }
 
-// ---------- Zeitverlauf (eine Reihe, eine Achse) ----------
-function tooltipFor(box) {
-  let tip = box.querySelector(".tooltip");
-  if (!tip) { tip = el("div", { class: "tooltip", role: "status" }); box.append(tip); }
-  return tip;
-}
-function placeTip(box, tip, x, y) {
-  tip.style.display = "block";
-  const w = tip.offsetWidth, bw = box.clientWidth;
-  tip.style.left = `${Math.min(Math.max(0, x + 12), bw - w)}px`;
-  if (x + 12 + w > bw) tip.style.left = `${Math.max(0, x - w - 12)}px`;
-  tip.style.top = `${Math.max(0, y - 10)}px`;
-}
-function tipRows(tip, head, rows) {
-  tip.replaceChildren(el("div", { class: "t-head" }, head));
-  for (const [color, value, label] of rows) {
-    const r = el("div", { class: "t-row" });
-    const k = el("span", { class: "key" }); k.style.background = color;
-    r.append(k, el("b", {}, value), el("span", {}, label));
-    tip.append(r);
-  }
-}
-
+// ---------- 24-h-Verlauf (eine Reihe, eine Achse) ----------
 function timeChart(box, opt) {
   const pts = data.series, now = data.generated;
   const W = box.clientWidth, H = 150, L = 34, R = 8, T = 8, B = 22;
@@ -345,13 +435,11 @@ function timeChart(box, opt) {
     svg.append(sv("line", { class: v === 0 ? "baseline" : "gridline", x1: L, x2: W - R, y1: y(v), y2: y(v) }));
     svg.append(sv("text", { x: L - 6, y: y(v) + 4, "text-anchor": "end" }, opt.fmt(v)));
   }
-  const first = Math.ceil(x0 / 21600) * 21600;
-  for (let t = first; t <= now; t += 21600) {
+  for (let t = Math.ceil(x0 / 21600) * 21600; t <= now; t += 21600) {
     const tx = x(t);
     if (tx < L + 16 || tx > W - R - 16) continue;
     svg.append(sv("text", { x: tx, y: H - 6, "text-anchor": "middle" }, clock(t)));
   }
-  // Linie in Stücken: Lücken, wo keine Werte da sind (Server aus, Dienst aus)
   const segs = []; let cur = [];
   pts.forEach((p, i) => {
     const v = opt.get(p);
@@ -363,7 +451,7 @@ function timeChart(box, opt) {
   for (const s of segs) {
     let d = "";
     s.forEach(([t, v], i) => {
-      if (opt.step && i > 0) d += `L${x(t + 0)},${y(s[i - 1][1])}`;
+      if (opt.step && i > 0) d += `L${x(t)},${y(s[i - 1][1])}`;
       d += `${i ? "L" : "M"}${x(t)},${y(v)}`;
     });
     const end = s[s.length - 1];
@@ -372,7 +460,7 @@ function timeChart(box, opt) {
     svg.append(sv("path", { d: `${d}L${lastX},${y(0)}L${x(s[0][0])},${y(0)}Z`, fill: opt.color, "fill-opacity": 0.1, stroke: "none" }));
     svg.append(sv("path", { d, fill: "none", stroke: opt.color, "stroke-width": 2, "stroke-linejoin": "round", "stroke-linecap": "round" }));
   }
-  if (segs.length) {  // aktueller Wert als Endpunkt, sichtbar auch bei nur einem Messwert
+  if (segs.length) {
     const [t, v] = segs[segs.length - 1].at(-1);
     svg.append(sv("circle", { cx: x(t), cy: y(v), r: 4, fill: opt.color, stroke: "var(--surface)", "stroke-width": 2 }));
   } else {
@@ -382,8 +470,8 @@ function timeChart(box, opt) {
   const dot = sv("circle", { r: 4, fill: opt.color, stroke: "var(--surface)", "stroke-width": 2, visibility: "hidden" });
   const hit = sv("rect", { x: L, y: 0, width: Math.max(0, W - L - R), height: H, fill: "transparent", tabindex: 0 });
   svg.append(cross, dot, hit);
-  box.replaceChildren(svg);
   const tip = tooltipFor(box);
+  box.replaceChildren(svg, tip);
   const show = px => {
     if (!pts.length) return;
     const t = x0 + (px - L) / (W - L - R) * DAY;
@@ -412,15 +500,14 @@ function renderCharts() {
     step: true, color: "var(--s1)", label: "Spieler", tip: v => nf(v), aria: "Spieler online in den letzten 24 Stunden" });
   timeChart($("c-tps"), { get: p => p.tps, max: 20, ticks: [0, 10, 20], fmt: v => v,
     color: "var(--s1)", label: "TPS (schlechtester Wert)", tip: v => nf(v, 1), aria: "TPS in den letzten 24 Stunden" });
-  const hasHeap = data.series.some(p => p.heap != null);
-  if (hasHeap) {
+  if (data.series.some(p => p.heap != null)) {
     const maxG = s.heap_max / 1024, ticks = []; for (let v = 0; v <= maxG; v += 4) ticks.push(v);
-    $("c-ram-note").textContent = `letzte 24 Stunden, Minecraft (max. ${nf(maxG)} GB)`;
+    $("c-ram-note").textContent = `Minecraft, in GB (max. ${nf(maxG)} GB)`;
     timeChart($("c-ram"), { get: p => p.heap == null ? null : p.heap / 1024, max: maxG, ticks, fmt: v => `${v}`,
       color: "var(--s1)", label: "GB belegt", tip: v => nf(v, 1), aria: "Arbeitsspeicher von Minecraft in den letzten 24 Stunden" });
   } else {
     const maxG = Math.ceil(s.mem_total / 1024 / 8) * 8, ticks = []; for (let v = 0; v <= maxG; v += maxG / 4) ticks.push(v);
-    $("c-ram-note").textContent = "letzte 24 Stunden, ganzer Server in GB";
+    $("c-ram-note").textContent = "ganzer Server, in GB";
     timeChart($("c-ram"), { get: p => p.mem == null ? null : p.mem / 1024, max: maxG, ticks, fmt: v => `${v}`,
       color: "var(--s1)", label: "GB belegt", tip: v => nf(v, 1), aria: "Arbeitsspeicher des Servers in den letzten 24 Stunden" });
   }
@@ -428,28 +515,69 @@ function renderCharts() {
     color: "var(--s1)", label: "% CPU", tip: v => `${nf(v)} %`, aria: "CPU-Auslastung in den letzten 24 Stunden" });
 }
 
-// ---------- Spielzeit pro Tag (gestapelte Säulen) ----------
-function renderDaily() {
-  const { days, players: per } = data.daily, now = data.generated;
-  const names = data.players.map(p => p.name).filter(n => per[n] && per[n].some(v => v > 0));
-  const legend = $("daily-legend"); legend.replaceChildren();
-  for (const n of names) {
-    const li = el("li"); const sw = el("span", { class: "swatch" }); sw.style.background = colorOf(n);
-    li.append(sw, document.createTextNode(n)); legend.append(li);
+// ---------- Heatmap: wann wird gespielt ----------
+function renderHeat() {
+  const box = $("c-heat"), { hours: hrs, count, since } = data.heatmap, now = data.generated;
+  const avg = hrs.map((row, d) => row.map((v, h) => count[d][h] ? v / count[d][h] : null));
+  const max = Math.max(0.01, ...avg.flat().filter(v => v != null));
+  const steps = 5, bin = v => v == null || v < 0.005 ? 0 : Math.min(steps, Math.ceil(v / max * steps));
+  const W = box.clientWidth, L = 26, T = 4, B = 18, gap = 2;
+  const cw = (W - L) / 24, ch = Math.max(14, Math.min(26, cw * 0.9)), H = T + 7 * ch + B;
+  const svg = sv("svg", { viewBox: `0 0 ${W} ${H}`, height: H, role: "img", "aria-label": "Durchschnittlich online nach Wochentag und Uhrzeit" });
+  const tip = tooltipFor(box);
+  const cells = [];
+  for (let d = 0; d < 7; d++) {
+    svg.append(sv("text", { x: 0, y: T + d * ch + ch / 2 + 4 }, WD_MON[d]));
+    for (let h = 0; h < 24; h++) {
+      const v = avg[d][h];
+      const rect = sv("rect", { class: "cell", x: L + h * cw + gap / 2, y: T + d * ch + gap / 2, width: Math.max(1, cw - gap),
+        height: ch - gap, rx: 3, fill: `var(--h${bin(v)})`, tabindex: 0 });
+      cells.push([rect, d, h, v]);
+      svg.append(rect);
+    }
   }
-  const box = $("c-daily"), W = box.clientWidth, H = 200, L = 30, R = 4, T = 18, B = 24;
+  for (let h = 0; h < 24; h += cw < 20 ? 6 : 3)
+    svg.append(sv("text", { x: L + h * cw, y: H - 4 }, `${h} Uhr`));
+  box.replaceChildren(svg, tip);
+  for (const [rect, d, h, v] of cells) {
+    const show = () => {
+      tipRows(tip, `${WD_MON[d]} ${h}–${h + 1} Uhr`, [[`var(--h${Math.max(1, bin(v))})`, v == null ? "–" : nf(v, 1), "Spieler online im Schnitt"]], "box");
+      placeTip(box, tip, L + (h + 1) * cw, T + d * ch + ch);
+    };
+    const hide = () => { tip.style.display = "none"; };
+    rect.addEventListener("pointerenter", show); rect.addEventListener("focus", show);
+    rect.addEventListener("pointerleave", hide); rect.addEventListener("blur", hide);
+  }
+  const days = Math.round((now - since) / DAY);
+  $("heat-note").textContent = `Wie viele Spieler im Schnitt online sind, nach Wochentag und Uhrzeit (letzte ${days >= 27 ? "4 Wochen" : `${Math.max(1, days)} Tage`})`;
+  const ramp = $("heat-ramp"); ramp.replaceChildren(document.createTextNode("weniger"));
+  for (let i = 0; i <= steps; i++) { const c = el("i"); c.style.background = `var(--h${i})`; ramp.append(c); }
+  ramp.append(document.createTextNode(`mehr (dunkelstes Feld: Ø ${nf(max, 1)} Spieler)`));
+}
+
+// ---------- Gestapelte Säulen pro Tag ----------
+function renderLegend(ul, names, shape = "swatch") {
+  ul.replaceChildren();
+  for (const n of names) {
+    const li = el("li"); li.append(swatch(n, shape), document.createTextNode(n)); ul.append(li);
+  }
+}
+function stackedDays(box, legend, per, opt) {
+  const days = data.daily.days;
+  const names = data.players.map(p => p.name).filter(n => per[n] && per[n].some(v => v > 0));
+  renderLegend(legend, names);
+  const W = box.clientWidth, H = 200, L = 38, R = 4, T = 18, B = 24;
   const totals = days.map((_, i) => names.reduce((a, n) => a + per[n][i], 0));
-  const top = Math.max(4, ...totals), stepV = top > 24 ? 10 : top > 12 ? 4 : 2;
+  const top = Math.max(opt.minMax, ...totals), stepV = niceStep(top);
   const maxV = Math.ceil(top / stepV) * stepV;
   const y = v => T + (1 - v / maxV) * (H - T - B);
   const band = (W - L - R) / days.length, bw = Math.min(24, band * 0.62);
-  const svg = sv("svg", { viewBox: `0 0 ${W} ${H}`, height: H, role: "img", "aria-label": "Spielzeit pro Tag und Spieler in den letzten 14 Tagen" });
-  for (let v = 0; v <= maxV; v += stepV) {
+  const svg = sv("svg", { viewBox: `0 0 ${W} ${H}`, height: H, role: "img", "aria-label": opt.aria });
+  for (let v = 0; v <= maxV + 1e-9; v += stepV) {
     svg.append(sv("line", { class: v === 0 ? "baseline" : "gridline", x1: L, x2: W - R, y1: y(v), y2: y(v) }));
-    svg.append(sv("text", { x: L - 6, y: y(v) + 4, "text-anchor": "end" }, `${v} h`));
+    svg.append(sv("text", { x: L - 6, y: y(v) + 4, "text-anchor": "end" }, opt.axis(v)));
   }
-  const tip = tooltipFor(box);
-  const hits = [];
+  const tip = tooltipFor(box), hits = [];
   days.forEach((day, i) => {
     const cx = L + band * (i + 0.5), d = new Date(day + "T12:00:00");
     const every = band < 30 ? 2 : 1;
@@ -462,22 +590,20 @@ function renderDaily() {
       base += v;
       if (h <= 0) return;
       const x = cx - bw / 2, r = k === segs.length - 1 ? Math.min(4, h, bw / 2) : 0;
-      const path = `M${x},${y0}V${y1 + r}Q${x},${y1} ${x + r},${y1}H${x + bw - r}Q${x + bw},${y1} ${x + bw},${y1 + r}V${y0}Z`;
-      svg.append(sv("path", { d: path, fill: colorOf(n) }));
+      svg.append(sv("path", { d: `M${x},${y0}V${y1 + r}Q${x},${y1} ${x + r},${y1}H${x + bw - r}Q${x + bw},${y1} ${x + bw},${y1 + r}V${y0}Z`, fill: colorOf(n) }));
     });
-    if (totals[i] >= 0.05 && band >= 26)
-      svg.append(sv("text", { class: "total", x: cx, y: y(totals[i]) - 5, "text-anchor": "middle" }, nf(totals[i], totals[i] < 10 ? 1 : 0)));
+    if (totals[i] > 0 && band >= 26 && opt.label(totals[i]))
+      svg.append(sv("text", { class: "total", x: cx, y: y(totals[i]) - 5, "text-anchor": "middle" }, opt.label(totals[i])));
     const hit = sv("rect", { x: cx - band / 2, y: 0, width: band, height: H, fill: "transparent", tabindex: 0 });
-    hits.push([hit, i, cx]);
-    svg.append(hit);
+    hits.push([hit, i, cx]); svg.append(hit);
   });
   box.replaceChildren(svg, tip);
   for (const [hit, i, cx] of hits) {
     const show = () => {
       const d = new Date(days[i] + "T12:00:00");
-      const head = `${WD[d.getDay()]} ${d.getDate()}.${d.getMonth() + 1}. · ${nf(totals[i], 1)} h gesamt`;
-      const rows = names.filter(n => per[n][i] > 0).map(n => [colorOf(n), `${nf(per[n][i], 1)} h`, n]);
-      tipRows(tip, head, rows.length ? rows : [["var(--muted)", "–", "niemand gespielt"]]);
+      const rows = names.filter(n => per[n][i] > 0).sort((a, b) => per[b][i] - per[a][i]).map(n => [colorOf(n), opt.tip(per[n][i]), n]);
+      tipRows(tip, `${WD[d.getDay()]} ${d.getDate()}.${d.getMonth() + 1}. · ${opt.tip(totals[i])} gesamt`,
+              rows.length ? rows : [["var(--muted)", "–", opt.none]], "box");
       hit.setAttribute("fill", "var(--wash)");
       placeTip(box, tip, cx, 0);
     };
@@ -486,47 +612,133 @@ function renderDaily() {
     hit.addEventListener("pointerleave", hide); hit.addEventListener("blur", hide);
   }
 }
+function renderDaily() {
+  stackedDays($("c-daily-play"), $("l-daily-play"), data.daily.playtime, {
+    minMax: 4, axis: v => `${v} h`, label: v => v >= 0.05 ? nf(v, v < 10 ? 1 : 0) : "", tip: v => `${nf(v, 1)} h`,
+    none: "niemand gespielt", aria: "Spielzeit pro Tag und Spieler in den letzten 14 Tagen" });
+  stackedDays($("c-daily-placed"), $("l-daily-placed"), data.daily.placed, {
+    minMax: 100, axis: v => compact(v), label: v => compact(v), tip: v => nf(v),
+    none: "nichts gebaut", aria: "Platzierte Blöcke pro Tag und Spieler in den letzten 14 Tagen" });
+  if (data.server.blocks_since)
+    $("n-daily-placed").textContent = `letzte 14 Tage, aus dem Block-Protokoll (CoreProtect, aktuelle Welt seit ${dateShort(data.server.blocks_since)})`;
+}
 
-// ---------- Tabelle ----------
-const COLS = [
-  { key: "name", label: "Spieler", val: p => p.name.toLowerCase(), asc: true },
-  { key: "status", label: "Zuletzt online", val: p => p.online ? Infinity : (p.last_seen || 0) },
-  { key: "total", label: "Spielzeit", val: p => p.total, sep: true },
-  { key: "week", label: "Letzte 7 Tage", val: p => p.week },
-  { key: "sessions", label: "Sessions", val: p => p.sessions },
-  { key: "longest", label: "Längste Session", val: p => p.longest },
-  { key: "deaths", label: "Tode", val: p => p.world?.deaths ?? -1, world: true, sep: true },
-  { key: "mob_kills", label: "Mobs besiegt", val: p => p.world?.mob_kills ?? -1, world: true },
-  { key: "distance_km", label: "Strecke", val: p => p.world?.distance_km ?? -1, world: true },
-  { key: "mined", label: "Blöcke abgebaut", val: p => p.world?.mined ?? -1, world: true },
-  { key: "crafted", label: "Hergestellt", val: p => p.world?.crafted ?? -1, world: true },
+// ---------- Wettrennen: kumulierte Spielzeit ----------
+function renderRace() {
+  const { days, playtime } = data.cumulative, now = data.generated;
+  const names = data.players.map(p => p.name).filter(n => playtime[n]);
+  const cum = {};
+  for (const n of names) { let a = 0; cum[n] = playtime[n].map(v => (a += v)); }
+  renderLegend($("l-race"), names, "swatch line-key");
+  const box = $("c-race"), W = box.clientWidth, H = 230, narrow = W < 560;
+  const L = 38, R = narrow ? 10 : 112, T = 10, B = 24;
+  const top = Math.max(4, ...names.map(n => cum[n].at(-1))), stepV = niceStep(top);
+  const maxV = Math.ceil(top / stepV) * stepV;
+  const x = i => L + (days.length === 1 ? 0.5 : i / (days.length - 1)) * (W - L - R);
+  const y = v => T + (1 - v / maxV) * (H - T - B);
+  const svg = sv("svg", { viewBox: `0 0 ${W} ${H}`, height: H, role: "img", "aria-label": "Gesamtspielzeit je Spieler im Verlauf" });
+  for (let v = 0; v <= maxV + 1e-9; v += stepV) {
+    svg.append(sv("line", { class: v === 0 ? "baseline" : "gridline", x1: L, x2: W - R, y1: y(v), y2: y(v) }));
+    svg.append(sv("text", { x: L - 6, y: y(v) + 4, "text-anchor": "end" }, `${v} h`));
+  }
+  const every = Math.max(1, Math.ceil(days.length / Math.max(2, Math.floor((W - L - R) / 56))));
+  days.forEach((day, i) => {
+    if ((days.length - 1 - i) % every) return;
+    const d = new Date(day + "T12:00:00");
+    svg.append(sv("text", { x: x(i), y: H - 6, "text-anchor": "middle" }, `${d.getDate()}.${d.getMonth() + 1}.`));
+  });
+  for (const n of names) {
+    const d = cum[n].map((v, i) => `${i ? "L" : "M"}${x(i)},${y(v)}`).join("");
+    svg.append(sv("path", { d, fill: "none", stroke: colorOf(n), "stroke-width": 2, "stroke-linejoin": "round", "stroke-linecap": "round" }));
+  }
+  for (const n of names)
+    svg.append(sv("circle", { cx: x(days.length - 1), cy: y(cum[n].at(-1)), r: 4, fill: colorOf(n), stroke: "var(--surface)", "stroke-width": 2 }));
+  if (!narrow) {  // Namen am Linienende, nur wo sie sich nicht überlappen
+    let lastY = -Infinity;
+    for (const n of [...names].sort((a, b) => cum[b].at(-1) - cum[a].at(-1))) {
+      const ly = y(cum[n].at(-1));
+      if (ly - lastY < 15) continue;
+      lastY = ly;
+      svg.append(sv("text", { class: "label", x: x(days.length - 1) + 10, y: ly + 4 }, `${n} ${nf(cum[n].at(-1))} h`));
+    }
+  }
+  const cross = sv("line", { class: "crosshair", y1: T, y2: H - B, visibility: "hidden" });
+  const hit = sv("rect", { x: L, y: 0, width: Math.max(0, W - L - R), height: H, fill: "transparent", tabindex: 0 });
+  svg.append(cross, hit);
+  const tip = tooltipFor(box);
+  box.replaceChildren(svg, tip);
+  const show = px => {
+    const i = Math.max(0, Math.min(days.length - 1, Math.round((px - L) / (W - L - R) * (days.length - 1))));
+    cross.setAttribute("x1", x(i)); cross.setAttribute("x2", x(i)); cross.setAttribute("visibility", "visible");
+    const d = new Date(days[i] + "T12:00:00");
+    tipRows(tip, `bis ${WD[d.getDay()]} ${d.getDate()}.${d.getMonth() + 1}.`,
+            [...names].sort((a, b) => cum[b][i] - cum[a][i]).map(n => [colorOf(n), `${nf(cum[n][i], 1)} h`, n]));
+    placeTip(box, tip, x(i), 0);
+  };
+  const hide = () => { tip.style.display = "none"; cross.setAttribute("visibility", "hidden"); };
+  hit.addEventListener("pointermove", e => show(e.offsetX));
+  hit.addEventListener("pointerleave", hide);
+  hit.addEventListener("focus", () => show(W - R));
+  hit.addEventListener("blur", hide);
+  if (data.server.tracking_since)
+    $("n-race").textContent = `Stunden seit Beginn der Aufzeichnung (${dateShort(data.server.tracking_since)}), über alle Welten`;
+}
+
+// ---------- Rangliste und Tabelle (Zeitraum-Umschalter) ----------
+const METRICS = [
+  { key: "playtime", label: "Spielzeit", fmt: v => v ? hours(v) : "0 h" },
+  { key: "placed", label: "Blöcke platziert", fmt: v => nf(v) },
+  { key: "broken", label: "Blöcke abgebaut", fmt: v => nf(v) },
+  { key: "mob_kills", label: "Mobs besiegt", fmt: v => nf(v), world: true },
+  { key: "walk_km", label: "Zu Fuß", fmt: v => km(v), world: true },
+  { key: "deaths", label: "Tode", fmt: v => nf(v), world: true },
+  { key: "distance_km", label: "Strecke gesamt", fmt: v => km(v), world: true, tableOnly: true },
+  { key: "crafted", label: "Hergestellt", fmt: v => nf(v), world: true, tableOnly: true },
 ];
-function cell(p, c, now) {
-  const w = p.world;
-  switch (c.key) {
-    case "name": return null;
-    case "status":
-      if (p.online) return el("span", { class: "online" }, "● online");
-      return document.createTextNode(p.last_seen ? ago(p.last_seen, now) : "noch nie");
-    case "total": return document.createTextNode(p.total ? hours(p.total) : "–");
-    case "week": return document.createTextNode(p.week ? hours(p.week) : "–");
-    case "sessions": return document.createTextNode(nf(p.sessions));
-    case "longest": return document.createTextNode(p.longest ? dur(p.longest) : "–");
-    case "distance_km": return document.createTextNode(w ? `${nf(w.distance_km, w.distance_km < 10 ? 1 : 0)} km` : "–");
-    default: return document.createTextNode(w ? nf(w[c.key]) : "–");
+function renderPeriod() {
+  for (const b of $("period").querySelectorAll("button")) b.setAttribute("aria-pressed", String(b.dataset.period === period));
+  const s = data.server, now = data.generated, cov = $("coverage");
+  if (period === "total") {
+    cov.textContent = `Spielzeit seit ${dateShort(s.tracking_since)} über alle Welten, alles andere in der aktuellen Welt.`;
+  } else {
+    const start = s.period_starts[period], ws = s.world_since[period];
+    const head = period === "today" ? "Seit heute 0 Uhr." : `Seit ${when(start, now)} Uhr.`;
+    cov.textContent = ws - start > 120
+      ? `${head} Tode, Mobs, Strecke und Hergestelltes zählt das Dashboard erst seit ${when(ws, now)} Uhr.`
+      : head;
+  }
+}
+function renderRanking() {
+  const box = $("ranking"); box.replaceChildren();
+  for (const m of METRICS.filter(m => !m.tableOnly)) {
+    const card = el("div", { class: "card" });
+    card.append(el("h3", {}, m.label));
+    const rows = data.players.map(p => [p.name, p.periods[period][m.key] || 0]).sort((a, b) => b[1] - a[1]);
+    const max = Math.max(...rows.map(r => r[1]));
+    const ul = el("ul", { class: "bars" });
+    rows.forEach(([name, v], i) => {
+      const li = el("li");
+      const who = el("span", { class: "who" }); who.append(el("span", { class: "rank" }, `${i + 1}.`), document.createTextNode(name));
+      const track = el("span", { class: "track" });
+      const bar = el("span", { class: "bar" }); bar.style.background = colorOf(name);
+      bar.style.width = max > 0 && v > 0 ? `max(3px, calc((100% - 72px) * ${v / max}))` : "0";
+      track.append(bar, el("span", { class: "val" }, m.fmt(v)));
+      li.append(who, track); ul.append(li);
+    });
+    card.append(ul); box.append(card);
   }
 }
 function renderTable() {
   const t = $("players"), now = data.generated;
   t.replaceChildren();
-  const thead = el("thead");
-  const g = el("tr");
-  g.append(el("th", { colspan: 2 }), el("th", { colspan: 4, class: "group sep" }, "seit Beginn der Aufzeichnung"),
-           el("th", { colspan: 5, class: "group sep" }, "in der aktuellen Welt"));
-  const hr = el("tr");
-  for (const c of COLS) {
+  const cols = [
+    { key: "name", label: "Spieler", val: p => p.name.toLowerCase(), asc: true },
+    { key: "status", label: "Zuletzt online", val: p => p.online ? Infinity : (p.last_seen || 0) },
+    ...METRICS.map(m => ({ ...m, val: p => p.periods[period][m.key] || 0 })),
+  ];
+  const thead = el("thead"), hr = el("tr");
+  for (const c of cols) {
     const th = el("th", { scope: "col" });
-    if (c.sep) th.classList.add("sep");
     if (c.key === sortKey) th.setAttribute("aria-sort", sortDir > 0 ? "ascending" : "descending");
     const b = el("button", { type: "button" }, c.label);
     b.addEventListener("click", () => {
@@ -535,36 +747,85 @@ function renderTable() {
     });
     th.append(b); hr.append(th);
   }
-  thead.append(g, hr);
-  const col = COLS.find(c => c.key === sortKey);
+  thead.append(hr);
+  const col = cols.find(c => c.key === sortKey) || cols[2];
   const rows = [...data.players].sort((a, b) => {
     const va = col.val(a), vb = col.val(b);
-    return va < vb ? -sortDir : va > vb ? sortDir : b.total - a.total;
+    return va < vb ? -sortDir : va > vb ? sortDir : a.name.localeCompare(b.name);
   });
   const tbody = el("tbody");
   for (const p of rows) {
     const tr = el("tr");
-    for (const c of COLS) {
+    for (const c of cols) {
       const td = el("td");
-      if (c.sep) td.classList.add("sep");
-      if (c.key === "name") {
-        td.className = "player";
-        const sw = el("span", { class: "swatch" }); sw.style.background = colorOf(p.name);
-        td.append(sw, document.createTextNode(p.name));
-      } else td.append(cell(p, c, now));
+      if (c.key === "name") { td.className = "player"; td.append(swatch(p.name), document.createTextNode(p.name)); }
+      else if (c.key === "status") {
+        if (p.online) td.append(el("span", { class: "online" }, "● online"));
+        else td.textContent = p.last_seen ? ago(p.last_seen, now) : "noch nie";
+      } else td.textContent = c.fmt(p.periods[period][c.key] || 0);
       tr.append(td);
     }
     tbody.append(tr);
   }
   t.append(thead, tbody);
+  $("table-note").textContent = `${{ today: "Heute", week: "Letzte 7 Tage", total: "Gesamt" }[period]} · Spalten zum Sortieren antippen`;
+}
+
+// ---------- Steckbriefe ----------
+function renderProfiles() {
+  const box = $("profiles"), now = data.generated;
+  box.replaceChildren();
+  const order = [...data.players].sort((a, b) => b.periods.total.playtime - a.periods.total.playtime);
+  for (const p of order) {
+    const card = el("article", { class: "card profile" }), w = p.world, f = w && w.facts;
+    const head = el("header");
+    head.append(swatch(p.name), el("span", { class: "name" }, p.name),
+      el("span", { class: "state" + (p.online ? " online" : "") }, p.online ? "● online" : p.last_seen ? `zuletzt ${ago(p.last_seen, now)}` : "noch nie da"));
+    card.append(head);
+    const meta = [];
+    if (p.first_seen) meta.push(`dabei seit ${dateShort(p.first_seen)}`);
+    meta.push(`${nf(p.sessions)} Sessions`);
+    if (p.longest) meta.push(`längste ${dur(p.longest)}`);
+    card.append(el("p", { class: "meta" }, meta.join(" · ")));
+    const dl = el("dl");
+    const row = (label, value, extra) => {
+      const dd = el("dd", {}, value);
+      if (extra) dd.append(el("span", {}, ` ${extra}`));
+      dl.append(el("dt", {}, label), dd);
+    };
+    if (f) {
+      if (f.mined[0]) row("Baut am meisten ab", f.mined[0][0], `${compact(f.mined[0][1])}×`);
+      if (f.killed[0]) row("Besiegt am liebsten", f.killed[0][0], `${nf(f.killed[0][1])}×`);
+      row("Gestorben durch", f.killed_by[0] ? f.killed_by[0][0] : (w.deaths ? "Sturz, Lava & Co." : "noch nie gestorben"),
+          f.killed_by[0] ? `${nf(f.killed_by[0][1])}×` : "");
+      if (f.crafted[0]) row("Stellt am meisten her", f.crafted[0][0], `${compact(f.crafted[0][1])}×`);
+      row("Unterwegs insgesamt", km(w.distance_km));
+      row("Davon zu Fuß", km(w.walk_km));
+      if (w.swim_km >= 0.1) row("Geschwommen", km(w.swim_km));
+      row("Gesprungen", `${nf(w.jumps)}×`);
+      row("Platziert / abgebaut", `${compact(p.periods.total.placed)} / ${compact(p.periods.total.broken)}`);
+    } else {
+      dl.append(el("dt", {}, "In dieser Welt"), el("dd", {}, "noch keine Statistik"));
+    }
+    card.append(dl); box.append(card);
+  }
 }
 
 function render() {
   if (!data || !data.server) return;
-  renderTiles(); renderOnline(); renderCharts(); renderDaily(); renderTable();
+  renderTiles(); renderOnline(); renderCharts(); renderHeat(); renderDaily(); renderRace();
+  renderPeriod(); renderRanking(); renderTable(); renderProfiles();
   if (data.server.tracking_since)
     $("foot-tracking").textContent = `Spielzeiten aus den Server-Logs, aufgezeichnet seit ${new Date(data.server.tracking_since * 1000).toLocaleDateString("de-DE")}.`;
 }
+
+$("period").addEventListener("click", e => {
+  const b = e.target.closest("button[data-period]");
+  if (!b) return;
+  period = b.dataset.period;
+  try { localStorage.setItem("period", period); } catch (err) {}
+  renderPeriod(); renderRanking(); renderTable();
+});
 
 async function load() {
   try {
@@ -579,8 +840,11 @@ async function load() {
     document.body.classList.add("stale"); $("error").style.display = "block";
   }
 }
-let resizeTimer;
-addEventListener("resize", () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(render, 150); });
+let resizeTimer, lastWidth = innerWidth;
+addEventListener("resize", () => {
+  if (innerWidth === lastWidth) return;  // Handy: Adressleiste ein/aus ändert nur die Höhe
+  lastWidth = innerWidth; clearTimeout(resizeTimer); resizeTimer = setTimeout(render, 150);
+});
 document.addEventListener("visibilitychange", () => { if (!document.hidden) load(); });
 load();
 setInterval(load, 30000);
