@@ -34,6 +34,10 @@ file = "config/naturaltemperature-common.toml"
 hash = "fc1ec8d3e3c8afd9f2ee55927a03efeb691a8efcd68d93937daef476a8d5aeb3"
 
 [[files]]
+file = "config/proudmountain/spielerfarben.json"
+hash = "6b8f07c0fa73b3dd0d64f1f6b2037894929786b211c18da1157c9dde7e7b585e"
+
+[[files]]
 file = "config/proudmountain_tweaks/default_resourcepacks.txt"
 hash = "1a39fdf741f78a6c3ccf75a0b3a340c9e27a60ecce19567bf849054b9b5c3813"
 
@@ -663,7 +667,7 @@ hash = "a9108634f879d22414af161983a06ca53aa6e95c97f04414f4a1ca6e2b7b7f74"
 
 [[files]]
 file = "kubejs/data/minecraft/chat_type/chat.json"
-hash = "b4a28a15b020d1562d6819290644beb5bb97e3a0d3ddede9d9af88edbbcb97f4"
+hash = "0625e00debd75e0326e02e95bbfa672c7cbe40a60d032bf5bb74f746813d92cb"
 
 [[files]]
 file = "kubejs/data/minecraft/chat_type/emote_command.json"
@@ -2168,6 +2172,10 @@ hash = "0185ffa8f3990730134d5785f32886448de52c965e7935397d90adb992ed42f4"
 [[files]]
 file = "kubejs/server_scripts/smallships.js"
 hash = "de10973245c650c925376f297637b6a4c6586ca092a4c60bfc34a2bac34c5d62"
+
+[[files]]
+file = "kubejs/server_scripts/spielerfarben.js"
+hash = "f9a69b1108c546c37c8404be04ae16a722a206bde954781c956e68f09998d7fc"
 
 [[files]]
 file = "kubejs/server_scripts/testwelt.js"

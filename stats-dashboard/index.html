@@ -301,9 +301,9 @@ function sv(tag, attrs = {}, text) {
   if (text !== undefined) e.textContent = text;
   return e;
 }
-function colorOf(name) {
-  const i = data.players.findIndex(p => p.name === name);
-  return `var(--s${(i < 0 ? 0 : i) % 8 + 1})`;
+function colorOf(name) {  // Farbnummer vom Server, dieselbe wie für den Namen im Chat
+  const p = data.players.find(p => p.name === name);
+  return `var(--s${p && p.color || 1})`;
 }
 function swatch(name, cls = "swatch") {
   const s = el("span", { class: cls }); s.style.background = colorOf(name); return s;

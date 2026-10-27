@@ -1,0 +1,10 @@
+{
+  "_hinweis": "Farbe je Spieler, gilt für den Namen im Chat (KubeJS spielerfarben.js) und für https://stats.proud-mountain.com. 1 blau, 2 orange, 3 türkis, 4 gelb, 5 rosa, 6 grün, 7 violett, 8 rot. Neue Spieler hier eintragen (am besten eine noch freie Farbe), sonst gibt das Dashboard ihnen die nächste freie und der Name im Chat bleibt weiß.",
+  "farben": {
+    "IrgendwasMitT": 1,
+    "EinsLotti": 2,
+    "Her0feX": 3,
+    "BinNick": 4,
+    "LtCloudbeater": 5
+  }
+}

@@ -312,6 +312,29 @@ def level_name():
     return "world"
 
 
+def player_colors():
+    """Feste Farbnummern (1-8) aus config/proudmountain/spielerfarben.json, dieselben wie im Chat."""
+    try:
+        farben = json.load(open(os.path.join(DATA, "config", "proudmountain", "spielerfarben.json")))["farben"]
+        return {str(k): int(v) for k, v in farben.items() if 1 <= int(v) <= 8}
+    except (OSError, ValueError, KeyError, TypeError, AttributeError):
+        return {}
+
+
+def assign_colors(order):
+    """Spieler ohne Eintrag bekommen der Reihe nach die noch freien Farben."""
+    fixed = player_colors()
+    free = [c for c in range(1, 9) if c not in fixed.values()] or list(range(1, 9))
+    out, i = {}, 0
+    for name in order:
+        if name in fixed:
+            out[name] = fixed[name]
+        else:
+            out[name] = free[i % len(free)]
+            i += 1
+    return out
+
+
 WALK = ("walk", "sprint", "crouch", "walk_on_water", "walk_under_water")
 SNAPSHOT_KEYS = ("deaths", "mob_kills", "walk_km", "distance_km", "crafted")
 
@@ -558,6 +581,7 @@ class Collector:
                 first_seen.setdefault(name, start)
             order = sorted(set(wl) | set(first_seen), key=lambda n: (first_seen.get(n, now), n.lower()))
             world = {n: world_stats(wl[n]) if n in wl else None for n in order}
+            colors = assign_colors(order)
             snapshot_world(con, now, world)
             con.commit()
 
@@ -585,6 +609,7 @@ class Collector:
                     }
                 table.append({
                     "name": name,
+                    "color": colors[name],
                     "online": name in players,
                     "since": current[1] if current else None,
                     "last_seen": now if current else (max(ends) if ends else None),
