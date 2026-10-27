@@ -9,26 +9,6 @@ file = "config/betterdays-common.toml"
 hash = "2db73d5071bd28cb2f65c1e934f32a1cb3fba10c17f591e32fcd36471ecbb221"
 
 [[files]]
-file = "config/bluemap/core.conf"
-hash = "eb391feadc2ce686e0ec5f37f01229b6be2e759349819453f08ab4eee7b975c4"
-
-[[files]]
-file = "config/bluemap/maps/world.conf"
-hash = "901cdd2c09af17d0203bec946fe9625766d758165f49f190b01c8e6c5434bdb3"
-
-[[files]]
-file = "config/bluemap/maps/world_the_end.conf"
-hash = "3f1ff5cd0f3fe5cadc3c69df00c76764a9e293eb43987318993cf532f0a65f20"
-
-[[files]]
-file = "config/bluemap/maps/world_the_nether.conf"
-hash = "7d3a49747f1ed238bcd0f3b2d99a089df19773cdb2bca62c13c2705262c3c906"
-
-[[files]]
-file = "config/bluemap/plugin.conf"
-hash = "93c9b2090eac3283d6af7436c2a72ef1ddb4bdcb3cea26644f22464019427468"
-
-[[files]]
 file = "config/fallingtrees/common.json"
 hash = "38087e213fc6665caee804836df125675b46248019f369ae188bb7de97758ed8"
 
@@ -2232,11 +2212,6 @@ metafile = true
 [[files]]
 file = "mods/biomes-o-plenty.pw.toml"
 hash = "f6f723c2d15da3b36a2c29408deb914f6c4bdbe4a20aa652f3f07642011fce8e"
-metafile = true
-
-[[files]]
-file = "mods/bluemap.pw.toml"
-hash = "5edfbc3144fd12924e2f581eb238be03cdd7db42e9a95b3761a9240b773dfec9"
 metafile = true
 
 [[files]]

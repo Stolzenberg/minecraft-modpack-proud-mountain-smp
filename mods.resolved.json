@@ -1498,25 +1498,6 @@
   "serverPackOnly": true
  },
  {
-  "slug": "bluemap",
-  "name": "BlueMap",
-  "projectID": 406463,
-  "fileID": 6239407,
-  "fileName": "bluemap-5.7-neoforge.jar",
-  "date": "2025-02-26",
-  "releaseType": 1,
-  "downloadUrl": "https://edge.forgecdn.net/files/6239/407/bluemap-5.7-neoforge.jar",
-  "side": "server",
-  "why": "listed",
-  "requires": [],
-  "url": "https://www.curseforge.com/minecraft/mc-mods/bluemap",
-  "authors": [
-   "TBlueF"
-  ],
-  "classId": 6,
-  "serverPackOnly": true
- },
- {
   "slug": "jei",
   "name": "Just Enough Items (JEI)",
   "projectID": 238222,

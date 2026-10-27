@@ -97,7 +97,6 @@ betterdays                               pin=7978626 # 4x längere Tage (Config:
 simple-voice-chat                        pin=8601207 # Proximity-Voice-Chat, Server braucht UDP-Port 24454
 coreprotectneo                           pin=8917394 side=server pack=server # Block-Logging und Rollbacks, MariaDB auf dem Server (Config nur dort, enthält Passwort)
 chunky-pregenerator-forge                pin=6383261 side=server pack=server # Welt vorgenerieren (/chunky), erst wenn die Weltgenerierung feststeht
-bluemap                                  pin=6239407 side=server pack=server # 3D-Webkarte auf https://map.proud-mountain.com (Port 8100, Cloudflare Tunnel im Docker-Setup); Config: server-overrides/config/bluemap/
 # --- QoL ---
 jei                                      pin=8792638
 jade                                     pin=8591319
