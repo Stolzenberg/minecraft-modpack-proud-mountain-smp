@@ -2162,6 +2162,10 @@ file = "kubejs/server_scripts/elytra.js"
 hash = "f99cf362902ba9ef64d9085354a827116a315b8b785d66cbd582dc6ab8d66a5d"
 
 [[files]]
+file = "kubejs/server_scripts/endsperre.js"
+hash = "4f45846bdb3c7e1323862867f86a36901973d83f64a532f6ce90c78077e5b650"
+
+[[files]]
 file = "kubejs/server_scripts/smallships.js"
 hash = "de10973245c650c925376f297637b6a4c6586ca092a4c60bfc34a2bac34c5d62"
 
