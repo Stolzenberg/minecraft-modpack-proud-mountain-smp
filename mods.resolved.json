@@ -2139,6 +2139,25 @@
   "serverPackOnly": false
  },
  {
+  "slug": "uwrad-neoforge",
+  "name": "Unsafe World Random Access Detector (NeoForge)",
+  "projectID": 1111799,
+  "fileID": 9069850,
+  "fileName": "unsafe-world-random-access-detector-1.1.4+neoforge.jar",
+  "date": "2026-10-05",
+  "releaseType": 1,
+  "downloadUrl": "https://edge.forgecdn.net/files/9069/850/unsafe-world-random-access-detector-1.1.4%2bneoforge.jar",
+  "side": "client",
+  "why": "listed",
+  "requires": [],
+  "url": "https://www.curseforge.com/minecraft/mc-mods/uwrad-neoforge",
+  "authors": [
+   "ishlandmc"
+  ],
+  "classId": 6,
+  "serverPackOnly": false
+ },
+ {
   "slug": "antixray-forge",
   "name": "AntiXray ((Neo)Forge)",
   "projectID": 560511,

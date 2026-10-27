@@ -1,0 +1,13 @@
+name = "Unsafe World Random Access Detector (NeoForge)"
+filename = "unsafe-world-random-access-detector-1.1.4+neoforge.jar"
+side = "client"
+
+[download]
+url = "https://cdn.modrinth.com/data/MsGuTgPJ/versions/S8Xtmi9v/unsafe-world-random-access-detector-1.1.4%2Bneoforge.jar"
+hash-format = "sha1"
+hash = "11de4f0e9e9f200c9c4c2644298f5c3b5e867366"
+
+[update]
+[update.modrinth]
+mod-id = "MsGuTgPJ"
+version = "S8Xtmi9v"

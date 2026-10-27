@@ -136,4 +136,5 @@ alltheleaks                              pin=8943912
 clumps                                   pin=5623731
 spark                                    pin=6225208
 crash-assistant                          pin=8636685 side=client
+uwrad-neoforge                           pin=9069850 side=client   # fängt Zugriffe fremder Threads auf den Level-Zufall ab ("Accessing LegacyRandomSource from multiple threads", z. B. am Sculptor-Kloster) und loggt den Verursacher statt abzustürzen (Config: packwiz/config/uwrad.properties)
 antixray-forge                           pin=7979123 pack=server

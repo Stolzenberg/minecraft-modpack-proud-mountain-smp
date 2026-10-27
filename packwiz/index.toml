@@ -58,6 +58,10 @@ file = "config/tectonic.json"
 hash = "c44645599a7c0c0315131e7e0c4189b7957b6b1eae534e443c795bbafc20dd2a"
 
 [[files]]
+file = "config/uwrad.properties"
+hash = "ea48c5a190e29cf23f296d54d19288b9e32cbd33190aa1429f4898178baf5795"
+
+[[files]]
 file = "config/waystones-common.toml"
 hash = "f338c510714391635d7a8a38ef2687d6ecfc94f3a0ac48794293ca3b86ffbf98"
 
@@ -2769,6 +2773,11 @@ metafile = true
 [[files]]
 file = "mods/terrablender-neoforge.pw.toml"
 hash = "d77e4dc337b6090358c1ef01b0f99a8357e5279443e0e23e511de1be865c01c9"
+metafile = true
+
+[[files]]
+file = "mods/uwrad-neoforge.pw.toml"
+hash = "f01c223df5a6f8b678f6300f4fa7a9612dd4349d5c0f173634f7316a9a11756e"
 metafile = true
 
 [[files]]
