@@ -715,6 +715,12 @@ function renderRanking() {
     card.append(el("h3", {}, m.label));
     const rows = data.players.map(p => [p.name, p.periods[period][m.key] || 0]).sort((a, b) => b[1] - a[1]);
     const max = Math.max(...rows.map(r => r[1]));
+    const ws = data.server.world_since[period];
+    if (m.world && max === 0 && period !== "total" && ws - data.server.period_starts[period] > 120) {
+      card.append(el("p", { class: "empty" }, `Zählt seit ${when(ws, data.generated)} Uhr, bisher noch nichts dazugekommen.`));
+      box.append(card);
+      continue;
+    }
     const ul = el("ul", { class: "bars" });
     rows.forEach(([name, v], i) => {
       const li = el("li");
