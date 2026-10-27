@@ -25,7 +25,8 @@
 
   ServerEvents.commandRegistry(event => {
     const { commands: Commands } = event
-    const reply = (ctx, msg) => ctx.source.sendSuccess(() => Text.of(msg), true)
+    // sendSuccess erwartet einen Supplier, daraus macht Rhino keine Pfeilfunktion
+    const reply = (ctx, msg) => ctx.source.sendSystemMessage(Text.of(msg))
     event.register(Commands.literal('endsperre')
       .requires(src => src.hasPermission(2))
       .executes(ctx => {
@@ -65,6 +66,7 @@
     let now = server.getTickCount()
     if (lastNotice[id] && now - lastNotice[id] < 60) return
     lastNotice[id] = now
+    console.info(`[endsperre] ${entity.getScoreboardName()} wollte ins End`)
     entity.displayClientMessage(Text.of('Das End ist noch gesperrt und wird später freigeschaltet.').red(), true)
   })
 })()
