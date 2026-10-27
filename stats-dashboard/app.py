@@ -1,0 +1,435 @@
+#!/usr/bin/env python3
+"""Statistik-Dashboard für den Proud-Mountain-Server (https://stats.proud-mountain.com).
+
+Jede Minute: wer online ist und TPS (RCON), Heap nach der letzten Garbage Collection (GC-Log des
+Servers), RAM und CPU des Hosts (/proc). Sessions kommen aus den Server-Logs ("joined/left the game"),
+damit auch die Zeit vor dem Dashboard zählt. Ereignisse und Messwerte landen in einer SQLite-Datei,
+die Webseite (index.html) holt sich alles als JSON von /api/stats.
+
+Nur Standardbibliothek. Konfiguration per Umgebung, siehe ENV unten.
+"""
+import gzip, json, os, re, socket, sqlite3, struct, threading, time
+from datetime import datetime, timedelta
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from zoneinfo import ZoneInfo
+
+ENV = os.environ.get
+DATA = ENV("MC_DATA", "/data")
+DB_PATH = ENV("STATS_DB", "/stats/stats.db")
+RCON = (ENV("RCON_HOST", "mc"), int(ENV("RCON_PORT", "25575")), ENV("RCON_PASSWORD", ""))
+TZ = ZoneInfo(ENV("TZ", "Europe/Berlin"))
+MAX_HEAP = ENV("MAX_MEMORY", "16G")
+RESTART_AT = ENV("RESTART_AT", "06:00")  # täglicher Neustart (Cron auf dem Host)
+ADDRESS = ENV("SERVER_ADDRESS", "server.proud-mountain.com")
+INTERVAL = 60
+KEEP_DAYS = 30
+HERE = os.path.dirname(os.path.abspath(__file__))
+
+LOG_LINE = re.compile(r"^\[(\d{2}\w{3}\d{4} \d{2}:\d{2}:\d{2})\.\d+\] \[([^\]]+)\] \[([^\]]*)\]: (.*)$")
+ARCHIVE = re.compile(r"^(\d{4}-\d{2}-\d{2})-(\d+)\.log\.gz$")
+PLAYER_EVENT = re.compile(r"^(\w{3,16}) (joined|left) the game$")
+TPS = re.compile(r"Overall: ([\d.]+) TPS \(([\d.]+) ms/tick\)")
+GC = re.compile(r"(\d+)([KMG])->(\d+)([KMG])\((\d+)([KMG])\)")
+COLOR = re.compile(r"\x1b\[[0-9;]*m|§.")
+
+
+def mb(n, unit):
+    return int(n) * {"K": 1 / 1024, "M": 1, "G": 1024}[unit]
+
+
+# --- RCON -------------------------------------------------------------------------------------------
+
+def rcon(*commands):
+    host, port, password = RCON
+    with socket.create_connection((host, port), timeout=5) as s:
+        def send(rid, typ, body):
+            data = struct.pack("<ii", rid, typ) + body.encode() + b"\x00\x00"
+            s.sendall(struct.pack("<i", len(data)) + data)
+
+        def recv():
+            def exact(n):
+                buf = b""
+                while len(buf) < n:
+                    chunk = s.recv(n - len(buf))
+                    if not chunk:
+                        raise ConnectionError("RCON-Verbindung geschlossen")
+                    buf += chunk
+                return buf
+            n = struct.unpack("<i", exact(4))[0]
+            body = exact(n)
+            return struct.unpack("<i", body[:4])[0], body[8:-2].decode(errors="replace")
+
+        send(1, 3, password)
+        if recv()[0] == -1:
+            raise PermissionError("RCON-Passwort falsch")
+        out = []
+        for i, cmd in enumerate(commands, start=10):
+            send(i, 2, cmd)
+            out.append(COLOR.sub("", recv()[1]).strip())
+        return out
+
+
+# --- Datenbank --------------------------------------------------------------------------------------
+
+def db():
+    con = sqlite3.connect(DB_PATH, timeout=10)
+    con.executescript("""
+        CREATE TABLE IF NOT EXISTS events (ts REAL, kind TEXT, name TEXT, UNIQUE (ts, kind, name));
+        CREATE TABLE IF NOT EXISTS log_files (name TEXT PRIMARY KEY);
+        CREATE TABLE IF NOT EXISTS metrics (ts REAL PRIMARY KEY, online INTEGER, players INTEGER, tps REAL,
+                                            mspt REAL, heap_used REAL, heap_committed REAL, mem_used REAL,
+                                            mem_total REAL, cpu REAL);
+    """)
+    return con
+
+
+# --- Server-Logs ------------------------------------------------------------------------------------
+
+def parse_lines(lines):
+    """Ereignisse (ts, kind, name) und letzter Zeitstempel. kind: start, ready, stop, join, leave, eof."""
+    events, last = [], None
+    for line in lines:
+        m = LOG_LINE.match(line.rstrip("\n"))
+        if not m:
+            continue
+        stamp, thread, source, msg = m.groups()
+        try:
+            ts = datetime.strptime(stamp, "%d%b%Y %H:%M:%S").replace(tzinfo=TZ).timestamp()
+        except ValueError:
+            continue
+        last = ts
+        if thread != "Server thread/INFO":
+            continue
+        if source == "net.minecraft.server.MinecraftServer/":
+            if msg == "Stopping server":
+                events.append((ts, "stop", ""))
+            elif e := PLAYER_EVENT.match(msg):
+                events.append((ts, "join" if e.group(2) == "joined" else "leave", e.group(1)))
+        elif source == "net.minecraft.server.dedicated.DedicatedServer/":
+            if msg.startswith("Starting minecraft server version"):
+                events.append((ts, "start", ""))
+            elif msg.startswith("Done ("):
+                events.append((ts, "ready", ""))
+    return events, last
+
+
+class LatestLog:
+    """Liest logs/latest.log inkrementell (nur neue Zeilen), beginnt nach einer Rotation von vorn."""
+
+    def __init__(self):
+        self.inode, self.offset, self.rest, self.last = None, 0, "", None
+
+    def read(self):
+        path = os.path.join(DATA, "logs", "latest.log")
+        try:
+            st = os.stat(path)
+        except FileNotFoundError:
+            return []
+        if st.st_ino != self.inode or st.st_size < self.offset:
+            self.inode, self.offset, self.rest, self.last = st.st_ino, 0, "", None
+        with open(path, "rb") as f:
+            f.seek(self.offset)
+            chunk = f.read()
+        self.offset += len(chunk)
+        text = self.rest + chunk.decode(errors="replace")
+        lines = text.split("\n")
+        self.rest = lines.pop()
+        events, last = parse_lines(lines)
+        self.last = last or self.last
+        return events
+
+
+def import_archives(con):
+    """Rotierte Logs (YYYY-MM-DD-N.log.gz) einmalig einlesen. Ein eof-Ereignis merkt sich das Dateiende,
+    damit Sessions bei einem Absturz dort enden statt beim nächsten Start."""
+    known = {r[0] for r in con.execute("SELECT name FROM log_files")}
+    folder = os.path.join(DATA, "logs")
+    for name in sorted(os.listdir(folder)):
+        if not ARCHIVE.match(name) or name in known:
+            continue
+        with gzip.open(os.path.join(folder, name), "rt", errors="replace") as f:
+            events, last = parse_lines(f)
+        if last:
+            events.append((last, "eof", ""))
+        con.executemany("INSERT OR IGNORE INTO events VALUES (?, ?, ?)", events)
+        con.execute("INSERT INTO log_files VALUES (?)", (name,))
+    con.commit()
+
+
+def sessions(con, online, latest_last):
+    """Sessions [name, start, end] aus allen Ereignissen; end None = gerade online."""
+    done, open_, last, ready = [], {}, None, None
+    order = {"start": 0, "eof": 1, "ready": 2, "join": 3, "leave": 4, "stop": 5}
+    rows = sorted(con.execute("SELECT ts, kind, name FROM events"), key=lambda r: (r[0], order[r[1]]))
+    for ts, kind, name in rows:
+        if kind in ("start", "stop"):
+            end = ts if kind == "stop" else (last or ts)
+            done += [[n, s, max(s, end)] for n, s in open_.items()]
+            open_ = {}
+            ready = None
+        elif kind == "ready":
+            ready = ts
+        elif kind == "join":
+            if name in open_:
+                done.append([name, open_[name], ts])
+            open_[name] = ts
+        elif kind == "leave" and name in open_:
+            done.append([name, open_.pop(name), ts])
+        last = ts
+    now = time.time()
+    for n, s in open_.items():
+        if n in online:
+            done.append([n, s, None])
+        else:  # Server abgestürzt oder RCON gerade weg
+            done.append([n, s, max(s, latest_last or last or s)])
+    for n in online - set(open_):
+        done.append([n, now, None])
+    return done, ready
+
+
+# --- Messwerte --------------------------------------------------------------------------------------
+
+def heap():
+    """Belegter Heap nach der letzten GC und reservierter Heap (MB), aus dem GC-Log des Servers."""
+    path = os.path.join(DATA, "logs", "gc.log")
+    try:
+        if time.time() - os.path.getmtime(path) > 600:
+            return None, None
+        with open(path, "rb") as f:
+            f.seek(max(0, os.path.getsize(path) - 16384))
+            tail = f.read().decode(errors="replace")
+    except OSError:
+        return None, None
+    found = GC.findall(tail)
+    if not found:
+        return None, None
+    _, _, after, au, committed, cu = found[-1]
+    return mb(after, au), mb(committed, cu)
+
+
+def meminfo():
+    info = {}
+    with open("/proc/meminfo") as f:
+        for line in f:
+            k, v = line.split(":", 1)
+            info[k] = int(v.split()[0]) / 1024
+    return info["MemTotal"] - info["MemAvailable"], info["MemTotal"]
+
+
+class Cpu:
+    def __init__(self):
+        self.prev = None
+
+    def read(self):
+        with open("/proc/stat") as f:
+            v = [int(x) for x in f.readline().split()[1:]]
+        idle, total = v[3] + v[4], sum(v[:8])
+        prev, self.prev = self.prev, (idle, total)
+        if not prev or total == prev[1]:
+            return None
+        return 100 * (1 - (idle - prev[0]) / (total - prev[1]))
+
+
+# --- Spielerstatistiken der Welt -------------------------------------------------------------------
+
+def whitelist():
+    try:
+        return {p["name"]: p["uuid"] for p in json.load(open(os.path.join(DATA, "whitelist.json")))}
+    except (OSError, ValueError):
+        return {}
+
+
+def level_name():
+    try:
+        for line in open(os.path.join(DATA, "server.properties")):
+            if line.startswith("level-name="):
+                return line.split("=", 1)[1].strip()
+    except OSError:
+        pass
+    return "world"
+
+
+def world_stats(uuid):
+    try:
+        s = json.load(open(os.path.join(DATA, level_name(), "stats", f"{uuid}.json")))["stats"]
+    except (OSError, ValueError, KeyError):
+        return None
+    c = s.get("minecraft:custom", {})
+    return {
+        "play_time": c.get("minecraft:play_time", 0) / 20,
+        "deaths": c.get("minecraft:deaths", 0),
+        "mob_kills": c.get("minecraft:mob_kills", 0),
+        "distance_km": sum(v for k, v in c.items() if k.endswith("_one_cm") and k != "minecraft:fall_one_cm") / 100000,
+        "mined": sum(s.get("minecraft:mined", {}).values()),
+        "crafted": sum(s.get("minecraft:crafted", {}).values()),
+    }
+
+
+# --- Zusammenbauen ----------------------------------------------------------------------------------
+
+def day_start(ts):
+    d = datetime.fromtimestamp(ts, TZ)
+    return d.replace(hour=0, minute=0, second=0, microsecond=0)
+
+
+def per_day(sess, days, now):
+    """Spielzeit in Stunden pro Spieler und Kalendertag (Sessions an Mitternacht geteilt)."""
+    first = day_start(now) - timedelta(days=days - 1)
+    labels = [(first + timedelta(days=i)).strftime("%Y-%m-%d") for i in range(days)]
+    out = {}
+    for name, start, end in sess:
+        end = end or now
+        t = max(start, first.timestamp())
+        while t < end:
+            d = day_start(t)
+            nxt = min(end, (d + timedelta(days=1)).replace(hour=0).timestamp())
+            key = d.strftime("%Y-%m-%d")
+            if key in labels:
+                out.setdefault(name, [0.0] * days)[labels.index(key)] += (nxt - t) / 3600
+            t = nxt
+    return labels, out
+
+
+def series(con, now):
+    """Letzte 24 h in 5-Minuten-Schritten."""
+    rows = con.execute("SELECT ts, online, players, tps, mspt, heap_used, mem_used, cpu FROM metrics "
+                       "WHERE ts >= ? ORDER BY ts", (now - 86400,)).fetchall()
+    buckets = {}
+    for r in rows:
+        buckets.setdefault(int(r[0] // 300) * 300, []).append(r)
+    out = []
+    for b, rs in sorted(buckets.items()):
+        def avg(i):
+            v = [r[i] for r in rs if r[i] is not None]
+            return round(sum(v) / len(v), 2) if v else None
+        up = [r for r in rs if r[1]]
+        out.append({"ts": b, "online": bool(up), "players": max((r[2] or 0) for r in rs),
+                    "tps": min((r[3] for r in up if r[3] is not None), default=None), "mspt": avg(4),
+                    "heap": avg(5), "mem": avg(6), "cpu": avg(7)})
+    return out
+
+
+def next_restart(now):
+    h, m = map(int, RESTART_AT.split(":"))
+    d = datetime.fromtimestamp(now, TZ).replace(hour=h, minute=m, second=0, microsecond=0)
+    if d.timestamp() <= now:
+        d += timedelta(days=1)
+    return d.timestamp()
+
+
+class Collector:
+    def __init__(self):
+        self.latest, self.cpu, self.snapshot = LatestLog(), Cpu(), b"{}"
+        self.lock = threading.Lock()
+
+    def poll(self):
+        con = db()
+        try:
+            now = time.time()
+            import_archives(con)
+            con.executemany("INSERT OR IGNORE INTO events VALUES (?, ?, ?)", self.latest.read())
+            online, players, max_players, tps, mspt = False, [], None, None, None
+            try:
+                listed, tps_out = rcon("list", "neoforge tps")
+                m = re.match(r"There are (\d+) of a max of (\d+) players online:(.*)", listed, re.S)
+                if m:
+                    online, max_players = True, int(m.group(2))
+                    players = [p.strip() for p in m.group(3).split(",") if p.strip()]
+                if t := TPS.search(tps_out):
+                    tps, mspt = float(t.group(1)), float(t.group(2))
+            except (OSError, ConnectionError, PermissionError, struct.error) as e:
+                print("RCON:", e, flush=True)
+            heap_used, heap_committed = heap() if online else (None, None)
+            mem_used, mem_total = meminfo()
+            cpu = self.cpu.read()
+            con.execute("INSERT OR REPLACE INTO metrics VALUES (?,?,?,?,?,?,?,?,?,?)",
+                        (now, online, len(players), tps, mspt, heap_used, heap_committed, mem_used, mem_total, cpu))
+            con.execute("DELETE FROM metrics WHERE ts < ?", (now - KEEP_DAYS * 86400,))
+            con.commit()
+
+            sess, ready = sessions(con, set(players), self.latest.last)
+            wl = whitelist()
+            first_seen = {}
+            for name, start, _ in sorted(sess, key=lambda s: s[1]):
+                first_seen.setdefault(name, start)
+            names = sorted(set(wl) | set(first_seen), key=lambda n: (first_seen.get(n, now), n.lower()))
+            labels, daily = per_day(sess, 14, now)
+            week_ago = now - 7 * 86400
+            table = []
+            for name in names:
+                mine = [s for s in sess if s[0] == name]
+                current = next((s for s in mine if s[2] is None), None)
+                ends = [s[2] for s in mine if s[2] is not None]
+                table.append({
+                    "name": name,
+                    "online": name in players,
+                    "since": current[1] if current else None,
+                    "last_seen": now if current else (max(ends) if ends else None),
+                    "first_seen": first_seen.get(name),
+                    "total": sum((e or now) - s for _, s, e in mine),
+                    "week": sum(max(0, (e or now) - max(s, week_ago)) for _, s, e in mine),
+                    "sessions": len(mine),
+                    "longest": max(((e or now) - s for _, s, e in mine), default=0),
+                    "world": world_stats(wl[name]) if name in wl else None,
+                })
+            snapshot = {
+                "generated": now,
+                "server": {
+                    "address": ADDRESS, "online": online, "ready_since": ready if online else None,
+                    "players": len(players), "max_players": max_players, "tps": tps, "mspt": mspt,
+                    "heap_used": heap_used, "heap_committed": heap_committed, "heap_max": mb(MAX_HEAP[:-1], MAX_HEAP[-1]),
+                    "mem_used": mem_used, "mem_total": mem_total, "cpu": cpu,
+                    "next_restart": next_restart(now), "tracking_since": min(first_seen.values(), default=None),
+                },
+                "players": table,
+                "series": series(con, now),
+                "daily": {"days": labels, "players": daily},
+            }
+            with self.lock:
+                self.snapshot = json.dumps(snapshot, separators=(",", ":")).encode()
+        finally:
+            con.close()
+
+    def run(self):
+        while True:
+            started = time.time()
+            try:
+                self.poll()
+            except Exception as e:  # Dashboard soll weiterlaufen, auch wenn eine Runde scheitert
+                print("Fehler beim Sammeln:", repr(e), flush=True)
+            time.sleep(max(5, INTERVAL - (time.time() - started)))
+
+
+collector = Collector()
+STATIC = {"/": ("index.html", "text/html; charset=utf-8"), "/favicon.svg": ("favicon.svg", "image/svg+xml")}
+
+
+class Handler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        path = self.path.split("?", 1)[0]
+        if path == "/api/stats":
+            with collector.lock:
+                body = collector.snapshot
+            return self.reply(200, "application/json", body, "no-store")
+        if path in STATIC:
+            name, ctype = STATIC[path]
+            with open(os.path.join(HERE, name), "rb") as f:
+                return self.reply(200, ctype, f.read(), "max-age=300")
+        self.reply(404, "text/plain; charset=utf-8", b"nicht gefunden")
+
+    def reply(self, code, ctype, body, cache="no-cache"):
+        self.send_response(code)
+        self.send_header("Content-Type", ctype)
+        self.send_header("Content-Length", str(len(body)))
+        self.send_header("Cache-Control", cache)
+        self.send_header("X-Content-Type-Options", "nosniff")
+        self.end_headers()
+        self.wfile.write(body)
+
+    def log_message(self, *args):
+        pass
+
+
+if __name__ == "__main__":
+    threading.Thread(target=collector.run, daemon=True).start()
+    ThreadingHTTPServer(("0.0.0.0", int(ENV("PORT", "8080"))), Handler).serve_forever()

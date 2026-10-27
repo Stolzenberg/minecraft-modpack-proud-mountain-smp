@@ -1,0 +1,589 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proud Mountain Statistik</title>
+<meta name="description" content="Wer ist online, wie läuft der Server, wer hat wie viel gespielt.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7;
+  --surface: #fcfcfb;
+  --text: #0b0b0b;
+  --text-2: #52514e;
+  --muted: #898781;
+  --grid: #e1e0d9;
+  --axis: #c3c2b7;
+  --border: rgba(11,11,11,0.10);
+  --wash: rgba(11,11,11,0.04);
+  --accent: #2a78d6;
+  --good: #0ca30c; --warning: #fab219; --critical: #d03b3b;
+  --good-text: #006300;
+  --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; --s4: #eda100;
+  --s5: #e87ba4; --s6: #008300; --s7: #6250d6; --s8: #e34948;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --text: #f0efec; --text-2: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10); --wash: rgba(255,255,255,0.05);
+    --accent: #3987e5; --good-text: #0ca30c;
+    --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500;
+    --s5: #d55181; --s6: #008300; --s7: #9085e9; --s8: #e66767;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d; --surface: #1a1a19; --text: #f0efec; --text-2: #c3c2b7; --muted: #898781;
+  --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10); --wash: rgba(255,255,255,0.05);
+  --accent: #3987e5; --good-text: #0ca30c;
+  --s1: #3987e5; --s2: #d95926; --s3: #199e70; --s4: #c98500;
+  --s5: #d55181; --s6: #008300; --s7: #9085e9; --s8: #e66767;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--page); color: var(--text);
+  font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+main { max-width: 1120px; margin: 0 auto; padding: 24px 16px 40px; }
+header { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin-bottom: 20px; }
+header .title { flex: 1 1 auto; min-width: 0; }
+h1 { font-size: 24px; line-height: 1.2; margin: 0; font-weight: 650; letter-spacing: -0.01em; }
+.subtitle { color: var(--text-2); margin-top: 2px; font-size: 14px; }
+.subtitle code { font: inherit; color: var(--text); }
+.pill {
+  display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px;
+  background: var(--surface); border: 1px solid var(--border); font-weight: 600; font-size: 14px; white-space: nowrap;
+}
+.pill .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--muted); }
+.pill.on .dot { background: var(--good); box-shadow: 0 0 0 3px color-mix(in srgb, var(--good) 22%, transparent); }
+.pill.off .dot { background: var(--critical); }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; min-width: 0; }
+h2 { font-size: 15px; margin: 0 0 2px; font-weight: 620; }
+.card .note { color: var(--muted); font-size: 13px; margin: 0 0 12px; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 12px; margin-bottom: 12px; }
+.tile .label { color: var(--text-2); font-size: 13px; }
+.tile .value { font-size: 28px; font-weight: 620; line-height: 1.15; margin-top: 4px; }
+.tile .value small { font-size: 15px; font-weight: 500; color: var(--text-2); }
+.tile .sub { color: var(--muted); font-size: 13px; margin-top: 4px; }
+.hero .value { font-size: 48px; }
+.meter { height: 6px; border-radius: 3px; background: color-mix(in srgb, var(--accent) 18%, transparent); margin-top: 10px; overflow: hidden; }
+.meter i { display: block; height: 100%; border-radius: 3px; background: var(--accent); }
+.meter i.warn { background: var(--warning); } .meter i.crit { background: var(--critical); }
+.status { display: inline-flex; align-items: center; gap: 4px; }
+.status svg { width: 14px; height: 14px; flex: none; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr)); gap: 12px; margin-bottom: 12px; }
+.online-list { list-style: none; margin: 0; padding: 0; }
+.online-list li { display: flex; align-items: baseline; gap: 10px; padding: 8px 0; border-top: 1px solid var(--grid); flex-wrap: wrap; }
+.online-list li:first-child { border-top: 0; padding-top: 2px; }
+.online-list .name { font-weight: 600; }
+.online-list .meta { color: var(--text-2); font-size: 14px; }
+.swatch { width: 10px; height: 10px; border-radius: 3px; display: inline-block; flex: none; align-self: center; }
+.empty { color: var(--text-2); margin: 4px 0; }
+.chart { position: relative; }
+.chart svg { display: block; width: 100%; overflow: visible; }
+.chart text { fill: var(--muted); font-size: 11px; font-variant-numeric: tabular-nums; }
+.chart .gridline { stroke: var(--grid); stroke-width: 1; }
+.chart .baseline { stroke: var(--axis); stroke-width: 1; }
+.chart .crosshair { stroke: var(--muted); stroke-width: 1; }
+.chart .total { fill: var(--text-2); font-size: 11px; }
+.tooltip {
+  position: absolute; pointer-events: none; z-index: 5; min-width: 120px; padding: 8px 10px; border-radius: 8px;
+  background: var(--surface); border: 1px solid var(--border); box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  font-size: 13px; display: none; white-space: nowrap;
+}
+.tooltip .t-head { color: var(--text-2); margin-bottom: 4px; }
+.tooltip .t-row { display: flex; align-items: center; gap: 8px; }
+.tooltip .t-row b { font-weight: 650; min-width: 3.5em; }
+.tooltip .t-row span { color: var(--text-2); }
+.tooltip .key { width: 12px; height: 2px; border-radius: 1px; flex: none; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 0 0 10px; padding: 0; list-style: none; font-size: 13px; color: var(--text-2); }
+.legend li { display: inline-flex; align-items: center; gap: 6px; }
+.table-wrap { overflow-x: auto; margin: 0 -16px -16px; padding: 0 16px 8px; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { text-align: right; padding: 9px 10px; border-top: 1px solid var(--grid); white-space: nowrap; }
+th:first-child, td:first-child { text-align: left; padding-left: 0; }
+th:last-child, td:last-child { padding-right: 0; }
+thead th { border-top: 0; color: var(--text-2); font-weight: 560; font-size: 13px; vertical-align: bottom; }
+thead th button { all: unset; cursor: pointer; }
+thead th button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+thead th[aria-sort] button::after { content: " ↓"; }
+thead th[aria-sort="ascending"] button::after { content: " ↑"; }
+thead th.group { text-align: center; color: var(--muted); font-size: 12px; padding-bottom: 0; }
+td { font-variant-numeric: tabular-nums; }
+td.player { font-weight: 600; }
+td.player .swatch { margin-right: 8px; vertical-align: -1px; }
+td .online { color: var(--good-text); font-weight: 600; }
+td.sep, th.sep { border-left: 1px solid var(--grid); }
+footer { color: var(--muted); font-size: 13px; margin-top: 20px; }
+footer p { margin: 4px 0; }
+.stale main { opacity: 0.6; }
+#error { display: none; color: var(--critical); font-size: 14px; margin: -8px 0 16px; }
+@media (max-width: 640px) {
+  .tiles { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 520px) {
+  .hero .value { font-size: 40px; }
+  .tile .value { font-size: 24px; }
+  h1 { font-size: 21px; }
+}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <div class="title">
+      <h1>Proud Mountain SMP</h1>
+      <div class="subtitle">Server <code id="address">server.proud-mountain.com</code> · <span id="updated">lädt …</span></div>
+    </div>
+    <div class="pill" id="pill"><span class="dot"></span><span id="pill-text">…</span></div>
+  </header>
+  <p id="error">Keine Verbindung zum Statistik-Dienst, die Werte sind evtl. veraltet.</p>
+
+  <section class="tiles" aria-label="Server">
+    <div class="card tile hero"><div class="label">Spieler online</div><div class="value" id="t-players">–</div><div class="sub" id="t-players-sub"></div></div>
+    <div class="card tile"><div class="label">Server läuft seit</div><div class="value" id="t-uptime">–</div><div class="sub" id="t-uptime-sub"></div></div>
+    <div class="card tile"><div class="label">TPS (Server-Takt)</div><div class="value" id="t-tps">–</div><div class="sub" id="t-tps-sub"></div></div>
+    <div class="card tile"><div class="label" id="t-ram-label">Arbeitsspeicher</div><div class="value" id="t-ram">–</div><div class="meter"><i id="t-ram-bar" style="width:0"></i></div><div class="sub" id="t-ram-sub"></div></div>
+    <div class="card tile"><div class="label">CPU (ganzer Server)</div><div class="value" id="t-cpu">–</div><div class="meter"><i id="t-cpu-bar" style="width:0"></i></div><div class="sub">alle Kerne zusammen</div></div>
+    <div class="card tile"><div class="label">Nächster Neustart</div><div class="value" id="t-restart">–</div><div class="sub" id="t-restart-sub"></div></div>
+  </section>
+
+  <section class="card" style="margin-bottom:12px">
+    <h2>Gerade online</h2>
+    <ul class="online-list" id="online"></ul>
+  </section>
+
+  <section class="grid2" aria-label="Verlauf">
+    <div class="card"><h2>Spieler online</h2><p class="note">letzte 24 Stunden</p><div class="chart" id="c-players"></div></div>
+    <div class="card"><h2>TPS</h2><p class="note">letzte 24 Stunden, 20 ist das Maximum, darunter ruckelt es</p><div class="chart" id="c-tps"></div></div>
+    <div class="card"><h2>Arbeitsspeicher</h2><p class="note" id="c-ram-note">letzte 24 Stunden</p><div class="chart" id="c-ram"></div></div>
+    <div class="card"><h2>CPU-Auslastung</h2><p class="note">letzte 24 Stunden, ganzer Server</p><div class="chart" id="c-cpu"></div></div>
+  </section>
+
+  <section class="card" style="margin-bottom:12px">
+    <h2>Spielzeit pro Tag</h2><p class="note">letzte 14 Tage, Stunden je Spieler</p>
+    <ul class="legend" id="daily-legend"></ul>
+    <div class="chart" id="c-daily"></div>
+  </section>
+
+  <section class="card">
+    <h2>Alle Spieler</h2><p class="note">Spalten zum Sortieren antippen</p>
+    <div class="table-wrap"><table id="players"></table></div>
+  </section>
+
+  <footer>
+    <p id="foot-tracking">Spielzeiten aus den Server-Logs.</p>
+    <p>Tode, Mobs, Strecke, Blöcke und Hergestelltes zählen nur in der aktuellen Welt. Positionen werden bewusst nicht angezeigt.</p>
+    <p>Aktualisiert sich jede Minute von selbst.</p>
+  </footer>
+</main>
+
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+const nf = (v, d = 0) => v.toLocaleString("de-DE", { minimumFractionDigits: d, maximumFractionDigits: d });
+const DAY = 86400, WD = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
+let data = null, sortKey = "status", sortDir = -1;
+
+function dur(sec) {
+  sec = Math.max(0, Math.round(sec));
+  const d = Math.floor(sec / DAY), h = Math.floor(sec % DAY / 3600), m = Math.floor(sec % 3600 / 60);
+  if (d) return `${d} ${d === 1 ? "Tag" : "Tage"} ${h} h`;
+  if (h) return `${h} h ${m} min`;
+  return `${m} min`;
+}
+function hours(sec) { return sec >= 36000 ? `${nf(sec / 3600)} h` : `${nf(sec / 3600, 1)} h`; }
+function clock(ts) { return new Date(ts * 1000).toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit" }); }
+function dayStart(ts) { const d = new Date(ts * 1000); d.setHours(0, 0, 0, 0); return d.getTime() / 1000; }
+function when(ts, now) {
+  const days = Math.round((dayStart(now) - dayStart(ts)) / DAY);
+  if (days === 0) return `heute ${clock(ts)}`;
+  if (days === 1) return `gestern ${clock(ts)}`;
+  const d = new Date(ts * 1000);
+  return `${WD[d.getDay()]} ${d.getDate()}.${d.getMonth() + 1}. ${clock(ts)}`;
+}
+function ago(ts, now) {
+  const s = now - ts;
+  if (s < 120) return "gerade eben";
+  if (s < 3600) return `vor ${Math.round(s / 60)} min`;
+  if (s < DAY) return `vor ${Math.round(s / 3600)} h`;
+  const days = Math.round((dayStart(now) - dayStart(ts)) / DAY);
+  return days === 1 ? "gestern" : `vor ${days} Tagen`;
+}
+function gb(mb) { return nf(mb / 1024, 1); }
+function el(tag, attrs = {}, text) {
+  const e = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
+  if (text !== undefined) e.textContent = text;
+  return e;
+}
+const SVG = "http://www.w3.org/2000/svg";
+function sv(tag, attrs = {}, text) {
+  const e = document.createElementNS(SVG, tag);
+  for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
+  if (text !== undefined) e.textContent = text;
+  return e;
+}
+function colorOf(name) {
+  const i = data.players.findIndex(p => p.name === name);
+  return `var(--s${(i < 0 ? 0 : i) % 8 + 1})`;
+}
+const ICON = {
+  good: '<svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="var(--good)"/><path d="M4.5 8.2l2.3 2.3 4.7-4.8" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  warning: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5l7 12.5H1z" fill="var(--warning)"/><path d="M8 6v3.5" stroke="#0b0b0b" stroke-width="1.8" stroke-linecap="round"/><circle cx="8" cy="11.7" r="1" fill="#0b0b0b"/></svg>',
+  critical: '<svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="var(--critical)"/><path d="M5.5 5.5l5 5M10.5 5.5l-5 5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg>',
+};
+function status(kind, label) {
+  const s = el("span", { class: "status" });
+  s.innerHTML = ICON[kind];
+  s.append(document.createTextNode(label));
+  return s;
+}
+
+// ---------- Kacheln ----------
+function renderTiles() {
+  const s = data.server, now = data.generated;
+  $("address").textContent = s.address;
+  $("updated").textContent = `Stand ${clock(now)}`;
+  $("pill").className = "pill " + (s.online ? "on" : "off");
+  $("pill-text").textContent = s.online ? "Online" : "Offline";
+
+  const tp = $("t-players"); tp.textContent = s.online ? s.players : "–";
+  if (s.online && s.max_players) tp.append(el("small", {}, ` / ${s.max_players}`));
+  const today = data.players.reduce((a, p) => a + (p.last_seen && dayStart(p.last_seen) === dayStart(now) ? 1 : 0), 0);
+  $("t-players-sub").textContent = `heute ${today} Spieler da gewesen`;
+
+  $("t-uptime").textContent = s.ready_since ? dur(now - s.ready_since) : "–";
+  $("t-uptime-sub").textContent = s.ready_since ? `seit ${when(s.ready_since, now)}` : (s.online ? "startet gerade" : "Server ist aus");
+
+  const tps = $("t-tps"), tsub = $("t-tps-sub");
+  tsub.replaceChildren();
+  if (s.tps != null) {
+    tps.textContent = nf(s.tps, 1);
+    const kind = s.tps >= 19.5 ? "good" : s.tps >= 15 ? "warning" : "critical";
+    tsub.append(status(kind, { good: " läuft flüssig", warning: " etwas Lag", critical: " starker Lag" }[kind]),
+                document.createTextNode(` · ${nf(s.mspt, 0)} ms/Tick`));
+  } else tps.textContent = "–";
+
+  const bar = (node, frac) => {
+    node.style.width = `${Math.min(100, Math.max(0, frac * 100))}%`;
+    node.className = frac >= 0.9 ? "crit" : frac >= 0.75 ? "warn" : "";
+  };
+  if (s.heap_used != null) {
+    $("t-ram-label").textContent = "Arbeitsspeicher (Minecraft)";
+    const r = $("t-ram"); r.textContent = `${gb(s.heap_used)} GB`; r.append(el("small", {}, ` / ${nf(s.heap_max / 1024)} GB`));
+    bar($("t-ram-bar"), s.heap_used / s.heap_max);
+    $("t-ram-sub").textContent = `belegt nach letzter Aufräumrunde · ganzer Server ${gb(s.mem_used)} / ${nf(s.mem_total / 1024)} GB`;
+  } else {
+    $("t-ram-label").textContent = "Arbeitsspeicher (ganzer Server)";
+    const r = $("t-ram"); r.textContent = `${gb(s.mem_used)} GB`; r.append(el("small", {}, ` / ${nf(s.mem_total / 1024)} GB`));
+    bar($("t-ram-bar"), s.mem_used / s.mem_total);
+    $("t-ram-sub").textContent = `Minecraft darf bis ${nf(s.heap_max / 1024)} GB nutzen`;
+  }
+  $("t-cpu").textContent = s.cpu != null ? `${nf(s.cpu)} %` : "–";
+  bar($("t-cpu-bar"), (s.cpu || 0) / 100);
+
+  $("t-restart").textContent = clock(s.next_restart);
+  $("t-restart-sub").textContent = `in ${dur(s.next_restart - now)} · jeden Tag, dauert ein paar Minuten`;
+}
+
+// ---------- Gerade online ----------
+function renderOnline() {
+  const ul = $("online"), now = data.generated;
+  ul.replaceChildren();
+  const on = data.players.filter(p => p.online).sort((a, b) => (a.since || now) - (b.since || now));
+  if (!on.length) {
+    const last = data.players.filter(p => p.last_seen).sort((a, b) => b.last_seen - a.last_seen)[0];
+    const li = el("li", { class: "empty" }, data.server.online ? "Gerade ist niemand online." : "Der Server ist gerade aus.");
+    if (last) li.append(document.createTextNode(` Zuletzt da: ${last.name}, ${ago(last.last_seen, now)}.`));
+    ul.append(li);
+    return;
+  }
+  for (const p of on) {
+    const li = el("li");
+    const sw = el("span", { class: "swatch" }); sw.style.background = colorOf(p.name);
+    li.append(sw, el("span", { class: "name" }, p.name),
+      el("span", { class: "meta" }, p.since ? `seit ${when(p.since, now)} · ${dur(now - p.since)}` : "gerade gekommen"));
+    ul.append(li);
+  }
+}
+
+// ---------- Zeitverlauf (eine Reihe, eine Achse) ----------
+function tooltipFor(box) {
+  let tip = box.querySelector(".tooltip");
+  if (!tip) { tip = el("div", { class: "tooltip", role: "status" }); box.append(tip); }
+  return tip;
+}
+function placeTip(box, tip, x, y) {
+  tip.style.display = "block";
+  const w = tip.offsetWidth, bw = box.clientWidth;
+  tip.style.left = `${Math.min(Math.max(0, x + 12), bw - w)}px`;
+  if (x + 12 + w > bw) tip.style.left = `${Math.max(0, x - w - 12)}px`;
+  tip.style.top = `${Math.max(0, y - 10)}px`;
+}
+function tipRows(tip, head, rows) {
+  tip.replaceChildren(el("div", { class: "t-head" }, head));
+  for (const [color, value, label] of rows) {
+    const r = el("div", { class: "t-row" });
+    const k = el("span", { class: "key" }); k.style.background = color;
+    r.append(k, el("b", {}, value), el("span", {}, label));
+    tip.append(r);
+  }
+}
+
+function timeChart(box, opt) {
+  const pts = data.series, now = data.generated;
+  const W = box.clientWidth, H = 150, L = 34, R = 8, T = 8, B = 22;
+  const x0 = now - DAY, x = t => L + (t - x0) / DAY * (W - L - R);
+  const y = v => T + (1 - v / opt.max) * (H - T - B);
+  const svg = sv("svg", { viewBox: `0 0 ${W} ${H}`, height: H, role: "img", "aria-label": opt.aria });
+  for (const v of opt.ticks) {
+    svg.append(sv("line", { class: v === 0 ? "baseline" : "gridline", x1: L, x2: W - R, y1: y(v), y2: y(v) }));
+    svg.append(sv("text", { x: L - 6, y: y(v) + 4, "text-anchor": "end" }, opt.fmt(v)));
+  }
+  const first = Math.ceil(x0 / 21600) * 21600;
+  for (let t = first; t <= now; t += 21600) {
+    const tx = x(t);
+    if (tx < L + 16 || tx > W - R - 16) continue;
+    svg.append(sv("text", { x: tx, y: H - 6, "text-anchor": "middle" }, clock(t)));
+  }
+  // Linie in Stücken: Lücken, wo keine Werte da sind (Server aus, Dienst aus)
+  const segs = []; let cur = [];
+  pts.forEach((p, i) => {
+    const v = opt.get(p);
+    const gap = i > 0 && p.ts - pts[i - 1].ts > 600;
+    if (v == null || gap) { if (cur.length) segs.push(cur); cur = []; }
+    if (v != null) cur.push([p.ts, v]);
+  });
+  if (cur.length) segs.push(cur);
+  for (const s of segs) {
+    let d = "";
+    s.forEach(([t, v], i) => {
+      if (opt.step && i > 0) d += `L${x(t + 0)},${y(s[i - 1][1])}`;
+      d += `${i ? "L" : "M"}${x(t)},${y(v)}`;
+    });
+    const end = s[s.length - 1];
+    if (opt.step) d += `L${x(end[0] + 300)},${y(end[1])}`;
+    const lastX = opt.step ? x(end[0] + 300) : x(end[0]);
+    svg.append(sv("path", { d: `${d}L${lastX},${y(0)}L${x(s[0][0])},${y(0)}Z`, fill: opt.color, "fill-opacity": 0.1, stroke: "none" }));
+    svg.append(sv("path", { d, fill: "none", stroke: opt.color, "stroke-width": 2, "stroke-linejoin": "round", "stroke-linecap": "round" }));
+  }
+  if (segs.length) {  // aktueller Wert als Endpunkt, sichtbar auch bei nur einem Messwert
+    const [t, v] = segs[segs.length - 1].at(-1);
+    svg.append(sv("circle", { cx: x(t), cy: y(v), r: 4, fill: opt.color, stroke: "var(--surface)", "stroke-width": 2 }));
+  } else {
+    svg.append(sv("text", { x: (W + L) / 2, y: H / 2, "text-anchor": "middle" }, "noch keine Messwerte"));
+  }
+  const cross = sv("line", { class: "crosshair", y1: T, y2: H - B, visibility: "hidden" });
+  const dot = sv("circle", { r: 4, fill: opt.color, stroke: "var(--surface)", "stroke-width": 2, visibility: "hidden" });
+  const hit = sv("rect", { x: L, y: 0, width: Math.max(0, W - L - R), height: H, fill: "transparent", tabindex: 0 });
+  svg.append(cross, dot, hit);
+  box.replaceChildren(svg);
+  const tip = tooltipFor(box);
+  const show = px => {
+    if (!pts.length) return;
+    const t = x0 + (px - L) / (W - L - R) * DAY;
+    let best = pts[0];
+    for (const p of pts) if (Math.abs(p.ts - t) < Math.abs(best.ts - t)) best = p;
+    const v = opt.get(best), bx = x(best.ts);
+    cross.setAttribute("x1", bx); cross.setAttribute("x2", bx); cross.setAttribute("visibility", "visible");
+    if (v != null) { dot.setAttribute("cx", bx); dot.setAttribute("cy", y(v)); dot.setAttribute("visibility", "visible"); }
+    else dot.setAttribute("visibility", "hidden");
+    tipRows(tip, `${when(best.ts, now)} Uhr`, [[opt.color, v == null ? "–" : opt.tip(v), v == null && !best.online ? "Server aus" : opt.label]]);
+    placeTip(box, tip, bx, 0);
+  };
+  const hide = () => { tip.style.display = "none"; cross.setAttribute("visibility", "hidden"); dot.setAttribute("visibility", "hidden"); };
+  hit.addEventListener("pointermove", e => show(e.offsetX));
+  hit.addEventListener("pointerleave", hide);
+  hit.addEventListener("focus", () => show(W - R));
+  hit.addEventListener("blur", hide);
+}
+
+function renderCharts() {
+  const s = data.server;
+  const maxP = Math.max(4, ...data.series.map(p => p.players));
+  const step = maxP <= 6 ? 1 : 2;
+  const pt = []; for (let v = 0; v <= maxP; v += step) pt.push(v);
+  timeChart($("c-players"), { get: p => p.online ? p.players : null, max: pt[pt.length - 1], ticks: pt, fmt: v => v,
+    step: true, color: "var(--s1)", label: "Spieler", tip: v => nf(v), aria: "Spieler online in den letzten 24 Stunden" });
+  timeChart($("c-tps"), { get: p => p.tps, max: 20, ticks: [0, 10, 20], fmt: v => v,
+    color: "var(--s1)", label: "TPS (schlechtester Wert)", tip: v => nf(v, 1), aria: "TPS in den letzten 24 Stunden" });
+  const hasHeap = data.series.some(p => p.heap != null);
+  if (hasHeap) {
+    const maxG = s.heap_max / 1024, ticks = []; for (let v = 0; v <= maxG; v += 4) ticks.push(v);
+    $("c-ram-note").textContent = `letzte 24 Stunden, Minecraft (max. ${nf(maxG)} GB)`;
+    timeChart($("c-ram"), { get: p => p.heap == null ? null : p.heap / 1024, max: maxG, ticks, fmt: v => `${v}`,
+      color: "var(--s1)", label: "GB belegt", tip: v => nf(v, 1), aria: "Arbeitsspeicher von Minecraft in den letzten 24 Stunden" });
+  } else {
+    const maxG = Math.ceil(s.mem_total / 1024 / 8) * 8, ticks = []; for (let v = 0; v <= maxG; v += maxG / 4) ticks.push(v);
+    $("c-ram-note").textContent = "letzte 24 Stunden, ganzer Server in GB";
+    timeChart($("c-ram"), { get: p => p.mem == null ? null : p.mem / 1024, max: maxG, ticks, fmt: v => `${v}`,
+      color: "var(--s1)", label: "GB belegt", tip: v => nf(v, 1), aria: "Arbeitsspeicher des Servers in den letzten 24 Stunden" });
+  }
+  timeChart($("c-cpu"), { get: p => p.cpu, max: 100, ticks: [0, 50, 100], fmt: v => `${v} %`,
+    color: "var(--s1)", label: "% CPU", tip: v => `${nf(v)} %`, aria: "CPU-Auslastung in den letzten 24 Stunden" });
+}
+
+// ---------- Spielzeit pro Tag (gestapelte Säulen) ----------
+function renderDaily() {
+  const { days, players: per } = data.daily, now = data.generated;
+  const names = data.players.map(p => p.name).filter(n => per[n] && per[n].some(v => v > 0));
+  const legend = $("daily-legend"); legend.replaceChildren();
+  for (const n of names) {
+    const li = el("li"); const sw = el("span", { class: "swatch" }); sw.style.background = colorOf(n);
+    li.append(sw, document.createTextNode(n)); legend.append(li);
+  }
+  const box = $("c-daily"), W = box.clientWidth, H = 200, L = 30, R = 4, T = 18, B = 24;
+  const totals = days.map((_, i) => names.reduce((a, n) => a + per[n][i], 0));
+  const top = Math.max(4, ...totals), stepV = top > 24 ? 10 : top > 12 ? 4 : 2;
+  const maxV = Math.ceil(top / stepV) * stepV;
+  const y = v => T + (1 - v / maxV) * (H - T - B);
+  const band = (W - L - R) / days.length, bw = Math.min(24, band * 0.62);
+  const svg = sv("svg", { viewBox: `0 0 ${W} ${H}`, height: H, role: "img", "aria-label": "Spielzeit pro Tag und Spieler in den letzten 14 Tagen" });
+  for (let v = 0; v <= maxV; v += stepV) {
+    svg.append(sv("line", { class: v === 0 ? "baseline" : "gridline", x1: L, x2: W - R, y1: y(v), y2: y(v) }));
+    svg.append(sv("text", { x: L - 6, y: y(v) + 4, "text-anchor": "end" }, `${v} h`));
+  }
+  const tip = tooltipFor(box);
+  const hits = [];
+  days.forEach((day, i) => {
+    const cx = L + band * (i + 0.5), d = new Date(day + "T12:00:00");
+    const every = band < 30 ? 2 : 1;
+    if ((days.length - 1 - i) % every === 0)
+      svg.append(sv("text", { x: cx, y: H - 6, "text-anchor": "middle" }, band < 44 ? `${d.getDate()}.` : `${WD[d.getDay()]} ${d.getDate()}.`));
+    let base = 0;
+    const segs = names.map(n => [n, per[n][i]]).filter(([, v]) => v > 0);
+    segs.forEach(([n, v], k) => {
+      const y1 = y(base + v), y0 = y(base) - (k ? 2 : 0), h = Math.max(0, y0 - y1);
+      base += v;
+      if (h <= 0) return;
+      const x = cx - bw / 2, r = k === segs.length - 1 ? Math.min(4, h, bw / 2) : 0;
+      const path = `M${x},${y0}V${y1 + r}Q${x},${y1} ${x + r},${y1}H${x + bw - r}Q${x + bw},${y1} ${x + bw},${y1 + r}V${y0}Z`;
+      svg.append(sv("path", { d: path, fill: colorOf(n) }));
+    });
+    if (totals[i] >= 0.05 && band >= 26)
+      svg.append(sv("text", { class: "total", x: cx, y: y(totals[i]) - 5, "text-anchor": "middle" }, nf(totals[i], totals[i] < 10 ? 1 : 0)));
+    const hit = sv("rect", { x: cx - band / 2, y: 0, width: band, height: H, fill: "transparent", tabindex: 0 });
+    hits.push([hit, i, cx]);
+    svg.append(hit);
+  });
+  box.replaceChildren(svg, tip);
+  for (const [hit, i, cx] of hits) {
+    const show = () => {
+      const d = new Date(days[i] + "T12:00:00");
+      const head = `${WD[d.getDay()]} ${d.getDate()}.${d.getMonth() + 1}. · ${nf(totals[i], 1)} h gesamt`;
+      const rows = names.filter(n => per[n][i] > 0).map(n => [colorOf(n), `${nf(per[n][i], 1)} h`, n]);
+      tipRows(tip, head, rows.length ? rows : [["var(--muted)", "–", "niemand gespielt"]]);
+      hit.setAttribute("fill", "var(--wash)");
+      placeTip(box, tip, cx, 0);
+    };
+    const hide = () => { tip.style.display = "none"; hit.setAttribute("fill", "transparent"); };
+    hit.addEventListener("pointerenter", show); hit.addEventListener("focus", show);
+    hit.addEventListener("pointerleave", hide); hit.addEventListener("blur", hide);
+  }
+}
+
+// ---------- Tabelle ----------
+const COLS = [
+  { key: "name", label: "Spieler", val: p => p.name.toLowerCase(), asc: true },
+  { key: "status", label: "Zuletzt online", val: p => p.online ? Infinity : (p.last_seen || 0) },
+  { key: "total", label: "Spielzeit", val: p => p.total, sep: true },
+  { key: "week", label: "Letzte 7 Tage", val: p => p.week },
+  { key: "sessions", label: "Sessions", val: p => p.sessions },
+  { key: "longest", label: "Längste Session", val: p => p.longest },
+  { key: "deaths", label: "Tode", val: p => p.world?.deaths ?? -1, world: true, sep: true },
+  { key: "mob_kills", label: "Mobs besiegt", val: p => p.world?.mob_kills ?? -1, world: true },
+  { key: "distance_km", label: "Strecke", val: p => p.world?.distance_km ?? -1, world: true },
+  { key: "mined", label: "Blöcke abgebaut", val: p => p.world?.mined ?? -1, world: true },
+  { key: "crafted", label: "Hergestellt", val: p => p.world?.crafted ?? -1, world: true },
+];
+function cell(p, c, now) {
+  const w = p.world;
+  switch (c.key) {
+    case "name": return null;
+    case "status":
+      if (p.online) return el("span", { class: "online" }, "● online");
+      return document.createTextNode(p.last_seen ? ago(p.last_seen, now) : "noch nie");
+    case "total": return document.createTextNode(p.total ? hours(p.total) : "–");
+    case "week": return document.createTextNode(p.week ? hours(p.week) : "–");
+    case "sessions": return document.createTextNode(nf(p.sessions));
+    case "longest": return document.createTextNode(p.longest ? dur(p.longest) : "–");
+    case "distance_km": return document.createTextNode(w ? `${nf(w.distance_km, w.distance_km < 10 ? 1 : 0)} km` : "–");
+    default: return document.createTextNode(w ? nf(w[c.key]) : "–");
+  }
+}
+function renderTable() {
+  const t = $("players"), now = data.generated;
+  t.replaceChildren();
+  const thead = el("thead");
+  const g = el("tr");
+  g.append(el("th", { colspan: 2 }), el("th", { colspan: 4, class: "group sep" }, "seit Beginn der Aufzeichnung"),
+           el("th", { colspan: 5, class: "group sep" }, "in der aktuellen Welt"));
+  const hr = el("tr");
+  for (const c of COLS) {
+    const th = el("th", { scope: "col" });
+    if (c.sep) th.classList.add("sep");
+    if (c.key === sortKey) th.setAttribute("aria-sort", sortDir > 0 ? "ascending" : "descending");
+    const b = el("button", { type: "button" }, c.label);
+    b.addEventListener("click", () => {
+      if (sortKey === c.key) sortDir = -sortDir; else { sortKey = c.key; sortDir = c.asc ? 1 : -1; }
+      renderTable();
+    });
+    th.append(b); hr.append(th);
+  }
+  thead.append(g, hr);
+  const col = COLS.find(c => c.key === sortKey);
+  const rows = [...data.players].sort((a, b) => {
+    const va = col.val(a), vb = col.val(b);
+    return va < vb ? -sortDir : va > vb ? sortDir : b.total - a.total;
+  });
+  const tbody = el("tbody");
+  for (const p of rows) {
+    const tr = el("tr");
+    for (const c of COLS) {
+      const td = el("td");
+      if (c.sep) td.classList.add("sep");
+      if (c.key === "name") {
+        td.className = "player";
+        const sw = el("span", { class: "swatch" }); sw.style.background = colorOf(p.name);
+        td.append(sw, document.createTextNode(p.name));
+      } else td.append(cell(p, c, now));
+      tr.append(td);
+    }
+    tbody.append(tr);
+  }
+  t.append(thead, tbody);
+}
+
+function render() {
+  if (!data || !data.server) return;
+  renderTiles(); renderOnline(); renderCharts(); renderDaily(); renderTable();
+  if (data.server.tracking_since)
+    $("foot-tracking").textContent = `Spielzeiten aus den Server-Logs, aufgezeichnet seit ${new Date(data.server.tracking_since * 1000).toLocaleDateString("de-DE")}.`;
+}
+
+async function load() {
+  try {
+    const r = await fetch("/api/stats", { cache: "no-store" });
+    if (!r.ok) throw new Error(r.status);
+    const d = await r.json();
+    if (!d.server) { setTimeout(load, 3000); return; }  // Dienst sammelt gerade die ersten Werte
+    data = d;
+    document.body.classList.remove("stale"); $("error").style.display = "none";
+    render();
+  } catch (e) {
+    document.body.classList.add("stale"); $("error").style.display = "block";
+  }
+}
+let resizeTimer;
+addEventListener("resize", () => { clearTimeout(resizeTimer); resizeTimer = setTimeout(render, 150); });
+document.addEventListener("visibilitychange", () => { if (!document.hidden) load(); });
+load();
+setInterval(load, 30000);
+</script>
+</body>
+</html>
