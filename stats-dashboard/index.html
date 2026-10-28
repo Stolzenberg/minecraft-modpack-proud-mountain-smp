@@ -552,7 +552,7 @@ function renderHeat() {
   $("heat-note").textContent = `Wie viele Spieler im Schnitt online sind, nach Wochentag und Uhrzeit (letzte ${days >= 27 ? "4 Wochen" : `${Math.max(1, days)} Tage`})`;
   const ramp = $("heat-ramp"); ramp.replaceChildren(document.createTextNode("weniger"));
   for (let i = 0; i <= steps; i++) { const c = el("i"); c.style.background = `var(--h${i})`; ramp.append(c); }
-  ramp.append(document.createTextNode(`mehr (dunkelstes Feld: Ø ${nf(max, 1)} Spieler)`));
+  ramp.append(document.createTextNode("mehr"));
 }
 
 // ---------- Gestapelte Säulen pro Tag ----------
