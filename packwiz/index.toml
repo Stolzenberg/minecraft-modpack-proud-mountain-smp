@@ -2174,12 +2174,16 @@ file = "kubejs/server_scripts/endsperre.js"
 hash = "0185ffa8f3990730134d5785f32886448de52c965e7935397d90adb992ed42f4"
 
 [[files]]
+file = "kubejs/server_scripts/invites.js"
+hash = "e55ab702ca5fd84ab1b330c0a80b5bccae5465a0e413b35235ad1e15c99937c7"
+
+[[files]]
 file = "kubejs/server_scripts/smallships.js"
 hash = "de10973245c650c925376f297637b6a4c6586ca092a4c60bfc34a2bac34c5d62"
 
 [[files]]
 file = "kubejs/server_scripts/spielerfarben.js"
-hash = "f9a69b1108c546c37c8404be04ae16a722a206bde954781c956e68f09998d7fc"
+hash = "affd6292ee0be2fb22b24226be41d174e22d135dbaff0c3926536092087998f7"
 
 [[files]]
 file = "kubejs/server_scripts/testwelt.js"

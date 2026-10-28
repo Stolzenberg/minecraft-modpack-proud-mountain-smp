@@ -321,9 +321,18 @@ def player_colors():
         return {}
 
 
+def invite_colors():
+    """Farben der per /invite eingeladenen Spieler (KubeJS invites.js vergibt sie beim Einladen)."""
+    try:
+        invites = json.load(open(os.path.join(DATA, "config", "proudmountain", "einladungen.json")))["einladungen"]
+        return {str(e["an"]): int(e["farbe"]) for e in invites if 1 <= int(e.get("farbe", 0)) <= 8}
+    except (OSError, ValueError, KeyError, TypeError, AttributeError):
+        return {}
+
+
 def assign_colors(order):
     """Spieler ohne Eintrag bekommen der Reihe nach die noch freien Farben."""
-    fixed = player_colors()
+    fixed = {**invite_colors(), **player_colors()}
     free = [c for c in range(1, 9) if c not in fixed.values()] or list(range(1, 9))
     out, i = {}, 0
     for name in order:
