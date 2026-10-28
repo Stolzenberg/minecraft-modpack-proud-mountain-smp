@@ -10,8 +10,12 @@
 // Getauscht wird immer dann, wenn Dimension und aktives Profil nicht zusammenpassen: beim Dimensionswechsel,
 // Login, Respawn und zusätzlich jede Sekunde. Das gerade inaktive Profil liegt in server.persistentData.
 // Hinein und hinaus geht es nur per /testwelt: Portale, Waystones usw. von oder in die
-// Testwelt werden blockiert, auch für Items, Tiere und Fahrzeuge. In der Testwelt außerdem gesperrt:
-//   - Mobs aller Art (natürliche Spawns, Spawn-Eier, Spawner, Golems, Bosse)
+// Testwelt werden blockiert, auch für Items, Tiere und Fahrzeuge.
+// Mobs gibt es nur aus Spawn-Eiern (auch per Werfer), Eimern und /summon, dazu deren Nachwuchs, Umwandlungen und
+// von ihnen gerufene Mobs. Höchstens MAX_MOBS gleichzeitig, /testwelt mobs entfernt alle Mobs im Umkreis.
+// Kills in der Testwelt zählen nicht für die Statistik.
+// In der Testwelt außerdem gesperrt:
+//   - natürliche Spawns, Spawner, Golems und Wither aus Blöcken
 //   - Waystones (globales Netz), Paraglider-Statuen und -Upgrades (Herz/Ausdauer gelten dauerhaft),
 //     Endportalrahmen, Netherportale, Respawnpunkte
 // Advancements und Statistiken sind nicht getrennt.
@@ -25,6 +29,10 @@
   const BLOCKED_BLOCKS = [/^waystones:/, /^paraglider:.*statue$/, /^minecraft:end_portal_frame$/]
   const BLOCKED_ITEMS = ['paraglider:heart_container', 'paraglider:stamina_vessel', 'paraglider:anti_vessel', 'paraglider:essence']
   const TAG_COMPOUND = 10
+  const MAX_MOBS = 150 // gleichzeitig geladene Mobs in der Testwelt, gegen Lag
+  const MOB_CLEAR_RADIUS = 64 // für /testwelt mobs
+  // Ohne Spawn-Art entstehen Golems und Wither aus Blöcken, aber auch Nachwuchs (siehe mobAllowed)
+  const BLOCKED_SPAWN_TYPES = ['NATURAL', 'CHUNK_GENERATION', 'SPAWNER', 'TRIAL_SPAWNER', 'STRUCTURE', 'PATROL', 'EVENT', 'TRIGGERED']
 
   const $CompoundTag = Java.loadClass('net.minecraft.nbt.CompoundTag')
   const $ListTag = Java.loadClass('net.minecraft.nbt.ListTag')
@@ -32,12 +40,15 @@
   const $MobEffectInstance = Java.loadClass('net.minecraft.world.effect.MobEffectInstance')
   const $ItemStack = Java.loadClass('net.minecraft.world.item.ItemStack')
   const $Mob = Java.loadClass('net.minecraft.world.entity.Mob')
+  const $AgeableMob = Java.loadClass('net.minecraft.world.entity.AgeableMob')
   const $ResourceLocation = Java.loadClass('net.minecraft.resources.ResourceLocation')
   const $CuriosApi = Java.loadClass('top.theillusivec4.curios.api.CuriosApi')
   const $TravelEvent = Java.loadClass('net.neoforged.neoforge.event.entity.EntityTravelToDimensionEvent')
   const $ChangedDimensionEvent = Java.loadClass('net.neoforged.neoforge.event.entity.player.PlayerEvent$PlayerChangedDimensionEvent')
   const $SetSpawnEvent = Java.loadClass('net.neoforged.neoforge.event.entity.player.PlayerSetSpawnEvent')
   const $PortalSpawnEvent = Java.loadClass('net.neoforged.neoforge.event.level.BlockEvent$PortalSpawnEvent')
+  const $JoinLevelEvent = Java.loadClass('net.neoforged.neoforge.event.entity.EntityJoinLevelEvent')
+  const $StatAwardEvent = Java.loadClass('net.neoforged.neoforge.event.StatAwardEvent')
 
   const travelAllowed = {} // UUIDs, die gerade per /testwelt reisen
   const lastHurt = {} // UUID → Server-Tick des letzten Schadens
@@ -296,6 +307,31 @@
     player.tell(Text.of('Zurück in der normalen Welt, dein Inventar ist wieder da.').gold())
   }
 
+  // --- Mobs ----------------------------------------------------------------------------------------------
+
+  // Spawn-Art merkt sich NeoForge am Mob (auch über Neustarts, NBT neoforge:spawn_type)
+  function mobAllowed(mob) {
+    let type = mob.getSpawnType()
+    if (type == null) return mob instanceof $AgeableMob && mob.isBaby() // Zucht, Spawn-Ei auf Tier, Hühnerei
+    return !BLOCKED_SPAWN_TYPES.includes(String(type))
+  }
+
+  function testMobs(level, fn) {
+    level.getAllEntities().forEach(e => {
+      if (e instanceof $Mob) fn(e)
+    })
+  }
+
+  function clearMobs(player) {
+    let mobs = []
+    let r2 = MOB_CLEAR_RADIUS * MOB_CLEAR_RADIUS
+    testMobs(player.level, m => {
+      if (m.distanceToSqr(player.getX(), player.getY(), player.getZ()) <= r2) mobs.push(m)
+    })
+    mobs.forEach(m => m.discard()) // erst sammeln, dann entfernen, ohne Drops
+    return mobs.length
+  }
+
   ServerEvents.commandRegistry(event => {
     const { commands: Commands } = event
     event.register(Commands.literal('testwelt').executes(ctx => {
@@ -316,7 +352,16 @@
         return 0
       }
       return 1
-    }))
+    }).then(Commands.literal('mobs').executes(ctx => {
+      let player = ctx.source.getPlayerOrException()
+      if (!isTest(player.level)) {
+        player.tell(Text.of('/testwelt mobs geht nur in der Testwelt.').red())
+        return 0
+      }
+      let n = clearMobs(player)
+      player.tell(Text.of(`${n} Mobs im Umkreis von ${MOB_CLEAR_RADIUS} Blöcken entfernt.`).gold())
+      return 1
+    })))
   })
 
   // Jede andere Reise von oder in die Testwelt abbrechen (Portale, Waystones, Teleport-Befehle, Items, Züge …)
@@ -360,8 +405,29 @@
     if (entity.isPlayer()) lastHurt[uuid(entity)] = entity.getServer().getTickCount()
   })
 
-  EntityEvents.spawned(event => {
-    if (isTest(event.level) && event.entity instanceof $Mob) event.cancel()
+  NativeEvents.onEvent($JoinLevelEvent, event => {
+    let mob = event.getEntity()
+    let level = event.getLevel()
+    // Aus dem Speicher geladene Mobs wurden schon beim Spawnen geprüft (Nachwuchs ist inzwischen evtl. erwachsen)
+    if (!(mob instanceof $Mob) || event.loadedFromDisk() || !isTest(level)) return
+    if (!mobAllowed(mob)) {
+      event.setCanceled(true)
+      return
+    }
+    let count = 0
+    testMobs(level, () => count++)
+    if (count < MAX_MOBS) return
+    event.setCanceled(true)
+    let player = level['getNearestPlayer(net.minecraft.world.entity.Entity,double)'](mob, 16)
+    if (player) notice(player, `Zu viele Mobs in der Testwelt (${MAX_MOBS}). Aufräumen mit /testwelt mobs.`)
+  })
+
+  // Kills in der Testwelt nicht in die Statistik (Stats-Dashboard)
+  NativeEvents.onEvent($StatAwardEvent, event => {
+    let player = event.getEntity()
+    if (!isTest(player.level)) return
+    let name = String(event.getStat().getName())
+    if (name.startsWith('minecraft.killed:') || name == 'minecraft.custom:minecraft.mob_kills') event.setCanceled(true)
   })
 
   BlockEvents.placed(event => {

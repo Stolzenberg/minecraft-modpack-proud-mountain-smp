@@ -2187,7 +2187,7 @@ hash = "affd6292ee0be2fb22b24226be41d174e22d135dbaff0c3926536092087998f7"
 
 [[files]]
 file = "kubejs/server_scripts/testwelt.js"
-hash = "3a1e5d8f013f3568fbc1610cf58338b69501f9c2542331f2190bc1f1436b644f"
+hash = "60ebfacd03b7f6674e65d74974c8aaa988b8d5dd1be8440d790820ccdfe5f0a7"
 
 [[files]]
 file = "mods/addonslib.pw.toml"
