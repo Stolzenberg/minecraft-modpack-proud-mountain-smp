@@ -44,7 +44,9 @@
   }
 
   function lookup(server, name) {
-    let found = server.getProfileCache().get(name) // fragt bei Mojang nach, wenn der Name nicht im Cache ist
+    // fragt bei Mojang nach, wenn der Name nicht im Cache ist. Die Variante ausdrücklich wählen, sonst nimmt Rhino
+    // get(UUID) und scheitert beim Umwandeln des Namens in eine UUID (außerhalb von try/catch)
+    let found = server.getProfileCache()['get(java.lang.String)'](name)
     return found.isPresent() ? found.get() : null
   }
 
@@ -127,7 +129,10 @@
     let until = start + minutes * 60000
     bans.add(new $UserBanListEntry(gp, new $Date(now), source, new $Date(until), reason))
     let online = server.getPlayerList().getPlayer(gp.getId())
-    if (online) online.connection.disconnect(Text.of(`Du bist bis ${date(until)} gebannt.\n\n${reason}`))
+    if (online) {
+      online.connection['disconnect(net.minecraft.network.chat.Component)'](
+        Text.of(`Du bist bis ${date(until)} gebannt.\n\n${reason}`))
+    }
     console.info(`[invites] ${name} für ${duration(minutes)} gebannt (bis ${date(until)}): ${reason}`)
     return until
   }
@@ -141,7 +146,8 @@
       if (e.getExpires() && Number(e.getExpires().getTime()) <= now) expired.push(e)
     })
     expired.forEach(e => {
-      bans.remove(e) // getUser() ist nicht öffentlich, daher über den Eintrag
+      // getUser() ist nicht öffentlich, daher über den Eintrag (remove(K) gibt es auch)
+      bans['remove(net.minecraft.server.players.StoredUserEntry)'](e)
       console.info(`[invites] Bann von ${e.getDisplayName().getString()} abgelaufen`)
     })
   }
@@ -273,7 +279,9 @@
   ServerEvents.commandRegistry(event => {
     const { commands: Commands, arguments: Arguments, builtinSuggestions: Suggestions } = event
     const whitelistNames = (ctx, builder) => Suggestions.suggest(ctx.source.getServer().getPlayerList().getWhiteListNames(), builder)
-    // Fehler im Skript sollen als Meldung ankommen und nicht als "An unexpected error occurred"
+    // Fehler im Skript sollen als Meldung ankommen und nicht als "An unexpected error occurred". Das greift nur für
+    // JS-Fehler: Java-Ausnahmen (RuntimeException) lässt Rhino an catch vorbei, die landen als "unexpected error"
+    // ohne Log. Deshalb überladene Java-Methoden immer mit ausdrücklicher Signatur aufrufen, z. B. obj['get(java.lang.String)'].
     const guarded = (label, fn) => ctx => {
       try {
         return fn(ctx)
