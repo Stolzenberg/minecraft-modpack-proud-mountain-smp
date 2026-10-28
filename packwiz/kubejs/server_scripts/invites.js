@@ -28,7 +28,7 @@
   function load() {
     let data = {}
     try {
-      data = JSON.parse(String(JsonIO.readString(FILE)))
+      data = JSON.parse(String(JsonIO.readString(FILE))) || {} // fehlt die Datei, kommt null statt eines Fehlers
     } catch (e) {
       // Datei gibt es erst nach der ersten Einladung
     }

@@ -2175,7 +2175,7 @@ hash = "0185ffa8f3990730134d5785f32886448de52c965e7935397d90adb992ed42f4"
 
 [[files]]
 file = "kubejs/server_scripts/invites.js"
-hash = "ab481a9463aad589905bdae9c248556611115165e6f797b6bdadf2180d03ad25"
+hash = "fb538d7bb24ddf4dfcc6082e54dd7fbe294221d117b1798397df1f8ff840052a"
 
 [[files]]
 file = "kubejs/server_scripts/smallships.js"
