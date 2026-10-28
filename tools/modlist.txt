@@ -85,7 +85,6 @@ enderman-overhaul                        pin=7661859
 mutant-monsters                          pin=7232511
 born-in-chaos                            pin=8268280
 ribbits                                  pin=7355196
-frost-bear                               pin=8507529
 # --- Überleben ---
 paragliders                              pin=7795089
 modernminecarts                          pin=8817323 # Copper Rails, Rail Crossing, Directed Powered Rail, Powered Detector Rail, Minecart-Ketten (Config: config/modernminecarts-common.toml, Standardwerte; brennende Furnace Minecarts laden Chunks); Rails Revamped gibt es nur für Fabric
@@ -136,5 +135,4 @@ alltheleaks                              pin=8943912
 clumps                                   pin=5623731
 spark                                    pin=6225208
 crash-assistant                          pin=8636685 side=client
-uwrad-neoforge                           pin=9069850 side=client   # fängt Zugriffe fremder Threads auf den Level-Zufall ab ("Accessing LegacyRandomSource from multiple threads", z. B. am Sculptor-Kloster) und loggt den Verursacher statt abzustürzen (Config: packwiz/config/uwrad.properties)
 antixray-forge                           pin=7979123 pack=server

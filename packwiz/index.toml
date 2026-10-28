@@ -58,10 +58,6 @@ file = "config/tectonic.json"
 hash = "c44645599a7c0c0315131e7e0c4189b7957b6b1eae534e443c795bbafc20dd2a"
 
 [[files]]
-file = "config/uwrad.properties"
-hash = "ea48c5a190e29cf23f296d54d19288b9e32cbd33190aa1429f4898178baf5795"
-
-[[files]]
 file = "config/waystones-common.toml"
 hash = "f338c510714391635d7a8a38ef2687d6ecfc94f3a0ac48794293ca3b86ffbf98"
 
@@ -2380,11 +2376,6 @@ hash = "5d81cae85a0d6973ebed1cda4a1c9dbfda2ce06befc285a762c34efd123d8db0"
 metafile = true
 
 [[files]]
-file = "mods/frost-bear.pw.toml"
-hash = "1ad39f6a2f2fb661f39646134b251c3c99d3aa2fb4554ad6c4102280ebaf0d20"
-metafile = true
-
-[[files]]
 file = "mods/geckolib.pw.toml"
 hash = "83a633a9d7d907ceb5b5ae9479412fde74bbcc6ba62f0a8c5bb4e7b1ac576b60"
 metafile = true
@@ -2777,11 +2768,6 @@ metafile = true
 [[files]]
 file = "mods/terrablender-neoforge.pw.toml"
 hash = "d77e4dc337b6090358c1ef01b0f99a8357e5279443e0e23e511de1be865c01c9"
-metafile = true
-
-[[files]]
-file = "mods/uwrad-neoforge.pw.toml"
-hash = "f01c223df5a6f8b678f6300f4fa7a9612dd4349d5c0f173634f7316a9a11756e"
 metafile = true
 
 [[files]]
