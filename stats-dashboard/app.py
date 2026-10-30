@@ -88,6 +88,7 @@ def db():
         CREATE TABLE IF NOT EXISTS cp_state (prefix TEXT PRIMARY KEY, last_rowid INTEGER);
         CREATE TABLE IF NOT EXISTS cp_hourly (prefix TEXT, hour INTEGER, name TEXT, placed INTEGER, broken INTEGER,
                                               PRIMARY KEY (prefix, hour, name));
+        CREATE TABLE IF NOT EXISTS boss_kills (boss TEXT, name TEXT, ts REAL, PRIMARY KEY (boss, name));
         CREATE TABLE IF NOT EXISTS metrics (ts REAL PRIMARY KEY, online INTEGER, players INTEGER, tps REAL,
                                             mspt REAL, heap_used REAL, heap_committed REAL, mem_used REAL,
                                             mem_total REAL, cpu REAL);
@@ -344,6 +345,25 @@ def assign_colors(order):
     return out
 
 
+# Trophäenwand: Bosse je Mod. Mehrere IDs sind Varianten desselben Bosses, Name und Schlüssel kommen von der ersten.
+BOSSES = (
+    ("Minecraft", ("minecraft:ender_dragon",), ("minecraft:wither",), ("minecraft:warden",), ("minecraft:elder_guardian",)),
+    ("Mowzie's Mobs", ("mowziesmobs:ferrous_wroughtnaut",), ("mowziesmobs:frostmaw",), ("mowziesmobs:umvuthi",),
+     ("mowziesmobs:naga",), ("mowziesmobs:sculptor",)),
+    ("L_Ender's Cataclysm", ("cataclysm:ignis",), ("cataclysm:the_harbinger",), ("cataclysm:netherite_monstrosity",),
+     ("cataclysm:ender_guardian",), ("cataclysm:the_leviathan",), ("cataclysm:ancient_remnant",),
+     ("cataclysm:maledictus",), ("cataclysm:scylla",)),
+    ("Bosses of Mass Destruction", ("bosses_of_mass_destruction:lich",), ("bosses_of_mass_destruction:obsidilith",),
+     ("bosses_of_mass_destruction:gauntlet",), ("bosses_of_mass_destruction:void_blossom",)),
+    ("Mutant Monsters", ("mutantmonsters:mutant_zombie",), ("mutantmonsters:mutant_skeleton",),
+     ("mutantmonsters:mutant_creeper",), ("mutantmonsters:mutant_enderman",)),
+    ("Born in Chaos", ("born_in_chaos_v1:lord_pumpkinhead", "born_in_chaos_v1:lord_pumpkinhead_withouta_horse",
+                       "born_in_chaos_v1:lord_pumpkinhead_head", "born_in_chaos_v1:lord_the_headless"),
+     ("born_in_chaos_v1:supreme_bonescaller", "born_in_chaos_v1:supreme_bonescaller_not_despawn",
+      "born_in_chaos_v1:supreme_bonescaller_stage_2"),
+     ("born_in_chaos_v1:lifestealer", "born_in_chaos_v1:lifestealer_true_form"), ("born_in_chaos_v1:krampus",),
+     ("born_in_chaos_v1:nightmare_stalker",)),
+)
 WALK = ("walk", "sprint", "crouch", "walk_on_water", "walk_under_water")
 SNAPSHOT_KEYS = ("deaths", "mob_kills", "walk_km", "distance_km", "crafted")
 
@@ -356,6 +376,8 @@ def world_stats(uuid):
     c = s.get("minecraft:custom", {})
     km = lambda keys: sum(c.get(f"minecraft:{k}_one_cm", 0) for k in keys) / 100000
     top = lambda cat, n: sorted(s.get(cat, {}).items(), key=lambda kv: -kv[1])[:n]
+    killed = s.get("minecraft:killed", {})
+    bosses = {ids[0]: n for _, *group in BOSSES for ids in group if (n := sum(killed.get(i, 0) for i in ids))}
     return {
         "play_time": c.get("minecraft:play_time", 0) / 20,
         "deaths": c.get("minecraft:deaths", 0),
@@ -367,6 +389,7 @@ def world_stats(uuid):
         "jumps": c.get("minecraft:jump", 0),
         "mined": sum(s.get("minecraft:mined", {}).values()),
         "crafted": sum(s.get("minecraft:crafted", {}).values()),
+        "bosses": bosses,
         "facts": {
             "mined": [[names.get(k, "block", "item"), v] for k, v in top("minecraft:mined", 3)],
             "killed": [[names.get(k, "entity"), v] for k, v in top("minecraft:killed", 3)],
@@ -398,6 +421,32 @@ def world_delta(con, start, stats):
             b = base.get(name, {})
             out[name] = {k: max(0, w[k] - b.get(k, 0)) for k in SNAPSHOT_KEYS}
     return out, max(start, base_ts or start)
+
+
+def boss_wall(con, now, stats):
+    """Trophäenwand: wer welchen Boss wie oft besiegt hat und wer zuerst. Die Statistik-Dateien haben keine
+    Zeitstempel, deshalb merkt sich das Dashboard, wann ein Sieg zum ersten Mal auftaucht. Die Zeile mit
+    leerem Boss hält den Beginn der Aufzeichnung, Siege von davor bekommen ts 0 (Reihenfolge unbekannt)."""
+    row = con.execute("SELECT ts FROM boss_kills WHERE boss = ''").fetchone()
+    since = row[0] if row else now
+    if not row:
+        con.execute("INSERT INTO boss_kills VALUES ('', '', ?)", (now,))
+    for name, w in stats.items():
+        for boss in (w or {}).get("bosses", {}):
+            con.execute("INSERT OR IGNORE INTO boss_kills VALUES (?, ?, ?)", (boss, name, now if row else 0))
+    seen = {}
+    for boss, name, ts in con.execute("SELECT boss, name, ts FROM boss_kills WHERE boss != '' ORDER BY ts"):
+        seen.setdefault(boss, {})[name] = ts
+    out = []
+    for mod, *group in BOSSES:
+        for ids in group:
+            kills = {n: w["bosses"][ids[0]] for n, w in stats.items() if w and ids[0] in w["bosses"]}
+            when = {n: seen.get(ids[0], {}).get(n, now) for n in kills}  # nach Sortierung: frühester Sieg zuerst
+            killers = sorted(kills, key=lambda n: (when[n], -kills[n], n.lower()))
+            first = killers[0] if killers and (when[killers[0]] > 0 or list(when.values()).count(0) == 1) else None
+            out.append({"id": ids[0], "mod": mod, "name": COLOR.sub("", names.get(ids[0], "entity")),
+                        "kills": [[n, kills[n], when[n]] for n in killers], "first": first})
+    return {"since": since, "list": out}
 
 
 # --- CoreProtect (platzierte und abgebaute Blöcke) --------------------------------------------------
@@ -592,6 +641,7 @@ class Collector:
             world = {n: world_stats(wl[n]) if n in wl else None for n in order}
             colors = assign_colors(order)
             snapshot_world(con, now, world)
+            bosses = boss_wall(con, now, world)
             con.commit()
 
             starts = {"today": day_start(now).timestamp(), "week": now - 7 * 86400}
@@ -650,6 +700,7 @@ class Collector:
                           "placed": cp_days["placed"], "broken": cp_days["broken"]},
                 "cumulative": {"days": labels_all, "playtime": per_day(sess, labels_all, now)},
                 "heatmap": heatmap(sess, now),
+                "bosses": bosses,
             }
             with self.lock:
                 self.snapshot = json.dumps(snapshot, separators=(",", ":")).encode()

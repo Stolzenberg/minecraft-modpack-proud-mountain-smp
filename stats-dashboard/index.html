@@ -148,6 +148,22 @@ td { font-variant-numeric: tabular-nums; }
 td.player { font-weight: 600; }
 td.player .swatch { margin-right: 8px; vertical-align: -1px; }
 td .online { color: var(--good-text); font-weight: 600; }
+.boss-card h3 { display: flex; justify-content: space-between; gap: 8px; }
+.boss-card h3 span { color: var(--muted); font-weight: 500; font-variant-numeric: tabular-nums; }
+.boss-list { list-style: none; margin: 0; padding: 0; }
+.boss-list li { display: grid; grid-template-columns: 16px 1fr auto; gap: 2px 10px; padding: 7px 0; border-top: 1px solid var(--grid); font-size: 14px; }
+.boss-list li:first-child { border-top: 0; padding-top: 2px; }
+.boss-list .mark { grid-row: span 2; width: 16px; height: 16px; margin-top: 2px; }
+.boss-list .mark svg { display: block; width: 16px; height: 16px; }
+.boss-list li.open .mark { grid-row: auto; }
+.boss-list .mark.open { border: 1.5px dashed var(--axis); border-radius: 50%; }
+.boss-list .boss { font-weight: 600; min-width: 0; }
+.boss-list li.open .boss { color: var(--muted); font-weight: 500; }
+.boss-list .count { font-variant-numeric: tabular-nums; font-weight: 600; text-align: right; }
+.boss-list .by { grid-column: 2 / 4; color: var(--text-2); font-size: 13px; }
+.boss-list .by .swatch { margin-right: 5px; vertical-align: -1px; }
+.boss-list .by .killer { white-space: nowrap; }
+.boss-list .by em { font-style: normal; color: var(--muted); }
 .profile header { margin: 0 0 4px; gap: 8px; flex-wrap: nowrap; }
 .profile header .name { font-weight: 650; font-size: 16px; }
 .profile header .state { margin-left: auto; color: var(--text-2); font-size: 13px; white-space: nowrap; }
@@ -244,12 +260,18 @@ footer p { margin: 4px 0; }
     </section>
   </div>
 
+  <div class="controls">
+    <h2 class="section-title">Trophäenwand</h2>
+    <p class="coverage" id="boss-note"></p>
+  </div>
+  <section class="grid3" id="bosses" aria-label="Trophäenwand"></section>
+
   <h2 class="section-title">Steckbriefe</h2>
   <section class="grid3" id="profiles" aria-label="Steckbriefe"></section>
 
   <footer>
     <p id="foot-tracking">Spielzeiten aus den Server-Logs.</p>
-    <p>Platzierte und abgebaute Blöcke aus dem Block-Protokoll (CoreProtect), Tode, Mobs, Strecke und Hergestelltes aus den Minecraft-Statistiken, beides für die aktuelle Welt. Positionen werden bewusst nicht angezeigt.</p>
+    <p>Platzierte und abgebaute Blöcke aus dem Block-Protokoll (CoreProtect), Tode, Mobs, Bosse, Strecke und Hergestelltes aus den Minecraft-Statistiken, beides für die aktuelle Welt. Positionen werden bewusst nicht angezeigt.</p>
     <p>Aktualisiert sich jede Minute von selbst.</p>
   </footer>
 </main>
@@ -781,6 +803,47 @@ function renderTable() {
   $("table-note").textContent = `${{ today: "Heute", week: "Letzte 7 Tage", total: "Gesamt" }[period]} · Spalten zum Sortieren antippen`;
 }
 
+// ---------- Trophäenwand ----------
+function renderBosses() {
+  const box = $("bosses"), wall = data.bosses;
+  box.replaceChildren();
+  if (!wall) return;
+  const before = `vor dem ${dateShort(wall.since)}`;
+  const mods = [];
+  for (const b of wall.list) {
+    if (!mods.length || mods[mods.length - 1][0] !== b.mod) mods.push([b.mod, []]);
+    mods[mods.length - 1][1].push(b);
+  }
+  for (const [mod, list] of mods) {
+    const card = el("div", { class: "card boss-card" }), h = el("h3", {}, mod);
+    h.append(el("span", {}, `${list.filter(b => b.kills.length).length} / ${list.length}`));
+    const ul = el("ul", { class: "boss-list" });
+    for (const b of list) {
+      const done = b.kills.length > 0, li = el("li", { class: done ? "" : "open" });
+      const mark = el("span", { class: "mark" + (done ? "" : " open") });
+      if (done) mark.innerHTML = ICON.good;
+      const total = b.kills.reduce((sum, k) => sum + k[1], 0);
+      li.append(mark, el("span", { class: "boss" }, b.name), el("span", { class: "count" }, done ? `${nf(total)}×` : ""));
+      if (!done) { ul.append(li); continue; }
+      const by = el("span", { class: "by" });
+      b.kills.forEach(([name, n, ts], i) => {
+        if (i) by.append(document.createTextNode(" · "));
+        const who = el("span", { class: "killer" });
+        who.append(swatch(name), document.createTextNode(b.kills.length > 1 ? `${name} ${nf(n)}×` : name));
+        if (name === b.first) who.append(el("em", {}, ` (zuerst, ${ts ? dateShort(ts) : before})`));
+        by.append(who);
+      });
+      if (!b.first) by.append(el("em", {}, ` (${before})`));
+      li.append(by); ul.append(li);
+    }
+    card.append(h, ul); box.append(card);
+  }
+  const beaten = wall.list.filter(b => b.kills.length).length;
+  const fights = wall.list.reduce((sum, b) => sum + b.kills.reduce((s, k) => s + k[1], 0), 0);
+  $("boss-note").textContent = `Gemeinsam ${nf(beaten)} von ${nf(wall.list.length)} Bossen besiegt, ${nf(fights)} ${fights === 1 ? "Bosskampf" : "Bosskämpfe"} gewonnen. ` +
+    `Wer zuerst war, merkt sich die Seite seit dem ${dateShort(wall.since)}`;
+}
+
 // ---------- Steckbriefe ----------
 function renderProfiles() {
   const box = $("profiles"), now = data.generated;
@@ -813,6 +876,9 @@ function renderProfiles() {
       row("Davon zu Fuß", km(w.walk_km));
       if (w.swim_km >= 0.1) row("Geschwommen", km(w.swim_km));
       row("Gesprungen", `${nf(w.jumps)}×`);
+      const bosses = Object.values(w.bosses || {});
+      row("Bosse besiegt", bosses.length ? `${nf(bosses.length)} verschiedene` : "noch keinen",
+          bosses.length ? `${nf(bosses.reduce((a, b) => a + b, 0))}×` : "");
       row("Platziert / abgebaut", `${compact(p.periods.total.placed)} / ${compact(p.periods.total.broken)}`);
     } else {
       dl.append(el("dt", {}, "In dieser Welt"), el("dd", {}, "noch keine Statistik"));
@@ -824,7 +890,7 @@ function renderProfiles() {
 function render() {
   if (!data || !data.server) return;
   renderTiles(); renderOnline(); renderCharts(); renderHeat(); renderDaily(); renderRace();
-  renderPeriod(); renderRanking(); renderTable(); renderProfiles();
+  renderPeriod(); renderRanking(); renderTable(); renderBosses(); renderProfiles();
   if (data.server.tracking_since)
     $("foot-tracking").textContent = `Spielzeiten aus den Server-Logs, aufgezeichnet seit ${new Date(data.server.tracking_since * 1000).toLocaleDateString("de-DE")}.`;
 }
