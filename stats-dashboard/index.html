@@ -132,6 +132,8 @@ h3 { font-size: 14px; margin: 0 0 8px; font-weight: 620; }
 .bars .bar { height: 14px; border-radius: 0 4px 4px 0; flex: none; min-width: 0; }
 .bars .val { font-variant-numeric: tabular-nums; color: var(--text); font-weight: 600; white-space: nowrap; }
 .bars .rank { color: var(--muted); font-variant-numeric: tabular-nums; margin-right: 4px; }
+.team { margin: 10px 0 0; padding-top: 10px; border-top: 1px solid var(--grid); font-size: 13px; color: var(--text-2); }
+.team b { color: var(--text); font-weight: 650; font-variant-numeric: tabular-nums; }
 .table-wrap { overflow-x: auto; margin: 0 -16px -16px; padding: 0 16px 8px; }
 table { border-collapse: collapse; width: 100%; font-size: 14px; }
 th, td { text-align: right; padding: 9px 10px; border-top: 1px solid var(--grid); white-space: nowrap; }
@@ -731,7 +733,9 @@ function renderRanking() {
       track.append(bar, el("span", { class: "val" }, m.fmt(v)));
       li.append(who, track); ul.append(li);
     });
-    card.append(ul); box.append(card);
+    const team = el("p", { class: "team" }, "Gemeinsam: ");
+    team.append(el("b", {}, m.fmt(rows.reduce((sum, r) => sum + r[1], 0))));
+    card.append(ul, team); box.append(card);
   }
 }
 function renderTable() {
