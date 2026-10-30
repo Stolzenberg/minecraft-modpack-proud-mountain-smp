@@ -76,6 +76,7 @@ h3 { font-size: 14px; margin: 0 0 8px; font-weight: 620; }
 .tile .value small { font-size: 15px; font-weight: 500; color: var(--text-2); }
 .tile .sub { color: var(--muted); font-size: 13px; margin-top: 4px; }
 .hero .value { font-size: 48px; }
+.world-tiles { grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); }
 .meter { height: 6px; border-radius: 3px; background: color-mix(in srgb, var(--accent) 18%, transparent); margin-top: 10px; overflow: hidden; }
 .meter i { display: block; height: 100%; border-radius: 3px; background: var(--accent); }
 .meter i.warn { background: var(--warning); } .meter i.crit { background: var(--critical); }
@@ -212,6 +213,14 @@ footer p { margin: 4px 0; }
     <ul class="online-list" id="online"></ul>
   </section>
 
+  <h2 class="section-title">In der Welt</h2>
+  <section class="tiles world-tiles" aria-label="Welt">
+    <div class="card tile"><div class="label">Ingame-Tag</div><div class="value" id="w-day">–</div><div class="sub" id="w-day-sub"></div></div>
+    <div class="card tile"><div class="label">Jahreszeit</div><div class="value" id="w-season">–</div><div class="meter"><i id="w-season-bar" style="width:0"></i></div><div class="sub" id="w-season-sub"></div><div class="sub" id="w-season-sub2"></div></div>
+    <div class="card tile"><div class="label">Mond</div><div class="value" id="w-moon">–</div><div class="sub" id="w-moon-sub"></div></div>
+    <div class="card tile"><div class="label">Wetter</div><div class="value" id="w-weather">–</div><div class="sub" id="w-weather-sub"></div></div>
+  </section>
+
   <h2 class="section-title">Server, letzte 24 Stunden</h2>
   <section class="grid2" aria-label="Server-Verlauf">
     <div class="card"><h2>Spieler online</h2><p class="note">Anzahl gleichzeitig online</p><div class="chart" id="c-players"></div></div>
@@ -271,7 +280,7 @@ footer p { margin: 4px 0; }
 
   <footer>
     <p id="foot-tracking">Spielzeiten aus den Server-Logs.</p>
-    <p>Platzierte und abgebaute Blöcke aus dem Block-Protokoll (CoreProtect), Tode, Mobs, Bosse, Strecke und Hergestelltes aus den Minecraft-Statistiken, beides für die aktuelle Welt. Positionen werden bewusst nicht angezeigt.</p>
+    <p>Platzierte und abgebaute Blöcke aus dem Block-Protokoll (CoreProtect), Tode, Mobs, Bosse, Strecke und Hergestelltes aus den Minecraft-Statistiken, beides für die aktuelle Welt. Ingame-Zeit und Jahreszeit (Serene Seasons) live vom Server, das Wetter aus dem letzten Speicherstand der Welt (höchstens ein paar Minuten alt). Positionen werden bewusst nicht angezeigt.</p>
     <p>Aktualisiert sich jede Minute von selbst.</p>
   </footer>
 </main>
@@ -310,6 +319,12 @@ function ago(ts, now) {
   if (s < DAY) return `vor ${Math.round(s / 3600)} h`;
   const days = Math.round((dayStart(now) - dayStart(ts)) / DAY);
   return days === 1 ? "gestern" : `vor ${days} Tagen`;
+}
+function soon(ts, now) {  // Zeitpunkt in der Zukunft
+  const days = Math.round((dayStart(ts) - dayStart(now)) / DAY);
+  if (days === 0) return `heute ${clock(ts)}`;
+  if (days === 1) return `morgen ${clock(ts)}`;
+  return `${WD[new Date(ts * 1000).getDay()]} ${dateShort(ts)}`;
 }
 function gb(mb) { return nf(mb / 1024, 1); }
 function el(tag, attrs = {}, text) {
@@ -803,6 +818,49 @@ function renderTable() {
   $("table-note").textContent = `${{ today: "Heute", week: "Letzte 7 Tage", total: "Gesamt" }[period]} · Spalten zum Sortieren antippen`;
 }
 
+// ---------- Welt (Ingame-Tag, Jahreszeit, Mond, Wetter) ----------
+const SEASONS = ["Vorfrühling", "Hochfrühling", "Spätfrühling", "Frühsommer", "Hochsommer", "Spätsommer",
+                 "Frühherbst", "Hochherbst", "Spätherbst", "Frühwinter", "Hochwinter", "Spätwinter"];
+const SEASON_MAIN = ["Frühling", "Sommer", "Herbst", "Winter"];
+const MOON = [["🌕", "Vollmond"], ["🌖", "Abnehmender Mond"], ["🌗", "Letztes Viertel"], ["🌘", "Abnehmende Sichel"],
+              ["🌑", "Neumond"], ["🌒", "Zunehmende Sichel"], ["🌓", "Erstes Viertel"], ["🌔", "Zunehmender Mond"]];
+function renderWorld() {
+  const w = data.world, now = data.generated;
+  const ids = ["w-day", "w-season", "w-moon", "w-weather"];
+  if (!w) {
+    for (const id of ids) { $(id).textContent = "–"; $(`${id}-sub`).textContent = ""; }
+    $("w-day-sub").textContent = "Server ist aus"; $("w-season-sub2").textContent = ""; $("w-season-bar").style.width = "0";
+    return;
+  }
+  const t = w.time, h = Math.floor(t / 1000 + 6) % 24, m = Math.floor(t % 1000 * 60 / 1000);
+  const night = t >= 13000 && t < 23000;
+  const phase = t < 12000 ? "Tag" : t < 13000 ? "Abenddämmerung" : night ? "Nacht" : "Morgendämmerung";
+  $("w-day").textContent = `Tag ${nf(w.day)}`;
+  $("w-day-sub").textContent = `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")} Uhr, ${phase} · ein Tag dauert ${dur(w.day_seconds)}`;
+
+  const se = w.season;
+  if (se) {
+    const next = SEASONS[(se.index + 1) % 12];
+    $("w-season").textContent = SEASONS[se.index];
+    $("w-season-bar").style.width = `${se.day / se.days * 100}%`;
+    $("w-season-sub").textContent = `Tag ${nf(se.day)} von ${nf(se.days)} · ${next} ab ca. ${soon(now + se.next_in, now)}`;
+    $("w-season-sub2").textContent = se.index % 3 === 2 ? "" : `${SEASON_MAIN[(Math.floor(se.index / 3) + 1) % 4]} ab ca. ${soon(now + se.season_in, now)}`;
+  } else {
+    $("w-season").textContent = "–"; $("w-season-sub").textContent = ""; $("w-season-sub2").textContent = "";
+  }
+
+  const [icon, name] = MOON[w.moon], full = (8 - w.moon) % 8;
+  $("w-moon").textContent = `${icon} ${name}`;
+  $("w-moon-sub").textContent = full === 0 ? (night ? "gerade Vollmond" : "heute Nacht Vollmond")
+    : `Vollmond in ${full} ${full === 1 ? "Tag" : "Tagen"} (ca. ${dur(full * w.day_seconds)})`;
+
+  const winter = se && se.index >= 9, wx = w.weather, left = dur(wx.change_in - (Date.now() / 1000 - now));
+  const fall = winter ? "Schnee oder Regen" : "Regen";
+  $("w-weather").textContent = wx.kind === "thunder" ? "⛈️ Gewitter" : wx.kind === "rain" ? (winter ? "🌨️ Schnee/Regen" : "🌧️ Regen")
+    : night ? "🌙 Klar" : "☀️ Klar";
+  $("w-weather-sub").textContent = wx.kind === "clear" ? `${fall} in ca. ${left}` : `hört in ca. ${left} auf`;
+}
+
 // ---------- Trophäenwand ----------
 function renderBosses() {
   const box = $("bosses"), wall = data.bosses;
@@ -889,7 +947,7 @@ function renderProfiles() {
 
 function render() {
   if (!data || !data.server) return;
-  renderTiles(); renderOnline(); renderCharts(); renderHeat(); renderDaily(); renderRace();
+  renderTiles(); renderOnline(); renderWorld(); renderCharts(); renderHeat(); renderDaily(); renderRace();
   renderPeriod(); renderRanking(); renderTable(); renderBosses(); renderProfiles();
   if (data.server.tracking_since)
     $("foot-tracking").textContent = `Spielzeiten aus den Server-Logs, aufgezeichnet seit ${new Date(data.server.tracking_since * 1000).toLocaleDateString("de-DE")}.`;

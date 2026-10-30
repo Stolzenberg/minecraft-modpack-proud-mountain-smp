@@ -3,13 +3,13 @@
 
 Jede Minute: wer online ist und TPS (RCON), Heap nach der letzten Garbage Collection (GC-Log des
 Servers), RAM und CPU des Hosts (/proc), platzierte/abgebaute Blöcke aus der CoreProtect-Datenbank (nur
-Leserechte). Stündlich ein Snapshot der Weltstatistiken (Tode, Mobs, Strecke …) für Heute/7 Tage. Sessions kommen aus den Server-Logs ("joined/left the game"),
+Leserechte), Ingame-Zeit und Jahreszeit (RCON) und Wetter (level.dat). Stündlich ein Snapshot der Weltstatistiken (Tode, Mobs, Strecke …) für Heute/7 Tage. Sessions kommen aus den Server-Logs ("joined/left the game"),
 damit auch die Zeit vor dem Dashboard zählt. Ereignisse und Messwerte landen in einer SQLite-Datei,
 die Webseite (index.html) holt sich alles als JSON von /api/stats.
 
 Standardbibliothek plus PyMySQL (für CoreProtect). Konfiguration per Umgebung, siehe ENV unten.
 """
-import gzip, json, os, re, socket, sqlite3, struct, threading, time, zipfile
+import gzip, io, json, os, re, socket, sqlite3, struct, threading, time, zipfile
 from datetime import datetime, timedelta
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from zoneinfo import ZoneInfo
@@ -36,6 +36,8 @@ LOG_LINE = re.compile(r"^\[(\d{2}\w{3}\d{4} \d{2}:\d{2}:\d{2})\.\d+\] \[([^\]]+)
 ARCHIVE = re.compile(r"^(\d{4}-\d{2}-\d{2})-(\d+)\.log\.gz$")
 PLAYER_EVENT = re.compile(r"^(\w{3,16}) (joined|left) the game$")
 TPS = re.compile(r"Overall: ([\d.]+) TPS \(([\d.]+) ms/tick\)")
+QUERY = re.compile(r"The time is (\d+)")
+SEASON = re.compile(r"Current season is (Early|Mid|Late) (Spring|Summer|Autumn|Winter), day (\d+)/(\d+), tick (\d+)/(\d+)")
 GC = re.compile(r"(\d+)([KMG])->(\d+)([KMG])\((\d+)([KMG])\)")
 COLOR = re.compile(r"\x1b\[[0-9;]*m|§.")
 LANG_FILE = re.compile(r"^assets/[^/]+/lang/(de_de|en_us)\.json$")
@@ -292,6 +294,79 @@ class Names:
 
 
 names = Names()
+
+
+# --- Zustand der Welt (Ingame-Tag, Jahreszeit, Mond, Wetter) --------------------------------------
+
+def read_nbt(path):
+    """Minimaler NBT-Leser (gzip oder roh) für level.dat, gibt das Wurzel-Compound als dict zurück."""
+    with open(path, "rb") as f:
+        raw = f.read()
+    f = io.BytesIO(gzip.decompress(raw) if raw[:2] == b"\x1f\x8b" else raw)
+    num = {1: "b", 2: "h", 3: "i", 4: "q", 5: "f", 6: "d"}
+
+    def read(fmt):
+        return struct.unpack(">" + fmt, f.read(struct.calcsize(fmt)))[0]
+
+    def text():
+        return f.read(read("H")).decode("utf-8", "replace")
+
+    def tag(t):
+        if t in num:
+            return read(num[t])
+        if t == 7:
+            return f.read(read("i"))
+        if t == 8:
+            return text()
+        if t == 9:
+            inner, n = read("b"), read("i")
+            return [tag(inner) for _ in range(n)]
+        if t == 10:
+            out = {}
+            while (inner := read("b")) != 0:
+                key = text()
+                out[key] = tag(inner)
+            return out
+        if t in (11, 12):
+            return [read("i" if t == 11 else "q") for _ in range(read("i"))]
+        raise ValueError(f"NBT-Tag {t}")
+
+    t = read("b")
+    text()
+    return tag(t)
+
+
+def world_state(now, daytime_out, day_out, season_out):
+    """Ingame-Uhrzeit, Tag und Jahreszeit live per RCON, Wetter aus level.dat (der Server speichert sie alle
+    paar Minuten, die Restzeit wird um die seither vergangene Zeit gekürzt). Zeiten in echten Sekunden."""
+    path = os.path.join(DATA, level_name(), "level.dat")
+    try:
+        level = read_nbt(path)["Data"]
+        saved = os.path.getmtime(path)
+    except (OSError, ValueError, KeyError, struct.error):
+        return None
+    rate = level.get("neoDayTimePerTick") or 1.0  # Better Days: Ingame-Zeit pro Server-Tick
+    real = lambda ticks: ticks / 20  # Wetter-Zähler laufen mit dem Server-Takt
+    t, d = QUERY.search(daytime_out or ""), QUERY.search(day_out or "")
+    day = int(d.group(1)) if d else level["DayTime"] // 24000
+    out = {"day": day + 1, "time": int(t.group(1)) if t else level["DayTime"] % 24000, "moon": day % 8,
+           "day_seconds": 24000 / (20 * rate), "season": None}
+    if m := SEASON.search(season_out or ""):
+        part, season, sday, sdays, tick, ticks = m.groups()
+        index = ("Spring", "Summer", "Autumn", "Winter").index(season) * 3 + ("Early", "Mid", "Late").index(part)
+        left = (int(sdays) - int(sday)) * int(ticks) + int(ticks) - int(tick)  # Ingame-Ticks bis zum nächsten Abschnitt
+        sub = int(sdays) * int(ticks)
+        out["season"] = {"index": index, "day": int(sday), "days": int(sdays),
+                         "next_in": left / (20 * rate), "season_in": (left + (2 - index % 3) * sub) / (20 * rate)}
+    gone = max(0.0, now - saved)
+    if level.get("clearWeatherTime", 0) > 0:
+        kind, left = "clear", level["clearWeatherTime"]
+    elif level.get("raining"):
+        kind, left = ("thunder" if level.get("thundering") else "rain"), level.get("rainTime", 0)
+    else:
+        kind, left = "clear", level.get("rainTime", 0)
+    out["weather"] = {"kind": kind, "change_in": max(0.0, real(left) - gone)}
+    return out
 
 
 # --- Spielerstatistiken der Welt -------------------------------------------------------------------
@@ -608,8 +683,10 @@ class Collector:
             import_archives(con)
             con.executemany("INSERT OR IGNORE INTO events VALUES (?, ?, ?)", self.latest.read())
             online, players, max_players, tps, mspt = False, [], None, None, None
+            daytime_out = day_out = season_out = None
             try:
-                listed, tps_out = rcon("list", "neoforge tps")
+                listed, tps_out, daytime_out, day_out, season_out = rcon(
+                    "list", "neoforge tps", "time query daytime", "time query day", "season get")
                 m = re.match(r"There are (\d+) of a max of (\d+) players online:(.*)", listed, re.S)
                 if m:
                     online, max_players = True, int(m.group(2))
@@ -701,6 +778,7 @@ class Collector:
                 "cumulative": {"days": labels_all, "playtime": per_day(sess, labels_all, now)},
                 "heatmap": heatmap(sess, now),
                 "bosses": bosses,
+                "world": world_state(now, daytime_out, day_out, season_out) if online else None,
             }
             with self.lock:
                 self.snapshot = json.dumps(snapshot, separators=(",", ":")).encode()
