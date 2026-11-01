@@ -1,6 +1,7 @@
 package de.proudmountain.tweaks;
 
 import de.proudmountain.tweaks.ban.BannedItems;
+import de.proudmountain.tweaks.hunger.HungerSystemModifier;
 import de.proudmountain.tweaks.seasons.SeasonCalendar;
 import de.proudmountain.tweaks.seasons.SeasonCalendarConfig;
 import net.neoforged.bus.api.IEventBus;
@@ -20,6 +21,7 @@ import net.neoforged.fml.config.ModConfig;
  */
 @Mod(ProudMountainTweaks.MOD_ID)
 public final class ProudMountainTweaks {
+
     public static final String MOD_ID = "proudmountain_tweaks";
 
     public ProudMountainTweaks(IEventBus modBus, ModContainer container) {
@@ -27,7 +29,8 @@ public final class ProudMountainTweaks {
         BannedItems.init(modBus);
         
         // Register hunger system modifier with NeoForge event bus
-        de.proudmountain.tweaks.hunger.HungerSystemModifier.init(modBus);
+        // This replaces the vanilla hunger system with direct HP restoration and food buffs
+        HungerSystemModifier.init(modBus);
         
         // SeasonCalendar greift auf Serene-Seasons-Klassen zu und darf ohne Serene Seasons nicht geladen werden
         if (ModList.get().isLoaded("sereneseasons")) SeasonCalendar.init();

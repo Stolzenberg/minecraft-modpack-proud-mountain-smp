@@ -4,8 +4,8 @@ import net.neoforged.effector.core.Effect;
 import java.util.Objects;
 
 /**
- * Custom effect for health restoration from consuming food.
- * Applies a temporary buff to restore HP when the player consumes food.
+ * Custom effect for health restoration from consuming food using NeoForge Entity Buffs.
+ * This replaces the vanilla HungerStatusEffect and provides direct HP restoration.
  */
 public class FoodEffect implements Effect {
 
@@ -23,11 +23,10 @@ public class FoodEffect implements Effect {
     }
 
     @Override
-    public void apply(ConsumerEffectConsumer consumer) {
+    public void apply(ConsumerEffectConsumer consumer, ConsumerEntityConsumer entity) {
         // Store the HP to restore and duration for tracking
         consumer.set("hpRestored", hpRestored);
-        consumer.set("duration", duration.getSeconds());
-        consumer.setDuration(duration);
+        consumer.setDuration(Duration.ofTicks(duration));
     }
 
     @Override
@@ -35,8 +34,8 @@ public class FoodEffect implements Effect {
         // When this effect expires, restore the stored HP to the player's health
         if (entity instanceof PlayerEntity playerEntity) {
             int hpToRestore = (int) entity.get("hpRestored");
-            // Restore HP without capping above max - let the game handle overflow
-            playerEntity.entityBuff(1000 + hpToRestore);
+            // Restore HP using NeoForge's entity buff system
+            entity.entityBuff(1000 + hpToRestore);
         }
     }
 

@@ -6,8 +6,7 @@ import net.minecraft.entity.PlayerEntity;
 import net.minecraft.inventory.ItemStack;
 import net.minecraft.world.player.PlayerEntity;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.effector.core.ConsumerEffectConsumer;
-import net.neoforged.effector.core.ConsumerEntityConsumer;
+import net.neoforged.effector.core.Effect;
 import java.time.Duration;
 
 /**
@@ -59,6 +58,54 @@ public class HungerSystemModifier {
 
         // Utility buffs
         SLOW_FALLING_SPEED(0.8f);                   // 20% slower falling speed
+    }
+
+    /**
+     * Custom effect for health restoration from consuming food using NeoForge Entity Buffs (not StatusEffects).
+     */
+    public static class HealthRestoreEffect implements Effect {
+        private final int hpRestored;
+        private final Duration duration;
+
+        public HealthRestoreEffect(int hpRestored, long tickDuration) {
+            this.hpRestored = hpRestored;
+            this.duration = Duration.ofTicks(tickDuration);
+        }
+
+        @Override
+        public boolean hasState() {
+            return true;
+        }
+
+        @Override
+        public void apply(ConsumerEffectConsumer consumer, ConsumerEntityConsumer entity) {
+            // Store the HP to restore and duration for tracking
+            consumer.set("hpRestored", hpRestored);
+            consumer.setDuration(Duration.ofTicks(duration));
+        }
+
+        @Override
+        public void update(ConsumerEffectConsumer consumer, ConsumerEntityConsumer entity) {
+            // When this effect expires, restore the stored HP to the player's health
+            if (entity instanceof PlayerEntity playerEntity) {
+                int hpToRestore = (int) entity.get("hpRestored");
+                // Restore HP using NeoForge's entity buff system
+                entity.entityBuff(1000 + hpToRestore);
+            }
+        }
+
+        @Override
+        public void remove(ConsumerEffectConsumer consumer, ConsumerEntityConsumer entity) {
+            entity.remove("hpRestored");
+        }
+
+        public int getHpRestored() {
+            return hpRestored;
+        }
+
+        public Duration getDuration() {
+            return duration;
+        }
     }
 
     /**
@@ -129,71 +176,9 @@ public class HungerSystemModifier {
     }
 
     private static void applySingleBuff(PlayerEntity player, FoodBuffType buff, float durationMultiplier) {
-        switch (buff) {
-            case RESISTANCE_TO_FALLING_DAMAGE:
-                // Apply resistance to falling damage using NeoForge's effect system
-                boolean hasEffect = ((ConsumerEntityConsumer) player).hasState(1000);
-                if (!hasEffect) {
-                    ((ConsumerEntityConsumer) player).addEffect(new FoodEffect(5, 20));
-                }
-                break;
-
-            case RESISTANCE_TO_PUNCHING_ATTACKS:
-                // Custom effect for punching attack resistance (NeoForge entity buff system)
-                boolean hasPunchingResistance = ((ConsumerEntityConsumer) player).hasState(1001);
-                if (!hasPunchingResistance) {
-                    ((ConsumerEntityConsumer) player).addEffect(new FoodEffect(5, 30));
-                }
-                break;
-
-            case RESISTANCE_TO_LASER_SHOTS:
-                // Apply resistance to laser shots using NeoForge's effect system
-                boolean hasLaserResistance = ((ConsumerEntityConsumer) player).hasState(1002);
-                if (!hasLaserResistance) {
-                    ((ConsumerEntityConsumer) player).addEffect(new FoodEffect(5, 60));
-                }
-                break;
-
-            case RESISTANCE_TO_PIERCING_ATTACKS:
-                // Custom effect for piercing attack resistance
-                boolean hasPiercingResistance = ((ConsumerEntityConsumer) player).hasState(1003);
-                if (!hasPiercingResistance) {
-                    ((ConsumerEntityConsumer) player).addEffect(new FoodEffect(5, 30));
-                }
-                break;
-
-            case FASTER_CRAFTING_SPEED:
-                // Apply faster crafting speed buff
-                boolean hasFasterCrafting = ((ConsumerEntityConsumer) player).hasState(1004);
-                if (!hasFasterCrafting) {
-                    ((ConsumerEntityConsumer) player).addEffect(new FoodEffect(5, 60));
-                }
-                break;
-
-            case FASTER_SPRINT_SPEED:
-                // Apply faster sprinting speed buff
-                boolean hasFasterSprinting = ((ConsumerEntityConsumer) player).hasState(1005);
-                if (!hasFasterSprinting) {
-                    ((ConsumerEntityConsumer) player).addEffect(new FoodEffect(5, 60));
-                }
-                break;
-
-            case ENHANCED_VISION_RANGE:
-                // Vision enhancement effect - use NeoForge's vision buff system
-                boolean hasEnhancedVision = ((ConsumerEntityConsumer) player).hasState(1006);
-                if (!hasEnhancedVision) {
-                    ((ConsumerEntityConsumer) player).addEffect(new FoodEffect(5, 30));
-                }
-                break;
-
-            case SLOW_FALLING_SPEED:
-                // Apply slower falling speed buff using NeoForge's entity buff system
-                boolean hasSlowFalling = ((ConsumerEntityConsumer) player).hasState(1007);
-                if (!hasSlowFalling) {
-                    ((ConsumerEntityConsumer) player).addEffect(new FoodEffect(5, 60));
-                }
-                break;
-        }
+        // Use NeoForge's entity buff system to apply buffs without creating StatusEffects
+        // Entity buff IDs: 1000-1999 are reserved for custom effects
+        ((ConsumerEntityConsumer) player).entityBuff(1000 + (int)(buff.getBuffMultiplier() * 60));
     }
 
     /**
@@ -217,10 +202,8 @@ public class HungerSystemModifier {
 
             hpRestored = (int) (hpRestored * healthMultiplier);
 
-            // Apply HP restoration effect using NeoForge's effect system
-            if (!((ConsumerEntityConsumer) player).hasState(9900)) {
-                ((ConsumerEntityConsumer) player).addEffect(new FoodEffect(hpRestored, 60));
-            }
+            // Apply HP restoration effect using NeoForge's entity buff system
+            ((ConsumerEntityConsumer) player).entityBuff(9900 + hpRestored);
 
             // Apply buffs based on food complexity
             applyFoodBuffs(player, item);
@@ -265,7 +248,7 @@ public class HungerSystemModifier {
             @Override
             public boolean consume(EntityEvent event, ConsumerEventConsumer consumer) {
                 if (event instanceof PlayerEntity player &&
-                    ((ConsumerEventConsumer) consumer).canHandle(player)) {
+                        ((ConsumerEventConsumer) consumer).canHandle(player)) {
 
                     // Check if food was consumed
                     Object item = consumer.get("item");

@@ -1,7 +1,6 @@
 package de.proudmountain.tweaks.hunger;
 
 import de.proudmountain.tweaks.ProudMountainTweaks;
-import de.proudmountain.tweaks.hunger.HungerSystemModifier;
 import net.minecraft.entity.EntityPlayer;
 import net.minecraft.inventory.ItemStack;
 import net.minecraft.world.player.PlayerEntity;
@@ -27,18 +26,17 @@ public class FoodConsumptionConsumer {
             @Override
             public boolean consume(EntityEvent event, ConsumerEventConsumer consumer) {
                 if (event instanceof PlayerEntity player &&
-                    ((ConsumerEventConsumer) consumer).canHandle(player)) {
+                        ((ConsumerEventConsumer) consumer).canHandle(player)) {
 
                     // Get the item being consumed
                     Object eatenItem = consumer.get("item");
                     if (eatenItem instanceof ItemStack itemStack) {
-
                         // Check if it's a food item and modify consumption
                         boolean isFoodItem = HungerSystemModifier.isFoodItem(itemStack);
                         if (isFoodItem) {
                             HungerSystemModifier.modifyFoodConsumption(
                                     ((PlayerEntity) player), itemStack
-                            );
+                                );
                         }
                     }
                 }
