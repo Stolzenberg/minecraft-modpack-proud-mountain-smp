@@ -16,14 +16,14 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 import java.util.List;
 
 /**
- * Kein Hunger: Der Food-Level bleibt fest auf 19 (sprinten geht, essen bleibt möglich).
+ * Kein Hunger: Der Food-Level bleibt fest auf 17 (unter 18 gibt es keine natürliche Regeneration, sprinten geht, essen bleibt möglich).
  * Essen heilt direkt Lebenspunkte und gibt Buffs, die mit der Komplexität des Gerichts länger halten.
  * Einfaches Essen heilt nur, Buffs gibt es erst bei aufwendigeren Gerichten.
  * Als Essen gilt alles mit der Food-Komponente, also Vanilla und alle Mods ohne Namensraten.
  * Komplexität = Nährwert + Sättigung; dazu zählen Folgeitem (Schüssel) und eingebaute Effekte.
  */
 public final class HungerSystemModifier {
-    private static final int FIXED_FOOD_LEVEL = 19;
+    private static final int FIXED_FOOD_LEVEL = 17;
 
     private static final List<Holder<MobEffect>> BUFFS = List.of(
             MobEffects.DAMAGE_RESISTANCE, MobEffects.DIG_SPEED, MobEffects.MOVEMENT_SPEED);
