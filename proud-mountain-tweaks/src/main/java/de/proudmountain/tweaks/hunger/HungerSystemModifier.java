@@ -18,6 +18,7 @@ import java.util.List;
 /**
  * Kein Hunger: Der Food-Level bleibt fest auf 19 (sprinten geht, essen bleibt möglich).
  * Essen heilt direkt Lebenspunkte und gibt Buffs, die mit der Komplexität des Gerichts länger halten.
+ * Einfaches Essen heilt nur, Buffs gibt es erst bei aufwendigeren Gerichten.
  * Als Essen gilt alles mit der Food-Komponente, also Vanilla und alle Mods ohne Namensraten.
  * Komplexität = Nährwert + Sättigung; dazu zählen Folgeitem (Schüssel) und eingebaute Effekte.
  */
@@ -25,8 +26,7 @@ public final class HungerSystemModifier {
     private static final int FIXED_FOOD_LEVEL = 19;
 
     private static final List<Holder<MobEffect>> BUFFS = List.of(
-            MobEffects.DAMAGE_RESISTANCE, MobEffects.DIG_SPEED, MobEffects.MOVEMENT_SPEED,
-            MobEffects.SLOW_FALLING, MobEffects.NIGHT_VISION, MobEffects.JUMP, MobEffects.DAMAGE_BOOST);
+            MobEffects.DAMAGE_RESISTANCE, MobEffects.DIG_SPEED, MobEffects.MOVEMENT_SPEED);
 
     private HungerSystemModifier() {
     }
@@ -55,15 +55,15 @@ public final class HungerSystemModifier {
         float score = food.nutrition() + food.saturation();
         if (food.usingConvertsTo().isPresent()) score += 3;
         score += food.effects().size() * 2;
-        int tier = score < 8 ? 1 : score < 16 ? 2 : 3;
-        if (score < 2) return;
+        // Einfaches Essen (Brot, Äpfel, Ofenkartoffel) heilt nur. Steak = 1 Buff, Eintöpfe = 2, Festmahl = 3.
+        int tier = score < 14 ? 0 : score < 28 ? 1 : score < 40 ? 2 : 3;
+        if (tier == 0) return;
 
-        int duration = (int) Math.min(12000, Math.max(600, score * 200));
+        int duration = (int) Math.min(6000, Math.max(600, score * 100));
         int start = Math.floorMod(stack.getItem().builtInRegistryHolder().key().location().hashCode(), BUFFS.size());
         for (int i = 0; i < tier; i++) {
             Holder<MobEffect> effect = BUFFS.get((start + i) % BUFFS.size());
-            int amplifier = tier == 3 && i == 0 ? 1 : 0;
-            player.addEffect(new MobEffectInstance(effect, duration, amplifier, true, true, true));
+            player.addEffect(new MobEffectInstance(effect, duration, 0, true, true, true));
         }
     }
 }

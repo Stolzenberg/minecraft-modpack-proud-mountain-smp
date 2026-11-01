@@ -5,6 +5,10 @@ file = "config/antixray.toml"
 hash = "440312183a42288fb6d86d04608e0fcfff87005989eb466aa93fd126c6eab794"
 
 [[files]]
+file = "config/appleskin-client.toml"
+hash = "c09b79041ad229f2b043b941f051e9732ae37011bafe5706549c0ccd8cac0129"
+
+[[files]]
 file = "config/betterdays-common.toml"
 hash = "2db73d5071bd28cb2f65c1e934f32a1cb3fba10c17f591e32fcd36471ecbb221"
 
@@ -2652,7 +2656,7 @@ metafile = true
 
 [[files]]
 file = "mods/proud-mountain-tweaks.pw.toml"
-hash = "2bf5277220da4dd57c066ed0b96390906636f5a8e1412dacdc565d468b8963f8"
+hash = "134f4b9a12760192af0e68f2cbbf2f820e3fa1b337e175f66a5c08a7c7ef3c71"
 metafile = true
 
 [[files]]
