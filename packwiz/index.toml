@@ -47,7 +47,7 @@ hash = "1a39fdf741f78a6c3ccf75a0b3a340c9e27a60ecce19567bf849054b9b5c3813"
 
 [[files]]
 file = "config/proudmountain_tweaks/food_buffs.json"
-hash = "c80d044dd6ee1ac68d2d3a8d74829e4e04aa5d57af3671ee96b31e39cbccf131"
+hash = "60d0ab8a1ced817cfc37cccf3e96c9d510030c9ab5f0bbcc9cfb0ad773c1ac1c"
 
 [[files]]
 file = "config/sereneseasons/seasons.toml"
