@@ -46,6 +46,10 @@ file = "config/proudmountain_tweaks/default_resourcepacks.txt"
 hash = "1a39fdf741f78a6c3ccf75a0b3a340c9e27a60ecce19567bf849054b9b5c3813"
 
 [[files]]
+file = "config/proudmountain_tweaks/food_buffs.json"
+hash = "c80d044dd6ee1ac68d2d3a8d74829e4e04aa5d57af3671ee96b31e39cbccf131"
+
+[[files]]
 file = "config/sereneseasons/seasons.toml"
 hash = "f6f1749a9e2400daa67150f9f5d8ef0916feed5aa5b58628fc2283b59089c4d9"
 
@@ -2656,7 +2660,7 @@ metafile = true
 
 [[files]]
 file = "mods/proud-mountain-tweaks.pw.toml"
-hash = "ac9bb0a55e986caea4346187130e65b39fb5415772feec95ad6efb5c9edc78e5"
+hash = "919140eaa23614063aebc74e2992fcd3c275222399390c290ffb3731075c85e6"
 metafile = true
 
 [[files]]
