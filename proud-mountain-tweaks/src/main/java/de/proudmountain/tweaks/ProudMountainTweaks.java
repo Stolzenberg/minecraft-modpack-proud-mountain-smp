@@ -2,6 +2,7 @@ package de.proudmountain.tweaks;
 
 import de.proudmountain.tweaks.ban.BannedItems;
 import de.proudmountain.tweaks.hunger.HungerSystemModifier;
+import de.proudmountain.tweaks.hunger.HungerHUDRemover;
 import de.proudmountain.tweaks.seasons.SeasonCalendar;
 import de.proudmountain.tweaks.seasons.SeasonCalendarConfig;
 import net.neoforged.bus.api.IEventBus;
@@ -9,6 +10,8 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.api.distmarker.Dist;
 
 /**
  * Anpassungen für das Modpack:
@@ -16,6 +19,7 @@ import net.neoforged.fml.config.ModConfig;
  * Mitgelieferte Resource Packs werden einmal eingeschaltet, siehe DefaultResourcePacks (nur Client).
  * Eisenfarmen laufen trotz Better-Days-Tageslänge den ganzen Tag, siehe VillagerMixin.
  * Elytren gibt es nicht (Loot, Item-Frames, Inventar), siehe BannedItems (Server).
+ * Hunger gibt es nicht, Essen heilt und gibt Buffs, siehe HungerSystemModifier (Server) und HungerHUDRemover (Client).
  * Außerdem legt neoforge.mods.toml die Ladereihenfolge Farmer's Delight -> Proud Mountain Tweaks -> Coffee Delight fest:
  * Coffee Delight greift beim Registrieren auf Farmer's-Delight-Blöcke zu, gibt die Reihenfolge aber selbst nicht an.
  */
@@ -27,11 +31,10 @@ public final class ProudMountainTweaks {
     public ProudMountainTweaks(IEventBus modBus, ModContainer container) {
         container.registerConfig(ModConfig.Type.COMMON, SeasonCalendarConfig.SPEC);
         BannedItems.init(modBus);
-        
-        // Register hunger system modifier with NeoForge event bus
-        // This replaces the vanilla hunger system with direct HP restoration and food buffs
-        HungerSystemModifier.init(modBus);
-        
+
+        HungerSystemModifier.init();
+        if (FMLEnvironment.dist == Dist.CLIENT) HungerHUDRemover.init();
+
         // SeasonCalendar greift auf Serene-Seasons-Klassen zu und darf ohne Serene Seasons nicht geladen werden
         if (ModList.get().isLoaded("sereneseasons")) SeasonCalendar.init();
     }
