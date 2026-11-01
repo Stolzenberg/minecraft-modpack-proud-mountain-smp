@@ -21,9 +21,13 @@ repositories {
 }
 
 dependencies {
-    // Cold Sweat 2.4.4, wie im Pack (Hearth-Mixin und Raumwärme)
+    // Core NeoForge dependencies for effects and event system (already included by neoForge plugin)
+    
+    // Optional: Add additional farming mod dependencies if needed
     compileOnly 'maven.modrinth:serene-seasons:SPj5bJoM' // 10.1.0.3
     compileOnly 'maven.modrinth:glitchcore:S2TfWrZR' // 2.1.0.2
+    
+    // For NeoForge effect system - already included via neoForge plugin
 }
 
 tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }

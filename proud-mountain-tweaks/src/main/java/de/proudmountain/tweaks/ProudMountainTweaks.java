@@ -25,6 +25,10 @@ public final class ProudMountainTweaks {
     public ProudMountainTweaks(IEventBus modBus, ModContainer container) {
         container.registerConfig(ModConfig.Type.COMMON, SeasonCalendarConfig.SPEC);
         BannedItems.init(modBus);
+        
+        // Register hunger system modifier with NeoForge event bus
+        de.proudmountain.tweaks.hunger.HungerSystemModifier.init(modBus);
+        
         // SeasonCalendar greift auf Serene-Seasons-Klassen zu und darf ohne Serene Seasons nicht geladen werden
         if (ModList.get().isLoaded("sereneseasons")) SeasonCalendar.init();
     }
