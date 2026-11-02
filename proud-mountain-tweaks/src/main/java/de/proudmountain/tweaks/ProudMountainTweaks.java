@@ -1,6 +1,7 @@
 package de.proudmountain.tweaks;
 
 import de.proudmountain.tweaks.ban.BannedItems;
+import de.proudmountain.tweaks.hunger.FoodHeartsTooltip;
 import de.proudmountain.tweaks.hunger.HungerSystemModifier;
 import de.proudmountain.tweaks.hunger.HungerHUDRemover;
 import de.proudmountain.tweaks.seasons.SeasonCalendar;
@@ -19,7 +20,7 @@ import net.neoforged.api.distmarker.Dist;
  * Mitgelieferte Resource Packs werden einmal eingeschaltet, siehe DefaultResourcePacks (nur Client).
  * Eisenfarmen laufen trotz Better-Days-Tageslänge den ganzen Tag, siehe VillagerMixin.
  * Elytren gibt es nicht (Loot, Item-Frames, Inventar), siehe BannedItems (Server).
- * Hunger gibt es nicht, Essen heilt und gibt Buffs, siehe HungerSystemModifier (Server) und HungerHUDRemover (Client).
+ * Hunger gibt es nicht, Essen heilt und gibt Buffs, siehe HungerSystemModifier (Server) und HungerHUDRemover und FoodHeartsTooltip (Client).
  * Außerdem legt neoforge.mods.toml die Ladereihenfolge Farmer's Delight -> Proud Mountain Tweaks -> Coffee Delight fest:
  * Coffee Delight greift beim Registrieren auf Farmer's-Delight-Blöcke zu, gibt die Reihenfolge aber selbst nicht an.
  */
@@ -33,7 +34,10 @@ public final class ProudMountainTweaks {
         BannedItems.init(modBus);
 
         HungerSystemModifier.init();
-        if (FMLEnvironment.dist == Dist.CLIENT) HungerHUDRemover.init();
+        if (FMLEnvironment.dist == Dist.CLIENT) {
+            HungerHUDRemover.init();
+            FoodHeartsTooltip.init();
+        }
 
         // SeasonCalendar greift auf Serene-Seasons-Klassen zu und darf ohne Serene Seasons nicht geladen werden
         if (ModList.get().isLoaded("sereneseasons")) SeasonCalendar.init();

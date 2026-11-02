@@ -6,7 +6,7 @@ hash = "440312183a42288fb6d86d04608e0fcfff87005989eb466aa93fd126c6eab794"
 
 [[files]]
 file = "config/appleskin-client.toml"
-hash = "c09b79041ad229f2b043b941f051e9732ae37011bafe5706549c0ccd8cac0129"
+hash = "eec8a35655e5330ae6f30964f566c8ffe4cb7a84fe6c9f759e52fc39197c5453"
 
 [[files]]
 file = "config/betterdays-common.toml"
@@ -2411,7 +2411,7 @@ metafile = true
 
 [[files]]
 file = "mods/proud-mountain-tweaks.pw.toml"
-hash = "919140eaa23614063aebc74e2992fcd3c275222399390c290ffb3731075c85e6"
+hash = "629cc0a40c159460b9b260e1ccf4b3af09255a5e53dff29148519509c50e3ece"
 metafile = true
 
 [[files]]
