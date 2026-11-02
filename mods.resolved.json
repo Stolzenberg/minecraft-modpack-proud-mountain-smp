@@ -1049,76 +1049,6 @@
   "serverPackOnly": false
  },
  {
-  "slug": "mowzies-mobs",
-  "name": "Mowzie's Mobs",
-  "projectID": 250498,
-  "fileID": 7760267,
-  "fileName": "mowziesmobs-1.21.1-1.8.2.jar",
-  "date": "2026-03-15",
-  "releaseType": 1,
-  "downloadUrl": "https://edge.forgecdn.net/files/7760/267/mowziesmobs-1.21.1-1.8.2.jar",
-  "side": "both",
-  "why": "listed",
-  "requires": [
-   388172
-  ],
-  "url": "https://www.curseforge.com/minecraft/mc-mods/mowzies-mobs",
-  "authors": [
-   "bobmowzie",
-   "noonyeyzz",
-   "wadoo154",
-   "pau101",
-   "vakypanda"
-  ],
-  "classId": 6,
-  "serverPackOnly": false
- },
- {
-  "slug": "lendercataclysm",
-  "name": "L_Ender 's Cataclysm",
-  "projectID": 551586,
-  "fileID": 8931182,
-  "fileName": "L_Ender's Cataclysm 1.21.1-3.33.jar",
-  "date": "2026-09-20",
-  "releaseType": 1,
-  "downloadUrl": "https://edge.forgecdn.net/files/8931/182/L_Ender%27s%20Cataclysm%201.21.1-3.33.jar",
-  "side": "both",
-  "why": "listed",
-  "requires": [
-   309927,
-   1001614
-  ],
-  "url": "https://www.curseforge.com/minecraft/mc-mods/lendercataclysm",
-  "authors": [
-   "mcl_ender"
-  ],
-  "classId": 6,
-  "serverPackOnly": false
- },
- {
-  "slug": "bosses-of-mass-destruction-forge",
-  "name": "Bosses of Mass Destruction [Forge | NeoForge]",
-  "projectID": 941573,
-  "fileID": 8448640,
-  "fileName": "BOMD-NeoForge-1.21-1.3.3.jar",
-  "date": "2026-07-17",
-  "releaseType": 1,
-  "downloadUrl": "https://edge.forgecdn.net/files/8448/640/BOMD-NeoForge-1.21-1.3.3.jar",
-  "side": "both",
-  "why": "listed",
-  "requires": [
-   955605,
-   348521,
-   388172
-  ],
-  "url": "https://www.curseforge.com/minecraft/mc-mods/bosses-of-mass-destruction-forge",
-  "authors": [
-   "Cerbon"
-  ],
-  "classId": 6,
-  "serverPackOnly": false
- },
- {
   "slug": "friends-and-foes-forge",
   "name": "Friends&Foes (Forge/NeoForge)",
   "projectID": 602059,
@@ -1235,48 +1165,6 @@
    "HellionGames",
    "ItsHamza",
    "AlexNijjar"
-  ],
-  "classId": 6,
-  "serverPackOnly": false
- },
- {
-  "slug": "mutant-monsters",
-  "name": "Mutant Monsters",
-  "projectID": 852665,
-  "fileID": 7232511,
-  "fileName": "MutantMonsters-v21.1.1-1.21.1-NeoForge.jar",
-  "date": "2025-11-17",
-  "releaseType": 1,
-  "downloadUrl": "https://edge.forgecdn.net/files/7232/511/MutantMonsters-v21.1.1-1.21.1-NeoForge.jar",
-  "side": "both",
-  "why": "listed",
-  "requires": [
-   495476
-  ],
-  "url": "https://www.curseforge.com/minecraft/mc-mods/mutant-monsters",
-  "authors": [
-   "Fuzs"
-  ],
-  "classId": 6,
-  "serverPackOnly": false
- },
- {
-  "slug": "born-in-chaos",
-  "name": "Born in Chaos",
-  "projectID": 686437,
-  "fileID": 8268280,
-  "fileName": "born_in_chaos_[Neoforge]_1.21.1_1.7.6.jar",
-  "date": "2026-06-17",
-  "releaseType": 1,
-  "downloadUrl": "https://edge.forgecdn.net/files/8268/280/born_in_chaos_%5bNeoforge%5d_1.21.1_1.7.6.jar",
-  "side": "both",
-  "why": "listed",
-  "requires": [
-   388172
-  ],
-  "url": "https://www.curseforge.com/minecraft/mc-mods/born-in-chaos",
-  "authors": [
-   "mongoose_artist"
   ],
   "classId": 6,
   "serverPackOnly": false
@@ -1876,7 +1764,7 @@
   "fileID": 8242804,
   "fileName": "iris-neoforge-1.8.14-beta.1+mc1.21.1.jar",
   "date": "2026-06-13",
-  "releaseType": 2,
+  "releaseType": 1,
   "downloadUrl": "https://edge.forgecdn.net/files/8242/804/iris-neoforge-1.8.14-beta.1%2bmc1.21.1.jar",
   "side": "client",
   "why": "listed",
@@ -2383,91 +2271,12 @@
   "releaseType": 1,
   "downloadUrl": "https://edge.forgecdn.net/files/8893/490/geckolib-neoforge-1.21.1-4.9.3.jar",
   "side": "both",
-  "why": "dep of mowzies-mobs",
+  "why": "dep of naturalist",
   "requires": [],
   "url": "https://www.curseforge.com/minecraft/mc-mods/geckolib",
   "authors": [
    "Gecko",
    "EliotL"
-  ],
-  "classId": 6,
-  "serverPackOnly": false
- },
- {
-  "slug": "curios",
-  "name": "Curios API",
-  "projectID": 309927,
-  "fileID": 6529130,
-  "fileName": "curios-neoforge-9.5.1+1.21.1.jar",
-  "date": "2025-05-14",
-  "releaseType": 1,
-  "downloadUrl": "https://edge.forgecdn.net/files/6529/130/curios-neoforge-9.5.1%2b1.21.1.jar",
-  "side": "both",
-  "why": "dep of lendercataclysm",
-  "requires": [],
-  "url": "https://www.curseforge.com/minecraft/mc-mods/curios",
-  "authors": [
-   "TheIllusiveC4"
-  ],
-  "classId": 6,
-  "serverPackOnly": false
- },
- {
-  "slug": "lionfish-api",
-  "name": "Lionfish API",
-  "projectID": 1001614,
-  "fileID": 8345326,
-  "fileName": "lionfishapi-3.1.jar",
-  "date": "2026-06-30",
-  "releaseType": 1,
-  "downloadUrl": "https://edge.forgecdn.net/files/8345/326/lionfishapi-3.1.jar",
-  "side": "both",
-  "why": "dep of lendercataclysm",
-  "requires": [],
-  "url": "https://www.curseforge.com/minecraft/mc-mods/lionfish-api",
-  "authors": [
-   "mcl_ender"
-  ],
-  "classId": 6,
-  "serverPackOnly": false
- },
- {
-  "slug": "cerbons-api",
-  "name": "CERBON's API [Forge | Fabric | NeoForge]",
-  "projectID": 955605,
-  "fileID": 6483943,
-  "fileName": "CerbonsAPI-NeoForge-1.21-1.3.0.jar",
-  "date": "2025-05-01",
-  "releaseType": 1,
-  "downloadUrl": "https://edge.forgecdn.net/files/6483/943/CerbonsAPI-NeoForge-1.21-1.3.0.jar",
-  "side": "both",
-  "why": "dep of bosses-of-mass-destruction-forge",
-  "requires": [
-   955605
-  ],
-  "url": "https://www.curseforge.com/minecraft/mc-mods/cerbons-api",
-  "authors": [
-   "Cerbon"
-  ],
-  "classId": 6,
-  "serverPackOnly": false
- },
- {
-  "slug": "cloth-config",
-  "name": "Cloth Config API (Fabric/Forge/NeoForge)",
-  "projectID": 348521,
-  "fileID": 5729127,
-  "fileName": "cloth-config-15.0.140-neoforge.jar",
-  "date": "2024-09-16",
-  "releaseType": 1,
-  "downloadUrl": "https://edge.forgecdn.net/files/5729/127/cloth-config-15.0.140-neoforge.jar",
-  "side": "both",
-  "why": "dep of bosses-of-mass-destruction-forge",
-  "requires": [],
-  "url": "https://www.curseforge.com/minecraft/mc-mods/cloth-config",
-  "authors": [
-   "shedaniel",
-   "LinkieIsBetterThanK9"
   ],
   "classId": 6,
   "serverPackOnly": false
@@ -2507,25 +2316,6 @@
   "authors": [
    "ThatGravyBoat",
    "epic_oreo"
-  ],
-  "classId": 6,
-  "serverPackOnly": false
- },
- {
-  "slug": "puzzles-lib",
-  "name": "Puzzles Lib",
-  "projectID": 495476,
-  "fileID": 9130151,
-  "fileName": "puzzleslib-v21.1.64-mc1.21.1+neoforge.jar",
-  "date": "2026-10-11",
-  "releaseType": 1,
-  "downloadUrl": "https://edge.forgecdn.net/files/9130/151/puzzleslib-v21.1.64-mc1.21.1%2bneoforge.jar",
-  "side": "both",
-  "why": "dep of mutant-monsters",
-  "requires": [],
-  "url": "https://www.curseforge.com/minecraft/mc-mods/puzzles-lib",
-  "authors": [
-   "Fuzs"
   ],
   "classId": 6,
   "serverPackOnly": false
@@ -2604,6 +2394,25 @@
   "url": "https://www.curseforge.com/minecraft/mc-mods/libipn",
   "authors": [
    "mirinimi"
+  ],
+  "classId": 6,
+  "serverPackOnly": false
+ },
+ {
+  "slug": "puzzles-lib",
+  "name": "Puzzles Lib",
+  "projectID": 495476,
+  "fileID": 9130151,
+  "fileName": "puzzleslib-v21.1.64-mc1.21.1+neoforge.jar",
+  "date": "2026-10-11",
+  "releaseType": 1,
+  "downloadUrl": "https://edge.forgecdn.net/files/9130/151/puzzleslib-v21.1.64-mc1.21.1%2bneoforge.jar",
+  "side": "both",
+  "why": "dep of effect-insights",
+  "requires": [],
+  "url": "https://www.curseforge.com/minecraft/mc-mods/puzzles-lib",
+  "authors": [
+   "Fuzs"
   ],
   "classId": 6,
   "serverPackOnly": false

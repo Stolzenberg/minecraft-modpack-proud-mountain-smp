@@ -83,7 +83,7 @@ hash = "2485a4a91399363128a1f6921d2c1db891e2440ef0c6239014b80125d06c2983"
 
 [[files]]
 file = "kubejs/assets/proudmountain/lang/de_de.json"
-hash = "aa5f20dd8187a5d7c4ad80bcc3bc7897e7f900de4b5a5dfe05d807e7054aa0de"
+hash = "5dbc69221c29ac1b64c0c14770daa4887705706a770d35fc0f0da391fd367f84"
 
 [[files]]
 file = "kubejs/data/bakery/tags/item/dough.json"
@@ -108,146 +108,6 @@ hash = "d89875d8cedd8c4873925181ab0c20d728a914c1ed17eb9966bf1f7d4304f73d"
 [[files]]
 file = "kubejs/data/betterdungeons/worldgen/structure_set/zombie_dungeons.json"
 hash = "b0ed7477a89e525000a34e9b54b791de6b1bbd3ed121e7684430685f3c74b739"
-
-[[files]]
-file = "kubejs/data/born_in_chaos_v1/worldgen/structure_set/clown_caravan_plains.json"
-hash = "9a03f466450c9fcde313c63f71b660dd78734f03b92385043a1cf5b5ae8e1d2d"
-
-[[files]]
-file = "kubejs/data/born_in_chaos_v1/worldgen/structure_set/clown_caravan_savanna.json"
-hash = "7f522b0f5525e88e8c131e25b9992cfb89801e6913d7ab67d0a5ad9fac11563f"
-
-[[files]]
-file = "kubejs/data/born_in_chaos_v1/worldgen/structure_set/clown_caravan_taiga.json"
-hash = "d0d21326481b426c88f860ce894d89d784ced255bbd435c76be1bd244ecd34a7"
-
-[[files]]
-file = "kubejs/data/born_in_chaos_v1/worldgen/structure_set/dark_tower_forest.json"
-hash = "c9fe293fac2f3993a1092ba15b10cd8858b5f5075b5c0f85fe9016e038845667"
-
-[[files]]
-file = "kubejs/data/born_in_chaos_v1/worldgen/structure_set/dark_tower_plain.json"
-hash = "67fadfb25f8821e30cb5743b1a7218aa43f2477f038043fcc20a426a938645f8"
-
-[[files]]
-file = "kubejs/data/born_in_chaos_v1/worldgen/structure_set/dark_tower_taiga.json"
-hash = "2809e8c905f4a85a14acbaf72f711dde1ad11c460d5d8776b4d82be2cf8b0ace"
-
-[[files]]
-file = "kubejs/data/born_in_chaos_v1/worldgen/structure_set/farm.json"
-hash = "06aa635f353f5d71de486ba654be4904cc8f79c69f1b35fd25ac248cd74b07bf"
-
-[[files]]
-file = "kubejs/data/born_in_chaos_v1/worldgen/structure_set/firewell.json"
-hash = "eeb64993cee60f0dc77e16d05947d62220a96f1dcd8c970174f02cb027ad186e"
-
-[[files]]
-file = "kubejs/data/born_in_chaos_v1/worldgen/structure_set/grave_2003wise.json"
-hash = "43f034516319316f0bab209e4233e8e65e8b1b6456ac21485035e76dcca3d7d3"
-
-[[files]]
-file = "kubejs/data/born_in_chaos_v1/worldgen/structure_set/grave_2_dling.json"
-hash = "b07e96bb66bc0ca7e3199844f617c19f4e5f4efd599a3224de5cc2235d301e50"
-
-[[files]]
-file = "kubejs/data/born_in_chaos_v1/worldgen/structure_set/grave_d_4rk_devil_x.json"
-hash = "9241c94e69744bd53d048b4be3cb1e4d8e10f782890cbd311b081623f16b23b0"
-
-[[files]]
-file = "kubejs/data/born_in_chaos_v1/worldgen/structure_set/grave_darktitan.json"
-hash = "409c29ad9e254e386cc98abf5bb59dd77db8209dd2c3120c1402cd37cecd2f51"
-
-[[files]]
-file = "kubejs/data/born_in_chaos_v1/worldgen/structure_set/grave_derivas.json"
-hash = "142ce3b7dc23f294347445e955b4bb5ddb3d3940cb55bab81c97e42c14209635"
-
-[[files]]
-file = "kubejs/data/born_in_chaos_v1/worldgen/structure_set/grave_euthymia.json"
-hash = "7517c004095abeaea3e0a9a0fdc2352ae73e9ecb9818d580d325c870cd9f1b9a"
-
-[[files]]
-file = "kubejs/data/born_in_chaos_v1/worldgen/structure_set/grave_feral.json"
-hash = "76b974dbb4584d3548a739428ec2f91695a012cfa63235fc9bdc032cb00df72d"
-
-[[files]]
-file = "kubejs/data/born_in_chaos_v1/worldgen/structure_set/grave_fubuki_banzai.json"
-hash = "3f244fbb9404d4dc8ebf201e71ea82585cce4abaa734a0b37a0730a729f07040"
-
-[[files]]
-file = "kubejs/data/born_in_chaos_v1/worldgen/structure_set/grave_memesus.json"
-hash = "11cc8a1b60b3519481d5d123158e670672ecafecc54b63f41de4f9ddd0a149c1"
-
-[[files]]
-file = "kubejs/data/born_in_chaos_v1/worldgen/structure_set/grave_mike_and_rory.json"
-hash = "4c0585277c709405e97b563969e31b3c2af016a9c1425315f3c2adf138045e06"
-
-[[files]]
-file = "kubejs/data/born_in_chaos_v1/worldgen/structure_set/grave_nino_4416.json"
-hash = "126547e12e7448fdeb5e79c9a5b9e84aa67e6279f78ec2936243c64c0396f670"
-
-[[files]]
-file = "kubejs/data/born_in_chaos_v1/worldgen/structure_set/grave_orion.json"
-hash = "c5aac397fb23a56e712c0b3e946d72d2ec000522d042b4753a9c29d5de18ed07"
-
-[[files]]
-file = "kubejs/data/born_in_chaos_v1/worldgen/structure_set/grave_petasi.json"
-hash = "41e9f8d0c0f3bcf44bc18ec96f9cfe2ba22cb35e39c07846625e18e7e1692c59"
-
-[[files]]
-file = "kubejs/data/born_in_chaos_v1/worldgen/structure_set/grave_plug.json"
-hash = "2524fbe07af790a934d16b404b3868823d47db0ec2cee00bcc0882b7889a1442"
-
-[[files]]
-file = "kubejs/data/born_in_chaos_v1/worldgen/structure_set/grave_rotborne.json"
-hash = "f7baf9a1a0ed107b04d2beaba7d0e1ea609f9d275517dbe5a9cd0dcf228a3941"
-
-[[files]]
-file = "kubejs/data/born_in_chaos_v1/worldgen/structure_set/grave_somfunambulist.json"
-hash = "593ce801341d00652242592389992facd8dd679d85eb9f5da9cf065a8e592f61"
-
-[[files]]
-file = "kubejs/data/born_in_chaos_v1/worldgen/structure_set/grave_tem_187.json"
-hash = "a1c0f7f827c6f6eaa2dec01169d0bdb3ae2cb18ce84cd5c0facb892e08e4fb84"
-
-[[files]]
-file = "kubejs/data/born_in_chaos_v1/worldgen/structure_set/grave_the_gentleman_frog.json"
-hash = "e1fd3cbaea0f6b2da5c9d7ea39d05df67f8da8ae38f5af988aefd0de06bcd201"
-
-[[files]]
-file = "kubejs/data/born_in_chaos_v1/worldgen/structure_set/gravecarrionexe.json"
-hash = "cdebe68615b88bc9bd1169703f2bab37a614c81193fb02d0c7b56c5721d5350e"
-
-[[files]]
-file = "kubejs/data/born_in_chaos_v1/worldgen/structure_set/infernal_pumpkin.json"
-hash = "efb5340c7ee1c78fba7232aef8cd9733b67d35478ac746378abcb0b67af05797"
-
-[[files]]
-file = "kubejs/data/born_in_chaos_v1/worldgen/structure_set/mound_of_hounds.json"
-hash = "28654dcc399e082a8afffdb3a2367f9e9728c9e5581c72b835ed8db36b33fb0d"
-
-[[files]]
-file = "kubejs/data/born_in_chaos_v1/worldgen/structure_set/observation_tower_forest.json"
-hash = "5d84ce8eeb51114ffd4f5f26e079a24699780dea29315c8a1d58d9cea727eabc"
-
-[[files]]
-file = "kubejs/data/born_in_chaos_v1/worldgen/structure_set/observation_tower_plains.json"
-hash = "64909a0f81c643a8f11d6f07a8b882dae411303637bcb235c1ea5b4c420f5ce6"
-
-[[files]]
-file = "kubejs/data/bosses_of_mass_destruction/worldgen/structure_set/gauntlet_arena.json"
-hash = "d20029a2f97d09a8977520a2795d8b8d807ce7b3d97b06b5aef80865de738700"
-
-[[files]]
-file = "kubejs/data/bosses_of_mass_destruction/worldgen/structure_set/lich_tower.json"
-hash = "8523971619993514a42c63d800eda1ca9a8cb2b73c183429b746e52075758dae"
-
-[[files]]
-file = "kubejs/data/bosses_of_mass_destruction/worldgen/structure_set/obsidilith_arena.json"
-hash = "047fbb97730d232ca4b96413c26a2cbeb9bdf72b9f3cc376f75b12f119a1979d"
-
-[[files]]
-file = "kubejs/data/bosses_of_mass_destruction/worldgen/structure_set/void_blossom.json"
-hash = "5b60b055dea23ad604892cd4a4fba971ef191124daddb581888fc58d7fa73983"
 
 [[files]]
 file = "kubejs/data/c/tags/item/foods/cooked_bacon.json"
@@ -292,50 +152,6 @@ hash = "b159ec6194e87631def5e3aacb565e346578ceda330d634586f6500d0060c327"
 [[files]]
 file = "kubejs/data/c/tags/item/tools/knife.json"
 hash = "0ff08a2c4e507c71095c55b7740267ae3c3909b15028c6c38425520b24ff04e2"
-
-[[files]]
-file = "kubejs/data/cataclysm/worldgen/structure_set/abandoned_structures.json"
-hash = "2a122970e4512b17392b1a5131014139a1d1031aa7d95e6b05554d3bc37027e5"
-
-[[files]]
-file = "kubejs/data/cataclysm/worldgen/structure_set/acropolis.json"
-hash = "0162b2f806af26661d6e0dc60fd3123be86a34780b1b0460b5a8e42d9c61b090"
-
-[[files]]
-file = "kubejs/data/cataclysm/worldgen/structure_set/amethyst_nest.json"
-hash = "5030901b3e2b82db29750f0ae6cf3a34f8d303553a9f6ea4223f69e5a7521b27"
-
-[[files]]
-file = "kubejs/data/cataclysm/worldgen/structure_set/ancient_factory.json"
-hash = "58d2ab097fd5f65ee64c7bfe760c2d4a2f1e046066d63251dcc63d2a189532c5"
-
-[[files]]
-file = "kubejs/data/cataclysm/worldgen/structure_set/burning_arena.json"
-hash = "6fe273afeed40f296f2dcf3beb031717b74b685db7bc92659688fc6f46902d34"
-
-[[files]]
-file = "kubejs/data/cataclysm/worldgen/structure_set/cursed_pyramid.json"
-hash = "78e6c075662f76dddb8acb596ec49597f8818f5225f0c9672febf5f843fedc04"
-
-[[files]]
-file = "kubejs/data/cataclysm/worldgen/structure_set/desert_structures.json"
-hash = "d50f7844721bb2e7464c9b8582fe09c6a45b81bb9e74e3f099da384441de2a2e"
-
-[[files]]
-file = "kubejs/data/cataclysm/worldgen/structure_set/frosted_prison.json"
-hash = "f4e807ad8c16517af7fefa35701e0267db819668d0836a4433428bbb4423cf38"
-
-[[files]]
-file = "kubejs/data/cataclysm/worldgen/structure_set/ruined_citadel.json"
-hash = "37826a03ad569612616c8fed9ae9c4396e59d6b36bf0b8ad4e111f6c113da85c"
-
-[[files]]
-file = "kubejs/data/cataclysm/worldgen/structure_set/soul_black_smith.json"
-hash = "a5bf264eb3cf9ffc203ca495bba16968fb26ae7139e834d6fd085903c1f8ee4b"
-
-[[files]]
-file = "kubejs/data/cataclysm/worldgen/structure_set/sunken_city.json"
-hash = "964a4490c49ca4224ca3a5db0eb4f8dd2ebc8a6f8f3a879d6044a9757290d637"
 
 [[files]]
 file = "kubejs/data/coffee_delight/recipe/wafer.json"
@@ -568,10 +384,6 @@ hash = "63baabe4f3553eb1fb16bf3c8e8af77cf0aef70a9da2576136dd299e92c7bfed"
 [[files]]
 file = "kubejs/data/friendsandfoes/worldgen/structure_set/illusioner_training_grounds.json"
 hash = "9c94991c91ef3d4033b6fbf8f977ed60737941363f04191e4a56ec4fb64b3d95"
-
-[[files]]
-file = "kubejs/data/meed/recipe/born_in_chaos_v1/infernal_flame.json"
-hash = "f5104b0ae84f6ca03d0f4680d2ef0ca89a53542931b41cc3d1c0806f0e14fa9b"
 
 [[files]]
 file = "kubejs/data/mes/worldgen/structure_set/astral_hideaway.json"
@@ -968,22 +780,6 @@ hash = "33ca23aa417cbf2212bc9c53f0e4b54c3487555c4f9e5436595f97c117e789b3"
 [[files]]
 file = "kubejs/data/mns/worldgen/structure_set/warped_pool.json"
 hash = "fa8f7be3f7c0d6aad235f09e5ba0fc6b82d65b24ea176d1464166ce258cb82b0"
-
-[[files]]
-file = "kubejs/data/mowziesmobs/worldgen/structure_set/frostmaw_spawns.json"
-hash = "e9893d923b29e545cf2906f5c9283fb81eafe1d5d82a6801a490d881bb3f9ef4"
-
-[[files]]
-file = "kubejs/data/mowziesmobs/worldgen/structure_set/monasteries.json"
-hash = "9898c4de12bb686506d8570a64d329bcbca78d7d5ad4f533ee7dab0803719e7e"
-
-[[files]]
-file = "kubejs/data/mowziesmobs/worldgen/structure_set/umvuthana_groves.json"
-hash = "fe3b7e0b8ef21fd6ecf25a60f262377f1f18554eb3f9f02b9ac1ff4789233cf7"
-
-[[files]]
-file = "kubejs/data/mowziesmobs/worldgen/structure_set/wrought_chambers.json"
-hash = "9e5954bbae6b359d8df3fd7eb4da2b8060dc864e32ae79d16a64d780ad460531"
 
 [[files]]
 file = "kubejs/data/mtr/worldgen/structure_set/badlands_temple.json"
@@ -2239,28 +2035,8 @@ hash = "f6f723c2d15da3b36a2c29408deb914f6c4bdbe4a20aa652f3f07642011fce8e"
 metafile = true
 
 [[files]]
-file = "mods/born-in-chaos.pw.toml"
-hash = "2c43a8411efa4d7dc088890ee6519abac3589040bd8867dc75d1595d7134cfaa"
-metafile = true
-
-[[files]]
-file = "mods/bosses-of-mass-destruction-forge.pw.toml"
-hash = "f1c1423658bc7057679d55ca12f13ecf484b7c85838b1a875ff55ff122bb315d"
-metafile = true
-
-[[files]]
-file = "mods/cerbons-api.pw.toml"
-hash = "5652a3f7f07083e93a4b3704731bf51f18b1786160870ab21ba72c0b074ffdbb"
-metafile = true
-
-[[files]]
 file = "mods/chunky-pregenerator-forge.pw.toml"
 hash = "3423d975355da0e06645821c12941158ff37ad2a9f443b71e9cff41e45e335fe"
-metafile = true
-
-[[files]]
-file = "mods/cloth-config.pw.toml"
-hash = "c80c88907418a2c8d5a37cc68225c43f46b1c314e2003444fba4fd19824c886b"
 metafile = true
 
 [[files]]
@@ -2306,11 +2082,6 @@ metafile = true
 [[files]]
 file = "mods/critters-and-companions.pw.toml"
 hash = "821b10294eced17ee623dd04213f976d1da26c7aff9934acc15cf281c031ac3d"
-metafile = true
-
-[[files]]
-file = "mods/curios.pw.toml"
-hash = "1a906a173b2562d83bcab9ca0cc9b9dbce52bcca6c4d884641acc56e7a5a1dcb"
 metafile = true
 
 [[files]]
@@ -2454,11 +2225,6 @@ hash = "f6b0c56c18768988d654ffb444562b526553a3437bd85aae2df73d1831d6eeba"
 metafile = true
 
 [[files]]
-file = "mods/lendercataclysm.pw.toml"
-hash = "37422b90103838b2ff7d3e0d058b264b4af8f479f1462defd4b596a65bbcfe63"
-metafile = true
-
-[[files]]
 file = "mods/lets-do-bakery-farm-charm-compat.pw.toml"
 hash = "96cdfc5939680cd20aa129dc2c53f9ffcecc50ef99812f1ecdca7be1985d7766"
 metafile = true
@@ -2476,11 +2242,6 @@ metafile = true
 [[files]]
 file = "mods/libipn.pw.toml"
 hash = "378bc3dffa957f169e27f53f71a5cbe873ae18bac99bd18a39f1ae99a38486a2"
-metafile = true
-
-[[files]]
-file = "mods/lionfish-api.pw.toml"
-hash = "03874ad1660a4eed7627bee30c651fe975dac75614e0413774e5704a2220282e"
 metafile = true
 
 [[files]]
@@ -2614,18 +2375,8 @@ hash = "7bf459d780e378c5194a1562669db838b32709446a2b1d3962c4292397cb3cec"
 metafile = true
 
 [[files]]
-file = "mods/mowzies-mobs.pw.toml"
-hash = "3e070ad755f51b55bef6c4bd6e7ea3d6e07cb66dd0e7af88cff630f97b0d70c3"
-metafile = true
-
-[[files]]
 file = "mods/mtr-moogs-temples-reimagined.pw.toml"
 hash = "c10612122199ea95a38a39a72f981d449fa66a0b5743b417fd3ec85b9b4e2e4e"
-metafile = true
-
-[[files]]
-file = "mods/mutant-monsters.pw.toml"
-hash = "bbd3610693ba80297f6a7b6b82f373d5edb6386d128d71c4588014249f86c20e"
 metafile = true
 
 [[files]]
