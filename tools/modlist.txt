@@ -74,11 +74,16 @@ natures-compass                          pin=7892954
 explorers-compass                        pin=7892943
 waystones                                pin=8969751
 # --- Mobs & Bosse ---
+mowzies-mobs                             pin=7760267
+lendercataclysm                          pin=8931182
+bosses-of-mass-destruction-forge         pin=8448640
 friends-and-foes-forge                   pin=9108912
 naturalist                               pin=9004373
 critters-and-companions                  pin=8646976
 creeper-overhaul                         pin=6051279
 enderman-overhaul                        pin=7661859
+mutant-monsters                          pin=7232511
+born-in-chaos                            pin=8268280
 ribbits                                  pin=7355196
 # --- Überleben ---
 paragliders                              pin=7795089

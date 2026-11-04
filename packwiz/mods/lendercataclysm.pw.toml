@@ -1,0 +1,13 @@
+name = "L_Ender 's Cataclysm"
+filename = "L_Ender's Cataclysm 1.21.1-3.33.jar"
+side = "both"
+
+[download]
+url = "https://cdn.modrinth.com/data/46KJle7n/versions/PsPYpoCC/L_Ender%27s%20Cataclysm%201.21.1-3.33.jar"
+hash-format = "sha1"
+hash = "f0310277167c82fd16a5c2bab220b5c5c262f133"
+
+[update]
+[update.modrinth]
+mod-id = "46KJle7n"
+version = "PsPYpoCC"
